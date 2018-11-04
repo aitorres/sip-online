@@ -75,8 +75,12 @@ WSGI_APPLICATION = 'sip.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'siponline_db',
+        'USER': 'siponline',
+        'PASSWORD': 's1p0nl1ne!',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 
