@@ -2,6 +2,27 @@
 
 {% block title %}Título de la página{% endblock %}
 
+{% block navegacion %}
+<div class="breadcrumbs">
+    <div class="col-sm-4">
+        <div class="page-header float-left">
+            <div class="page-title">
+                <h1>Dashboard</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <div class="page-header float-right">
+            <div class="page-title">
+                <ol class="breadcrumb text-right">
+                    <li class="active">Dashboard</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
 {% block content %}
 <div class="col-md-12">
     <div class="card">
@@ -16,9 +37,13 @@
 {% endblock %}
 
 {% block js %}
-<!-- Aquí va etiquetas javascript personalizadas -->
+<script type="text/javascript">
+	// Aquí va etiquetas javascript personalizadas si tienen
+</script>
 {% endblock %}
 
 {% block css %}
-<!-- Aqúí va codigo css personalziado dentro de etiquetas style -->
+<style type="text/css">
+/* Aquí va codigo css personalziado dentro de etiquetas style */
+</style>
 {% endblock %}
