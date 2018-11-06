@@ -27,4 +27,13 @@ class Profesor(models.Model):
     asignaturas = models.ManyToManyField('Asignatura')
 
 class Asignatura(models.Model):
-    pass
+    """
+    Modelo TEMPORAL que representa una asignatura con su
+    nombre, código y departamento asociado. Este modelo
+    deberá ser modificado posteriormente para incorporarse
+    con el desarrollo del equipo Delta Developers.
+    """
+
+    nombre = models.CharField(max_length=60)
+    codigo_interno = models.CharField(max_length=4, unique=True)
+    departamento = models.ForeignKey('Departamento')

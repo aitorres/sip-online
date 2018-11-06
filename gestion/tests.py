@@ -211,6 +211,7 @@ class AsignaturaModelTest(TestCase):
         corresponda al departamento.
 
         PRIMERA CORRIDA: Falla porque el modelo Asignatura no está creado.
+        SIGUIENTE CORRIDA: La prueba se ejecuta correctamente.
         """
 
         asignatura = Asignatura.objects.get(codigo_interno="3715")
@@ -219,26 +220,28 @@ class AsignaturaModelTest(TestCase):
             "Ingeniería de Software I"
         )
 
-    def test_codigo_departamento(self):
+    def test_codigo_asignatura(self):
         """
         PRUEBA 2. Se verifica que el código interno de la Asignatura se guarde
         correctamente en la base de datos, y que corresponda al código
         que se quiso almacenar.
 
         PRIMERA CORRIDA: Falla porque el modelo Asignatura no está creado.
+        SIGUIENTE CORRIDA: La prueba se ejecuta correctamente.
         """
 
         asignatura = Asignatura.objects.get(codigo_interno="3715")
         self.assertEqual(
-            asignatura.codigo, "CI"
+            asignatura.codigo_interno, "3715"
         )
 
-    def test_jefe_departamento(self):
+    def test_departamento_asignatura(self):
         """
         PRUEBA 3. Se verifica que se asocie un Departamento ya existente
         como el departamento asociado de la Asignatura.
 
         PRIMERA CORRIDA: Falla porque el modelo Asignatura no está creado.
+        SIGUIENTE CORRIDA: La prueba se ejecuta correctamente.
         """
 
         asignatura = Asignatura.objects.get(codigo_interno="3715")
