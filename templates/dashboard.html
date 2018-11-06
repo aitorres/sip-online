@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Inicio{% endblock %}
 
 {% block content %}
-
 <div class="row">
     <!-- Tarjeta de bienvenida -->
     <div class="col-lg-6">
@@ -25,7 +25,7 @@
                 <div class="card-header user-header alt bg-dark">
                     <div class="media">
                         <a href="#">
-                            <img class="align-self-center rounded-circle mr-3" style="width:85px; height:85px;" alt="" src="images/admin.jpg">
+                            <img class="align-self-center rounded-circle mr-3" style="width:50px; height:50px;" alt="" src="{% static 'images/admin.jpg' %}">
                         </a>
                         <div class="media-body">
                             <h2 class="text-light display-6">
@@ -93,18 +93,4 @@
         </div>
     </div>
 </div>
-
-
-{% endblock %}
-
-{% block js %}
-<script type="text/javascript">
-	// Aquí va etiquetas javascript personalizadas si tienen
-</script>
-{% endblock %}
-
-{% block css %}
-<style type="text/css">
-/* Aquí va codigo css personalziado dentro de etiquetas style */
-</style>
 {% endblock %}
