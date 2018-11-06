@@ -321,7 +321,7 @@ class AsignaturaModelTest(TestCase):
             "(CI3715) Ingeniería de Software I"
         )
 
-    def test_codigo_completo-asignatura(self):
+    def test_codigo_completo_asignatura(self):
         """
         PRUEBA 5. Verifica que el método codigo_completo() de Asignatura devuelva
         el código correcto de la asignatura. 

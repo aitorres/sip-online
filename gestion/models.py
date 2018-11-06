@@ -68,9 +68,18 @@ class Asignatura(models.Model):
     codigo_interno = models.CharField(max_length=4, unique=True)
     departamento = models.ForeignKey('Departamento')
 
+    def codigo_completo(self):
+        """
+        Devuelve el código completo (compuesto) de la asignatura,
+        que es el código del departamento y el código interno de la
+        asignatura.
+        """
+        return self.departamento.codigo + self.codigo_interno
+
     def __str__(self):
         """
         Muestra la instancia de Asignatura como
         (codigodptocodigointernoasigntura) nombre
         """
-        return "(" + self.departamento.codigo + self.codigo_interno + ") " + self.nombre
+        return "(" + self.codigo_completo() + ") " + self.nombre
+
