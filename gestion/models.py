@@ -12,4 +12,16 @@ class Departamento(models.Model):
     jefe = models.ForeignKey('Profesor')
 
 class Profesor(models.Model):
-    pass
+    """
+    Modelo que representa un profesor de la USB
+    incluye su nombre, apellido, cedula, email, disponibilidad semanal, departamento 
+    y las asignaturas que puede dar.
+    """
+
+    nombre = models.CharField(max_length=50)
+    apellido = models.CharField(max_length=50)
+    cedula = models.CharField(max_length=12, unique=True)
+    #disponibilidad
+    dpto = models.ForeignKey('Departamento')
+    correo = models.EmailField(max_length=200)
+    #asignaturas
