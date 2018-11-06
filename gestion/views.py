@@ -27,3 +27,12 @@ class Dashboard(generic.TemplateView):
         context['departamentos'] = Departamento.objects.all().count()
 
         return context
+
+class ListarProfesores(generic.ListView):
+    """
+    Controlador que muestra una lista en tabla de todos los
+    profesores.
+    """
+    template_name = 'profesores/listar.html'
+    model = Profesor
+    context_object_name = "profesores"
