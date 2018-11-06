@@ -90,6 +90,21 @@ class ProfesorModelTest(TestCase):
         self.assertEqual(profesor1.email, "14-11082@usb.ve")
         self.assertEqual(profesor2.email, "12-10042@usb.ve")
 
+    def test_string_profesor(self):
+        """
+        PRUEBA 4. Se verifica que la representación como cadena de caracteres
+        del modelo Profesor sea su nonmbre y su apellido.
+
+        PRIMERA CORRIDA: Falla porque la representación por cadena de 
+        caracteres (string) del modelo es la por defecto de Django.
+        """
+
+        profesor1 = Profesor.objects.get(cedula="V-22.252.123")
+        profesor2 = Profesor.objects.get(cedula="V-25.766.738")
+
+        self.assertEqual(str(profesor1), "Andrés Medina")
+        self.assertEqual(str(profesor2), "María Jaimes")
+
 class DepartamentoModelTest(TestCase):
     """
     Suite de pruebas para el modelo Departamento, que incluye
@@ -167,6 +182,18 @@ class DepartamentoModelTest(TestCase):
             dpto_ci.jefe,
             jefe
         )
+
+    def test_string_departamento(self):
+        """
+        PRUEBA 4. Se verifica que la representación como cadena de caracteres
+        del modelo Departamento sea su nonmbre y su código.
+
+        PRIMERA CORRIDA: Falla porque la representación por cadena de 
+        caracteres (string) del modelo es la por defecto de Django.
+        """
+
+        dpto_ci = Departamento.objects.get(codigo="CI")
+        self.assertEqual(str(dpto_ci), "Departamento de Computación y Tecnología de la Información (CI)")
 
 class AsignaturaModelTest(TestCase):
     """
@@ -249,4 +276,19 @@ class AsignaturaModelTest(TestCase):
         self.assertEqual(
             asignatura.departamento,
             dpto_compu
+        )
+
+    def test_string_asignatura(self):
+        """
+        PRUEBA 4. Se verifica que la representación como cadena de caracteres
+        del modelo Asignatura sea su código completo y su nombre.
+
+        PRIMERA CORRIDA: Falla porque la representación por cadena de 
+        caracteres (string) del modelo es la por defecto de Django.
+        """
+
+        asignatura = Asignatura.objects.get(codigo_interno="3715")
+        self.assertEqual(
+            str(asignatura),
+            "(CI3715) Ingeniería de Software I"
         )
