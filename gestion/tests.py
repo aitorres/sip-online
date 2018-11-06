@@ -93,7 +93,7 @@ class DepartamentoModelTest(TestCase):
         antes de iniciar cada prueba.
         """
 
-        jefe_compu = Profesor.objects.create_user(
+        jefe_compu = Profesor.objects.create(
             nombre="Ángela",
             apellido="Di Serio",
             email="adiserio@usb.ve",
