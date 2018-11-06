@@ -9,3 +9,6 @@ def index(request):
 class ListarProfesores(ListView):
 	template_name = 'profesores/listar.html'
 	model = Profesor
+
+	class get_context_object_name(self):
+		return("profesores")
