@@ -228,6 +228,7 @@ class DepartamentoModelTest(TestCase):
         el jefe es el departamento que dirige.
 
         PRIMERA CORRIDA: Falla porque el modelo Departamento no tiene el método dado.
+        SIGUIENTE CORRIDA: La prueba pasa porque se creó el método requerido.
         """
 
         dpto_ci = Departamento.objects.get(codigo="CI")

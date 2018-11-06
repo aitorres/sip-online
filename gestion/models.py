@@ -34,6 +34,18 @@ class Departamento(models.Model):
 
         return bool(self.jefe)
 
+    def jefe_coherente(self):
+        """
+        Determina si el jefe del Departamento tiene coherencia
+        con su Departamento asociado, es decir, que un jefe pertenezca
+        al mismo Departamento que dirige.
+        """
+
+        if not self.tiene_jefe():
+            raise ValueError("No se puede verificar la coherencia en la jefatura de un Departamento sin jefe.")
+
+        return self.jefe.departamento == self
+
 class Profesor(models.Model):
     """
     Modelo que representa un profesor de la USB
