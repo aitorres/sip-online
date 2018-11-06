@@ -19,5 +19,5 @@ app_name = "gestion"
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
-    url('^/profesores/(?P<slug>[-\w]+)/$', VerProfesor.as_view(), name = 'ver')
+    url('^/profesores/(?P<slug>[-\w]+)/$', views.VerProfesor.as_view(), name = 'ver')
 ]
