@@ -24,17 +24,24 @@ class ProfesorModelTest(TestCase):
         antes de iniciar cada prueba.
         """
 
+        dpto_compu = Departamento.objects.create(
+            nombre="Departamento de Computación y Tecnología de la Información",
+            codigo="CI",
+        )
+
         Profesor.objects.create(
             nombre="Andrés",
             apellido="Medina",
             email="14-11082@usb.ve",
-            ci="V-22.252.123"
+            cedula="V-22.252.123",
+            departamento=dpto_compu
         )
         Profesor.objects.create(
             nombre="María",
             apellido="Jaimes",
             email="12-10042@usb.ve",
-            ci="V-25.766.738"
+            cedula="V-25.766.738",
+            departamento=dpto_compu
         )
 
 
@@ -45,8 +52,8 @@ class ProfesorModelTest(TestCase):
 
         PRIMERA CORRIDA: Falla porque el modelo profesor no tiene atributos.
         """
-        profesor1 = Profesor.objects.get(ci="V-22.252.123")
-        profesor2 = Profesor.objects.get(ci="V-25.766.738")
+        profesor1 = Profesor.objects.get(cedula="V-22.252.123")
+        profesor2 = Profesor.objects.get(cedula="V-25.766.738")
 
         self.assertEqual(profesor1.nombre, "Andrés")
         self.assertEqual(profesor2.nombre, "María")
@@ -59,8 +66,8 @@ class ProfesorModelTest(TestCase):
         PRIMERA CORRIDA: Falla porque el modelo profesor no tiene atributos.
         """
 
-        profesor1 = Profesor.objects.get(ci="V-22.252.123")
-        profesor2 = Profesor.objects.get(ci="V-25.766.738")
+        profesor1 = Profesor.objects.get(cedula="V-22.252.123")
+        profesor2 = Profesor.objects.get(cedula="V-25.766.738")
 
         self.assertEqual(profesor1.apellido, "Medina")
         self.assertEqual(profesor2.apellido, "Jaimes")
@@ -72,8 +79,8 @@ class ProfesorModelTest(TestCase):
         con el apellido guardado.
         """
 
-        profesor1 = Profesor.objects.get(ci="V-22.252.123")
-        profesor2 = Profesor.objects.get(ci="V-25.766.738")
+        profesor1 = Profesor.objects.get(cedula="V-22.252.123")
+        profesor2 = Profesor.objects.get(cedula="V-25.766.738")
 
         self.assertEqual(profesor1.email, "14-11082@usb.ve")
         self.assertEqual(profesor2.email, "12-10042@usb.ve")
@@ -92,18 +99,21 @@ class DepartamentoModelTest(TestCase):
         antes de iniciar cada prueba.
         """
 
+        dpto_compu = Departamento.objects.create(
+            nombre="Departamento de Computación y Tecnología de la Información",
+            codigo="CI",
+        )
+
         jefe_compu = Profesor.objects.create(
             nombre="Ángela",
             apellido="Di Serio",
             email="adiserio@usb.ve",
-            ci="V-14.241.234"
+            cedula="V-14.241.234",
+            departamento=dpto_compu
         )
 
-        Departamento.objects.create(
-            nombre="Departamento de Computación y Tecnología de la Información",
-            codigo="CI",
-            jefe=jefe_compu
-        )
+        dpto_compu.jefe = jefe_compu
+        dpto_compu.save()        
 
     def test_nombre_departamento(self):
         """
@@ -164,18 +174,21 @@ class AsignaturaModelTest(TestCase):
         antes de iniciar cada prueba.
         """
 
+        dpto_compu = Departamento.objects.create(
+            nombre="Departamento de Computación y Tecnología de la Información",
+            codigo="CI",
+        )
+
         jefe_compu = Profesor.objects.create(
             nombre="Ángela",
             apellido="Di Serio",
             email="adiserio@usb.ve",
-            ci="V-14.241.234"
+            cedula="V-14.241.234",
+            departamento=dpto_compu
         )
 
-        dpto_compu = Departamento.objects.create(
-            nombre="Departamento de Computación y Tecnología de la Información",
-            codigo="CI",
-            jefe=jefe_compu
-        )
+        dpto_compu.jefe = jefe_compu
+        dpto_compu.save()
 
         Asignatura.objects.create(
             nombre="Ingeniería de Software I",
