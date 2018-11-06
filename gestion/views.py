@@ -11,10 +11,5 @@ class VerProfesor(DetailView):
     template_name = 'profesores/ver.html'
     model = Profesor
     
-    def get_context_data(self, **kwargs):
-        context = super(VerProfesorlView, self).get_context_data(**kwargs)
-        context['now'] = timezone.now()
-        return context
-
     def get_context_object_name(self):
         return "profesor"
