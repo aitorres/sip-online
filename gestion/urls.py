@@ -12,7 +12,6 @@ Class-based views
 
 from django.conf.urls import url, include
 from django.contrib import admin
-
 from gestion import views
 
 app_name = "gestion"
