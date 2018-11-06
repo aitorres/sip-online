@@ -10,13 +10,13 @@
             <div class="modal-body">
                 <p>         
                     <h1>Registro de Datos</h1>
-                    <form method="POST" class="post-form">{% csrf_token %}
+                    <form method="POST" class="post-form" id = "f1">{% csrf_token %}
                         {{ form.as_p }}
-                        <button type="submit" class="save btn btn-default">Agregar</button>
                     </form>
                 </p>
             </div>
             <div class="modal-footer">
+                <button type="submit" form="f1" value="Submit">Agregar</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
