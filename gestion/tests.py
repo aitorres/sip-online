@@ -8,7 +8,8 @@ asociadas.
 """
 
 from django.test import TestCase
-from gestion.models import Profesor
+from gestion.models import Profesor, Departamento
+from django.contrib.auth.models import User
 
 class ProfesorModelTest(TestCase):
     """
@@ -23,6 +24,7 @@ class ProfesorModelTest(TestCase):
         Método para crear los valores de la base de datos por defecto
         antes de iniciar cada prueba.
         """
+
         Profesor.objects.create(
             nombre="Andrés",
             apellido="Medina",
@@ -76,3 +78,69 @@ class ProfesorModelTest(TestCase):
 
         self.assertEqual(profesor1.email, "14-11082@usb.ve")
         self.assertEqual(profesor2.email, "12-10042@usb.ve")
+
+class DepartamentoModelTest(TestCase):
+    """
+    Suite de pruebas para el modelo Departamento, que incluye
+    pruebas de frontera, de esquina y de malicia para los atributos
+    de este modelo, y para sus métodos asociados en caso de
+    que se agreguen posteriormente.
+    """
+
+    def setUp(self):
+        """
+        Método para crear los valores de la base de datos por defecto
+        antes de iniciar cada prueba.
+        """
+        
+        jefe_compu = Profesor.objects.create_user(
+            nombre="Ángela",
+            apellido="Di Serio",
+            email="adiserio@usb.ve",
+            ci="V-14.241.234"
+        )
+
+        Departamento.objects.create(
+            nombre="Departamento de Computación y Tecnología de la Información",
+            codigo="CI",
+            jefe=jefe_compu
+        )
+
+    def test_nombre_departamento(self):
+        """
+        PRUEBA 1. Se verifica que el nombre del Departamento se guarde
+        correctamente en la entidad, y que luego el nombre guardado
+        corresponda al departamento.
+        """
+
+        dpto_ci = Departamento.objects.get(codigo="CI")
+        self.assertEqual(
+            dpto_ci.nombre,
+            "Departamento de Computación y Tecnología de la Información"
+        )
+
+    def test_codigo_departamento(self):
+        """
+        PRUEBA 2. Se verifica que el código del Departamento se guarde
+        correctamente en la base de datos, y que corresponda al código
+        que se quiso almacenar.
+        """
+
+        dpto_ci = Departamento.objects.get(codigo="CI")
+        self.assertEqual(
+            dpto_ci.codigo, "CI"
+        )
+
+    def test_jefe_departamento(self):
+        """
+        PRUEBA 3. Se verifica que se asocie la cuenta de un profesor
+        en la base de datos como jefe del Departamento y que sea
+        el usuario que se quiso almacenar.
+        """
+
+        dpto_ci = Departamento.objects.get(codigo="CI")
+        jefe = Profesor.objects.get(email="adiserio@usb.ve")
+        self.assertEqual(
+            dpto_ci.jefe,
+            jefe
+        )
