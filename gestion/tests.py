@@ -8,8 +8,7 @@ asociadas.
 """
 
 from django.test import TestCase
-from gestion.models import Profesor, Departamento
-from django.contrib.auth.models import User
+from gestion.models import Profesor, Departamento, Asignatura
 
 class ProfesorModelTest(TestCase):
     """
@@ -149,4 +148,81 @@ class DepartamentoModelTest(TestCase):
         self.assertEqual(
             dpto_ci.jefe,
             jefe
+        )
+
+class AsignaturaModelTest(TestCase):
+    """
+    Suite de pruebas para el modelo Asignatura, que incluye
+    pruebas de frontera, de esquina y de malicia para los atributos
+    de este modelo, y para sus métodos asociados en caso de
+    que se agreguen posteriormente.
+    """
+
+    def setUp(self):
+        """
+        Método para crear los valores de la base de datos por defecto
+        antes de iniciar cada prueba.
+        """
+
+        jefe_compu = Profesor.objects.create(
+            nombre="Ángela",
+            apellido="Di Serio",
+            email="adiserio@usb.ve",
+            ci="V-14.241.234"
+        )
+
+        dpto_compu = Departamento.objects.create(
+            nombre="Departamento de Computación y Tecnología de la Información",
+            codigo="CI",
+            jefe=jefe_compu
+        )
+
+        Asignatura.objects.create(
+            nombre="Ingeniería de Software I",
+            codigo_interno="3715",
+            departamento=dpto_compu
+        )
+
+    def test_nombre_asignatura(self):
+        """
+        PRUEBA 1. Se verifica que el nombre de la Asignatura se guarde
+        correctamente en la entidad, y que luego el nombre guardado
+        corresponda al departamento.
+
+        PRIMERA CORRIDA: Falla porque el modelo Asignatura no está creado.
+        """
+
+        asignatura = Asignatura.objects.get(codigo_interno="3715")
+        self.assertEqual(
+            asignatura.nombre,
+            "Ingeniería de Software I"
+        )
+
+    def test_codigo_departamento(self):
+        """
+        PRUEBA 2. Se verifica que el código interno de la Asignatura se guarde
+        correctamente en la base de datos, y que corresponda al código
+        que se quiso almacenar.
+
+        PRIMERA CORRIDA: Falla porque el modelo Asignatura no está creado.
+        """
+
+        asignatura = Asignatura.objects.get(codigo_interno="3715")
+        self.assertEqual(
+            asignatura.codigo, "CI"
+        )
+
+    def test_jefe_departamento(self):
+        """
+        PRUEBA 3. Se verifica que se asocie un Departamento ya existente
+        como el departamento asociado de la Asignatura.
+
+        PRIMERA CORRIDA: Falla porque el modelo Asignatura no está creado.
+        """
+
+        asignatura = Asignatura.objects.get(codigo_interno="3715")
+        dpto_compu = Departamento.objects.get(codigo="CI")
+        self.assertEqual(
+            asignatura.departamento,
+            dpto_compu
         )
