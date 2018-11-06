@@ -9,7 +9,7 @@ class Departamento(models.Model):
 
     nombre = models.CharField(max_length=50)
     codigo = models.CharField(max_length=2, unique=True)
-    jefe = models.ForeignKey('Profesor')
+    jefe = models.ForeignKey('Profesor', related_name="jefe_de")
 
 class Profesor(models.Model):
     """
@@ -22,6 +22,9 @@ class Profesor(models.Model):
     apellido = models.CharField(max_length=50)
     cedula = models.CharField(max_length=12, unique=True)
     #disponibilidad
-    dpto = models.ForeignKey('Departamento')
+    departamento = models.ForeignKey('Departamento')
     correo = models.EmailField(max_length=200)
-    #asignaturas
+    asignaturas = models.ManyToManyField('Asignatura')
+
+class Asignatura(models.Model):
+    pass
