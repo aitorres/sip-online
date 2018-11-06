@@ -99,6 +99,11 @@ class Asignatura(models.Model):
         return "(" + self.codigo_completo() + ") " + self.nombre
 
 class Disponibilidad(models.Model):
+    """
+    Modelo auxiliar que representa un horario (día, bloque) de
+    disponibilidad para un profesor.
+    """
+
     LUNES = (1, 'Lunes')
     MARTES = (2, 'Martes')
     MIERCOLES = (3, 'Miércoles')

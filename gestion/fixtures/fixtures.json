@@ -1,0 +1,580 @@
+[
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 1,
+    "fields": {
+      "dia": 1,
+      "bloque": 1
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 2,
+    "fields": {
+      "dia": 1,
+      "bloque": 2
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 3,
+    "fields": {
+      "dia": 1,
+      "bloque": 3
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 4,
+    "fields": {
+      "dia": 1,
+      "bloque": 4
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 5,
+    "fields": {
+      "dia": 1,
+      "bloque": 5
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 6,
+    "fields": {
+      "dia": 1,
+      "bloque": 6
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 7,
+    "fields": {
+      "dia": 1,
+      "bloque": 7
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 8,
+    "fields": {
+      "dia": 1,
+      "bloque": 8
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 9,
+    "fields": {
+      "dia": 1,
+      "bloque": 9
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 10,
+    "fields": {
+      "dia": 1,
+      "bloque": 10
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 11,
+    "fields": {
+      "dia": 1,
+      "bloque": 11
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 12,
+    "fields": {
+      "dia": 1,
+      "bloque": 12
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 13,
+    "fields": {
+      "dia": 2,
+      "bloque": 1
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 14,
+    "fields": {
+      "dia": 2,
+      "bloque": 2
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 15,
+    "fields": {
+      "dia": 2,
+      "bloque": 3
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 16,
+    "fields": {
+      "dia": 2,
+      "bloque": 4
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 17,
+    "fields": {
+      "dia": 2,
+      "bloque": 5
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 18,
+    "fields": {
+      "dia": 2,
+      "bloque": 6
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 19,
+    "fields": {
+      "dia": 2,
+      "bloque": 7
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 20,
+    "fields": {
+      "dia": 2,
+      "bloque": 8
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 21,
+    "fields": {
+      "dia": 2,
+      "bloque": 9
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 22,
+    "fields": {
+      "dia": 2,
+      "bloque": 10
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 23,
+    "fields": {
+      "dia": 2,
+      "bloque": 11
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 24,
+    "fields": {
+      "dia": 2,
+      "bloque": 12
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 24,
+    "fields": {
+      "dia": 3,
+      "bloque": 1
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 26,
+    "fields": {
+      "dia": 3,
+      "bloque": 2
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 27,
+    "fields": {
+      "dia": 3,
+      "bloque": 3
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 28,
+    "fields": {
+      "dia": 3,
+      "bloque": 4
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 29,
+    "fields": {
+      "dia": 3,
+      "bloque": 5
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 30,
+    "fields": {
+      "dia": 3,
+      "bloque": 6
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 31,
+    "fields": {
+      "dia": 3,
+      "bloque": 7
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 32,
+    "fields": {
+      "dia": 3,
+      "bloque": 8
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 33,
+    "fields": {
+      "dia": 3,
+      "bloque": 9
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 34,
+    "fields": {
+      "dia": 3,
+      "bloque": 10
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 35,
+    "fields": {
+      "dia": 3,
+      "bloque": 11
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 36,
+    "fields": {
+      "dia": 3,
+      "bloque": 12
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 37,
+    "fields": {
+      "dia": 4,
+      "bloque": 1
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 38,
+    "fields": {
+      "dia": 4,
+      "bloque": 2
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 39,
+    "fields": {
+      "dia": 4,
+      "bloque": 3
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 40,
+    "fields": {
+      "dia": 4,
+      "bloque": 4
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 41,
+    "fields": {
+      "dia": 4,
+      "bloque": 5
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 42,
+    "fields": {
+      "dia": 4,
+      "bloque": 6
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 43,
+    "fields": {
+      "dia": 4,
+      "bloque": 7
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 44,
+    "fields": {
+      "dia": 4,
+      "bloque": 8
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 45,
+    "fields": {
+      "dia": 4,
+      "bloque": 9
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 46,
+    "fields": {
+      "dia": 4,
+      "bloque": 10
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 47,
+    "fields": {
+      "dia": 4,
+      "bloque": 11
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 48,
+    "fields": {
+      "dia": 4,
+      "bloque": 12
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 49,
+    "fields": {
+      "dia": 5,
+      "bloque": 1
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 50,
+    "fields": {
+      "dia": 5,
+      "bloque": 2
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 51,
+    "fields": {
+      "dia": 5,
+      "bloque": 3
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 52,
+    "fields": {
+      "dia": 5,
+      "bloque": 4
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 53,
+    "fields": {
+      "dia": 5,
+      "bloque": 5
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 54,
+    "fields": {
+      "dia": 5,
+      "bloque": 6
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 55,
+    "fields": {
+      "dia": 5,
+      "bloque": 7
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 56,
+    "fields": {
+      "dia": 5,
+      "bloque": 8
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 57,
+    "fields": {
+      "dia": 5,
+      "bloque": 9
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 58,
+    "fields": {
+      "dia": 5,
+      "bloque": 10
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 59,
+    "fields": {
+      "dia": 5,
+      "bloque": 11
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 60,
+    "fields": {
+      "dia": 5,
+      "bloque": 12
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 61,
+    "fields": {
+      "dia": 6,
+      "bloque": 1
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 62,
+    "fields": {
+      "dia": 6,
+      "bloque": 2
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 63,
+    "fields": {
+      "dia": 6,
+      "bloque": 3
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 64,
+    "fields": {
+      "dia": 6,
+      "bloque": 4
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 65,
+    "fields": {
+      "dia": 6,
+      "bloque": 5
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 66,
+    "fields": {
+      "dia": 6,
+      "bloque": 6
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 67,
+    "fields": {
+      "dia": 6,
+      "bloque": 7
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 68,
+    "fields": {
+      "dia": 6,
+      "bloque": 8
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 69,
+    "fields": {
+      "dia": 6,
+      "bloque": 9
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 70,
+    "fields": {
+      "dia": 6,
+      "bloque": 10
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 71,
+    "fields": {
+      "dia": 6,
+      "bloque": 11
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 72,
+    "fields": {
+      "dia": 6,
+      "bloque": 12
+    }
+  }
+
+
+]
