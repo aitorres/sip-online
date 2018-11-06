@@ -1,5 +1,13 @@
 from django.db import models
 
+"""
+Módulo que incluye los modelos a utilizar en el
+Sistema de Inscripción de Postgrado Online (SIP-Online).
+
+Incluye modelos para representar departamentos, profesores,
+asignaturas y otros modelos auxiliares que se referencian entre sí.
+"""
+
 class Departamento(models.Model):
     """
     Modelo que representa un Departamento dado, incluyendo su
@@ -7,32 +15,24 @@ class Departamento(models.Model):
     como jefe del Departamento.
     """
 
-    """ 
-    Muestra la instancia de Departamento como 
-    nombre (codigo) 
-    """
-    def __str__(self):
-        return (self.nombre + " " + "(" + self.codigo + ")")
-
-
     nombre = models.CharField(max_length=200)
     codigo = models.CharField(max_length=2, unique=True)
     jefe = models.ForeignKey('Profesor', related_name="jefe_de", null=True)
 
+    def __str__(self):
+        """
+        Muestra la instancia de Departamento como
+        nombre (codigo)
+        """
+
+        return self.nombre + " " + "(" + self.codigo + ")"
+
 class Profesor(models.Model):
     """
     Modelo que representa un profesor de la USB
-    incluye su nombre, apellido, cedula, email, disponibilidad semanal, departamento 
+    incluye su nombre, apellido, cedula, email, disponibilidad semanal, departamento
     y las asignaturas que puede dar.
     """
-
-    """ 
-    Muestra la instancia de Profesor como 
-    nombre apellido 
-    """
-    def __str__(self):
-        return (self.nombre + " " + self.apellido)
-
 
     nombre = models.CharField(max_length=50)
     apellido = models.CharField(max_length=50)
@@ -42,6 +42,13 @@ class Profesor(models.Model):
     email = models.EmailField(max_length=200)
     asignaturas = models.ManyToManyField('Asignatura')
 
+    def __str__(self):
+        """
+        Muestra la instancia de Profesor como
+        nombre apellido
+        """
+        return self.nombre + " " + self.apellido
+
 class Asignatura(models.Model):
     """
     Modelo TEMPORAL que representa una asignatura con su
@@ -50,13 +57,12 @@ class Asignatura(models.Model):
     con el desarrollo del equipo Delta Developers.
     """
 
-    """ 
-    Muestra la instancia de Asignatura como 
-
-    (codigodptocodigointernoasigntura) nombre 
-    """
     def __str__(self):
-        return ("(" + self.departamento.codigo + self.codigo_interno + ") " + self.nombre)
+        """
+        Muestra la instancia de Asignatura como
+        (codigodptocodigointernoasigntura) nombre
+        """
+        return "(" + self.departamento.codigo + self.codigo_interno + ") " + self.nombre
 
     nombre = models.CharField(max_length=60)
     codigo_interno = models.CharField(max_length=4, unique=True)
