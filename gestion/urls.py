@@ -18,5 +18,5 @@ app_name = "gestion"
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
-    url(r'^profesores/eliminar/$', views.eliminarProfesor.as_view() , name='editar')
+    url(r'^profesores/eliminar/$', views.EliminarProfesor.as_view() , name='editar')
 ]
