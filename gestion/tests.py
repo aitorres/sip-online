@@ -51,6 +51,7 @@ class ProfesorModelTest(TestCase):
         en la entidad, y que luego corresponda con el nombre guardado.
 
         PRIMERA CORRIDA: Falla porque el modelo profesor no tiene atributos.
+        SIGUIENTE CORRIDA: La prueba se ejecuta correctamente.
         """
         profesor1 = Profesor.objects.get(cedula="V-22.252.123")
         profesor2 = Profesor.objects.get(cedula="V-25.766.738")
@@ -64,6 +65,7 @@ class ProfesorModelTest(TestCase):
         en la entidad, y que luego corresponda con el apellido guardado.
 
         PRIMERA CORRIDA: Falla porque el modelo profesor no tiene atributos.
+        SIGUIENTE CORRIDA: La prueba se ejecuta correctamente.
         """
 
         profesor1 = Profesor.objects.get(cedula="V-22.252.123")
@@ -77,6 +79,9 @@ class ProfesorModelTest(TestCase):
         PRUEBA 3. Se verifica que se guarde el correo electrónico (email) del
         profesor en la entidad, y que luego el correo guardado corresponda
         con el apellido guardado.
+
+        PRIMERA CORRIDA: Falla porque el modelo profesor no tiene atributos.
+        SIGUIENTE CORRIDA: La prueba se ejecuta correctamente.
         """
 
         profesor1 = Profesor.objects.get(cedula="V-22.252.123")
@@ -122,6 +127,7 @@ class DepartamentoModelTest(TestCase):
         corresponda al departamento.
 
         PRIMERA CORRIDA: Falla porque el modelo Departamento no está creado.
+        SIGUIENTE CORRIDA: La prueba se ejecuta correctamente.
         """
 
         dpto_ci = Departamento.objects.get(codigo="CI")
@@ -137,6 +143,7 @@ class DepartamentoModelTest(TestCase):
         que se quiso almacenar.
 
         PRIMERA CORRIDA: Falla porque el modelo Departamento no está creado.
+        SIGUIENTE CORRIDA: La prueba se ejecuta correctamente.
         """
 
         dpto_ci = Departamento.objects.get(codigo="CI")
@@ -151,6 +158,7 @@ class DepartamentoModelTest(TestCase):
         el usuario que se quiso almacenar.
 
         PRIMERA CORRIDA: Falla porque el modelo Departamento no está creado.
+        SIGUIENTE CORRIDA: La prueba se ejecuta correctamente.
         """
 
         dpto_ci = Departamento.objects.get(codigo="CI")
