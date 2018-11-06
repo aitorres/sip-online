@@ -24,6 +24,6 @@ class Dashboard(generic.TemplateView):
         # para reportarlo en el Dashboard
         context['profesores'] = Profesor.objects.all().count()
         context['asignaturas'] = Asignatura.objects.all().count()
-        context['departamento'] = Departamento.objects.all().count()
+        context['departamentos'] = Departamento.objects.all().count()
 
         return context
