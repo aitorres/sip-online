@@ -92,7 +92,7 @@ class DepartamentoModelTest(TestCase):
         Método para crear los valores de la base de datos por defecto
         antes de iniciar cada prueba.
         """
-        
+
         jefe_compu = Profesor.objects.create_user(
             nombre="Ángela",
             apellido="Di Serio",
@@ -111,6 +111,8 @@ class DepartamentoModelTest(TestCase):
         PRUEBA 1. Se verifica que el nombre del Departamento se guarde
         correctamente en la entidad, y que luego el nombre guardado
         corresponda al departamento.
+
+        PRIMERA CORRIDA: Falla porque el modelo Departamento no está creado.
         """
 
         dpto_ci = Departamento.objects.get(codigo="CI")
@@ -124,6 +126,8 @@ class DepartamentoModelTest(TestCase):
         PRUEBA 2. Se verifica que el código del Departamento se guarde
         correctamente en la base de datos, y que corresponda al código
         que se quiso almacenar.
+
+        PRIMERA CORRIDA: Falla porque el modelo Departamento no está creado.
         """
 
         dpto_ci = Departamento.objects.get(codigo="CI")
@@ -136,6 +140,8 @@ class DepartamentoModelTest(TestCase):
         PRUEBA 3. Se verifica que se asocie la cuenta de un profesor
         en la base de datos como jefe del Departamento y que sea
         el usuario que se quiso almacenar.
+
+        PRIMERA CORRIDA: Falla porque el modelo Departamento no está creado.
         """
 
         dpto_ci = Departamento.objects.get(codigo="CI")
