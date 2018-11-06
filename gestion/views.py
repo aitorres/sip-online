@@ -65,3 +65,12 @@ class EditarProfesor(generic.UpdateView):
     model = Profesor
     fields = '__all__'
     template_name = 'profesores/editar.html'
+
+class EliminarProfesor(generic.DeleteView):
+    """
+    Controlador que maneja la lógica y el formulario para
+    eliminar un profesor dado.
+    """
+
+    template_name = 'profesores/eliminar.html'
+    model = Profesor
