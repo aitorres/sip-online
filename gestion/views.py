@@ -1,7 +1,6 @@
 from django.views.generic.edit import CreateView
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.views import View
 from gestion.models import Profesor
 
 def index(request):
