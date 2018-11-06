@@ -95,7 +95,7 @@ class ProfesorModelTest(TestCase):
         PRUEBA 4. Se verifica que la representación como cadena de caracteres
         del modelo Profesor sea su nonmbre y su apellido.
 
-        PRIMERA CORRIDA: Falla porque la representación por cadena de 
+        PRIMERA CORRIDA: Falla porque la representación por cadena de
         caracteres (string) del modelo es la por defecto de Django.
         """
 
@@ -133,7 +133,12 @@ class DepartamentoModelTest(TestCase):
         )
 
         dpto_compu.jefe = jefe_compu
-        dpto_compu.save()        
+        dpto_compu.save()
+
+        dpto_qm = Departamento.objects.create(
+            nombre="Departamento de Química",
+            codigo="QM",
+        )        
 
     def test_nombre_departamento(self):
         """
@@ -188,12 +193,28 @@ class DepartamentoModelTest(TestCase):
         PRUEBA 4. Se verifica que la representación como cadena de caracteres
         del modelo Departamento sea su nonmbre y su código.
 
-        PRIMERA CORRIDA: Falla porque la representación por cadena de 
+        PRIMERA CORRIDA: Falla porque la representación por cadena de
         caracteres (string) del modelo es la por defecto de Django.
         """
 
         dpto_ci = Departamento.objects.get(codigo="CI")
         self.assertEqual(str(dpto_ci), "Departamento de Computación y Tecnología de la Información (CI)")
+
+    def test_tiene_jefe_departamento(self):
+        """
+        PRUEBA 5. Verifica que el método "tiene_jefe()" del modelo Departamento
+        devuelva el resultado apropiado, en caso de que el Departamento posea o no
+        un jefe ne el momento dado.
+
+        PRIMERA CORRIDA: Falla porque el modelo Departamento no tiene un método llamado
+        como tal asociado.
+        """
+
+        dpto_ci = Departamento.objects.get(codigo="CI")
+        dpto_qm = Departamento.objects.get(codigo="QM")
+
+        self.assertTrue(dpto_ci.tiene_jefe())
+        self.assertFalse(dpto_qm.tiene_jefe())
 
 class AsignaturaModelTest(TestCase):
     """
@@ -283,7 +304,7 @@ class AsignaturaModelTest(TestCase):
         PRUEBA 4. Se verifica que la representación como cadena de caracteres
         del modelo Asignatura sea su código completo y su nombre.
 
-        PRIMERA CORRIDA: Falla porque la representación por cadena de 
+        PRIMERA CORRIDA: Falla porque la representación por cadena de
         caracteres (string) del modelo es la por defecto de Django.
         """
 
