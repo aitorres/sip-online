@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 """
 Módulo que incluye los modelos a utilizar en el
@@ -42,7 +43,9 @@ class Departamento(models.Model):
         """
 
         if not self.tiene_jefe():
-            raise ValueError("No se puede verificar la coherencia en la jefatura de un Departamento sin jefe.")
+            raise ValueError(
+                "No se puede verificar la coherencia en la jefatura de un Departamento sin jefe."
+            )
 
         return self.jefe.departamento == self
 
@@ -56,7 +59,7 @@ class Profesor(models.Model):
     nombre = models.CharField(max_length=50)
     apellido = models.CharField(max_length=50)
     cedula = models.CharField(max_length=12, unique=True)
-    #disponibilidad
+    disponibilidad = models.ManyToManyField('Disponibilidad')
     departamento = models.ForeignKey('Departamento')
     email = models.EmailField(max_length=200)
     asignaturas = models.ManyToManyField('Asignatura')
@@ -95,3 +98,33 @@ class Asignatura(models.Model):
         """
         return "(" + self.codigo_completo() + ") " + self.nombre
 
+class Disponibilidad(models.Model):
+    LUNES = (1, 'Lunes')
+    MARTES = (2, 'Martes')
+    MIERCOLES = (3, 'Miércoles')
+    JUEVES = (4, 'Jueves')
+    VIERNES = (5, 'Viernes')
+    SABADO = (6, 'Sábado')
+
+    DIA_CHOICES = (
+        LUNES,
+        MARTES,
+        MIERCOLES,
+        JUEVES,
+        VIERNES,
+        SABADO
+    )
+
+    bloque = models.IntegerField(
+        validators=[
+            MaxValueValidator(12),
+            MinValueValidator(1)
+        ]
+    )
+    dia = models.IntegerField(
+        choices=DIA_CHOICES,
+        validators=[
+            MaxValueValidator(6),
+            MinValueValidator(1)
+        ]
+    )
