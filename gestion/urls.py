@@ -12,11 +12,11 @@ Class-based views
 
 from django.conf.urls import url, include
 from django.contrib import admin
-
 from gestion import views
 
 app_name = "gestion"
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
+    url(r'^profesores/eliminar/$', views.eliminarProfesor.as_view() , name='editar')
 ]
