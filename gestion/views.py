@@ -39,7 +39,7 @@ class ListarProfesores(generic.ListView):
 
 class VerProfesor(generic.DetailView):
     """
-    Permite visualizar los datos en detalle de un profesor
+    Controlador que permite visualizar los datos en detalle de un profesor
     en particular.
     """
 
@@ -47,3 +47,12 @@ class VerProfesor(generic.DetailView):
     model = Profesor
     context_object_name = "profesor"
 
+class AgregarProfesor(generic.CreateView):
+    """
+    Controlador que maneja la lógica de agregar un profesor
+    dado.
+    """
+
+    template_name = 'profesores/agregar.html'
+    model = Profesor
+    fields = '__all__' 
