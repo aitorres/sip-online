@@ -7,9 +7,11 @@ def index(request):
     return render(request, 'template.html')
 
 class VerProfesor(DetailView):
+    """
+    Permite visualizar los datos en detalle de un profesor
+    en particular.
+    """
     
     template_name = 'profesores/ver.html'
     model = Profesor
-    
-    def get_context_object_name(self):
-        return "profesor"
+    context_object_name = "profesor"
