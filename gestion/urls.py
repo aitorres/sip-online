@@ -18,5 +18,5 @@ from gestion import views
 app_name = "gestion"
 
 urlpatterns = [
-    url(r'^$', views.index, name='index'),
+    url(r'^$', views.Dashboard.as_view(), name='dashboard'),
 ]
