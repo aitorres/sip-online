@@ -19,7 +19,7 @@ app_name = "gestion"
 
 urlpatterns = [
     url(r'^$', views.Dashboard.as_view(), name='dashboard'),
-    url(r'^profesores$', views.ListarProfesores.as_view(), name = 'listar'),
-    url(r'^profesores/(?P<slug>[-\w]+)/$', views.VerProfesor.as_view(), name='ver'),
-    url(r'^profesores/agregar/$', views.AgregarProfesor.as_view() , name='agregar')
+    url(r'^profesores$', views.ListarProfesores.as_view(), name='listar'),
+    url(r'^profesores/agregar/$', views.AgregarProfesor.as_view(), name='agregar'),
+    url(r'^profesores/(?P<pk>[-\w]+)/$', views.VerProfesor.as_view(), name='ver'),
 ]
