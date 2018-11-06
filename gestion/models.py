@@ -27,6 +27,13 @@ class Departamento(models.Model):
 
         return self.nombre + " " + "(" + self.codigo + ")"
 
+    def tiene_jefe(self):
+        """
+        Determina si un Departamento tiene un jefe asociado.
+        """
+
+        return bool(self.jefe)
+
 class Profesor(models.Model):
     """
     Modelo que representa un profesor de la USB
@@ -57,13 +64,13 @@ class Asignatura(models.Model):
     con el desarrollo del equipo Delta Developers.
     """
 
+    nombre = models.CharField(max_length=60)
+    codigo_interno = models.CharField(max_length=4, unique=True)
+    departamento = models.ForeignKey('Departamento')
+
     def __str__(self):
         """
         Muestra la instancia de Asignatura como
         (codigodptocodigointernoasigntura) nombre
         """
         return "(" + self.departamento.codigo + self.codigo_interno + ") " + self.nombre
-
-    nombre = models.CharField(max_length=60)
-    codigo_interno = models.CharField(max_length=4, unique=True)
-    departamento = models.ForeignKey('Departamento')

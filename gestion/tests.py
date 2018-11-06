@@ -97,6 +97,8 @@ class ProfesorModelTest(TestCase):
 
         PRIMERA CORRIDA: Falla porque la representación por cadena de
         caracteres (string) del modelo es la por defecto de Django.
+        SIGUIENTE CORRIDA: La prueba pasa porque se genera la representación como
+        cadena de caracteres apropiada.
         """
 
         profesor1 = Profesor.objects.get(cedula="V-22.252.123")
@@ -195,6 +197,8 @@ class DepartamentoModelTest(TestCase):
 
         PRIMERA CORRIDA: Falla porque la representación por cadena de
         caracteres (string) del modelo es la por defecto de Django.
+        SIGUIENTE CORRIDA: La prueba pasa porque se genera la representación como
+        cadena de caracteres apropiada.
         """
 
         dpto_ci = Departamento.objects.get(codigo="CI")
@@ -208,6 +212,7 @@ class DepartamentoModelTest(TestCase):
 
         PRIMERA CORRIDA: Falla porque el modelo Departamento no tiene un método llamado
         como tal asociado.
+        SIGUIENTE CORRIDA: La prueba pasa porque se creó el método requerido.
         """
 
         dpto_ci = Departamento.objects.get(codigo="CI")
@@ -306,6 +311,8 @@ class AsignaturaModelTest(TestCase):
 
         PRIMERA CORRIDA: Falla porque la representación por cadena de
         caracteres (string) del modelo es la por defecto de Django.
+        SIGUIENTE CORRIDA: La prueba pasa porque se genera la representación como
+        cadena de caracteres apropiada.
         """
 
         asignatura = Asignatura.objects.get(codigo_interno="3715")
