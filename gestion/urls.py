@@ -12,7 +12,6 @@ Class-based views
 
 from django.conf.urls import url, include
 from django.contrib import admin
-
 from gestion import views
 
 app_name = "gestion"
@@ -22,4 +21,5 @@ urlpatterns = [
     url(r'^profesores$', views.ListarProfesores.as_view(), name='listar'),
     url(r'^profesores/agregar/$', views.AgregarProfesor.as_view(), name='agregar'),
     url(r'^profesores/(?P<pk>[-\w]+)/$', views.VerProfesor.as_view(), name='ver'),
+    url(r'^/profesores/editar/$', views.EditarProfesor.as_view() , name='editar')
 ]

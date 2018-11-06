@@ -55,4 +55,13 @@ class AgregarProfesor(generic.CreateView):
 
     template_name = 'profesores/agregar.html'
     model = Profesor
-    fields = '__all__' 
+    fields = '__all__'
+
+class EditarProfesor(generic.UpdateView):
+    """
+    Controlador que maneja la lógica y el formulario para
+    modificar un profesor dado.
+    """
+    model = Profesor
+    fields = '__all__'
+    template_name = 'profesores/editar.html'
