@@ -20,6 +20,6 @@ urlpatterns = [
     url(r'^$', views.Dashboard.as_view(), name='dashboard'),
     url(r'^profesores$', views.ListarProfesores.as_view(), name='listar'),
     url(r'^profesores/agregar/$', views.AgregarProfesor.as_view(), name='agregar'),
+    url(r'^profesores/editar/(?P<pk>[-\w]+)/$', views.EditarProfesor.as_view() , name='editar'),
     url(r'^profesores/(?P<pk>[-\w]+)/$', views.VerProfesor.as_view(), name='ver'),
-    url(r'^/profesores/editar/$', views.EditarProfesor.as_view() , name='editar')
 ]
