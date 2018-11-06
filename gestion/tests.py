@@ -320,3 +320,18 @@ class AsignaturaModelTest(TestCase):
             str(asignatura),
             "(CI3715) Ingeniería de Software I"
         )
+
+    def test_codigo_completo-asignatura(self):
+        """
+        PRUEBA 5. Verifica que el método codigo_completo() de Asignatura devuelva
+        el código correcto de la asignatura. 
+
+        PRIMERA CORRIDA: Falla porque el método no existe aún.
+        """
+
+        asignatura = Asignatura.objects.get(codigo_interno="3715")
+        self.assertEqual(
+            asignatura.codigo_completo(),
+            "CI3715"
+        )
+
