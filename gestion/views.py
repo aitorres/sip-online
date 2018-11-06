@@ -36,3 +36,14 @@ class ListarProfesores(generic.ListView):
     template_name = 'profesores/listar.html'
     model = Profesor
     context_object_name = "profesores"
+
+class VerProfesor(generic.DetailView):
+    """
+    Permite visualizar los datos en detalle de un profesor
+    en particular.
+    """
+
+    template_name = 'profesores/ver.html'
+    model = Profesor
+    context_object_name = "profesor"
+
