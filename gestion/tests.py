@@ -221,6 +221,21 @@ class DepartamentoModelTest(TestCase):
         self.assertTrue(dpto_ci.tiene_jefe())
         self.assertFalse(dpto_qm.tiene_jefe())
 
+    def test_jefe_coherente_departamento(self):
+        """
+        PRUEBA 6. Verifica la coherencia en la jefatura de un Departamento, dada por la
+        función jefe_coherente(), que chequea si el departamento al que está asociado
+        el jefe es el departamento que dirige.
+
+        PRIMERA CORRIDA: Falla porque el modelo Departamento no tiene el método dado.
+        """
+
+        dpto_ci = Departamento.objects.get(codigo="CI")
+        dpto_qm = Departamento.objects.get(codigo="QM")
+
+        self.assertTrue(dpto_ci.jefe_coherente())
+        self.assertRaises(ValueError, dpto_qm.jefe_coherente)
+
 class AsignaturaModelTest(TestCase):
     """
     Suite de pruebas para el modelo Asignatura, que incluye
@@ -324,7 +339,7 @@ class AsignaturaModelTest(TestCase):
     def test_codigo_completo_asignatura(self):
         """
         PRUEBA 5. Verifica que el método codigo_completo() de Asignatura devuelva
-        el código correcto de la asignatura. 
+        el código correcto de la asignatura.
 
         PRIMERA CORRIDA: Falla porque el método no existe aún.
         """
@@ -334,4 +349,3 @@ class AsignaturaModelTest(TestCase):
             asignatura.codigo_completo(),
             "CI3715"
         )
-
