@@ -6,8 +6,8 @@
 <div class="col-md-12">
     <div class="card">
         <div class="card-header">
+            <button class="btn btn-primary float-right" form="f1" id="boton-agregar" data-url="{% url 'gestion:agregar' %}">Agregar</button>
             <h4>Profesores</h4>
-            <button type="submit" form="f1" id="boton-agregar" data-url="{% url 'gestion:agregar' %}" value="Submit">Agregar</button>
         </div>
         <div class="card-body">
 
@@ -29,15 +29,16 @@
               		<td>{{ profesor.cedula }}</td>
               		<td>{{ profesor.departamento }}</td>
               		<td>
-                  <i class="fa fa-eye" class="boton-ver" data-url="{% url 'gestion:ver' profesor.pk %}" aria-hidden="true"></i> 
+                  <i class="fa fa-eye" class="boton-ver" data-url="{% url 'gestion:ver' profesor.pk %}" aria-hidden="true"></i>
+                  &nbsp;
                   <i class="fa fa-pencil" class="boton-editar" data-url="{% url 'gestion:editar' profesor.pk %}" aria-hidden="true"></i>
+                  &nbsp;
                   <i class="fa fa-trash-o" class="boton-eliminar" data-url="{% url 'gestion:eliminar' profesor.pk %}" aria-hidden="true"></i>  
                   </td>
               	</tr>
               	{% endfor %}
               </tbody>
             </table>
-
         </div>
     </div>
 </div>
