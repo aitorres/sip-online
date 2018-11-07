@@ -4,9 +4,21 @@
 
 {% block content %}
 <div class="col-md-12">
+
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %} alert-dismissible fade show">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Cerrar">
+            <span aria-hidden="true">×</span>
+        </button>
+      </div>
+    {% endfor %}
+  {% endif %}
+
     <div class="card">
         <div class="card-header">
-            <button class="btn btn-primary float-right" form="f1" id="boton-agregar" data-url="{% url 'gestion:agregar' %}">Agregar</button>
+            <button type="button" data-toggle="modal" data-target="#largeModal" class="btn btn-primary float-right trigger" form="f1" data-url="{% url 'gestion:agregar' %}">Agregar</button>
             <h4>Profesores</h4>
         </div>
         <div class="card-body">
@@ -28,12 +40,12 @@
               		<td>{{ profesor.apellido }}</td>
               		<td>{{ profesor.cedula }}</td>
               		<td>{{ profesor.departamento }}</td>
-              		<td>
-                  <i class="fa fa-eye" class="boton-ver" data-url="{% url 'gestion:ver' profesor.pk %}" aria-hidden="true"></i>
-                  &nbsp;
-                  <i class="fa fa-pencil" class="boton-editar" data-url="{% url 'gestion:editar' profesor.pk %}" aria-hidden="true"></i>
-                  &nbsp;
-                  <i class="fa fa-trash-o" class="boton-eliminar" data-url="{% url 'gestion:eliminar' profesor.pk %}" aria-hidden="true"></i>  
+              		<td class="acciones">
+                    <i class="fa fa-eye trigger" class="boton-ver" data-toggle="modal" data-target="#largeModal" data-url="{% url 'gestion:ver' profesor.pk %}" aria-hidden="true"></i>
+                    &nbsp;
+                    <i class="fa fa-pencil trigger" class="boton-editar" data-toggle="modal" data-target="#largeModal" data-url="{% url 'gestion:editar' profesor.pk %}" aria-hidden="true"></i>
+                    &nbsp;
+                    <i class="fa fa-trash-o trigger" class="boton-eliminar" data-toggle="modal" data-target="#largeModal" data-url="{% url 'gestion:eliminar' profesor.pk %}" aria-hidden="true"></i>  
                   </td>
               	</tr>
               	{% endfor %}
@@ -42,11 +54,30 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade show" id="largeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+    </div>
+  </div>
+</div>
 {% endblock %}
 
 {% block js %}
 <script type="text/javascript">
-	// Aquí va etiquetas javascript personalizadas si tienen
+  $('.trigger').on('click', function(e) {
+    const $this = $(this)
+    $.ajax({
+        url: $this.data('url'),
+        method: 'GET',
+        success: function(data) {
+            $('#largeModal .modal-content').html(data);
+            $('input').addClass( "form-control" );
+            $('select').addClass( "form-control" );
+        }
+    })
+  })
+
 </script>
 {% endblock %}
 
