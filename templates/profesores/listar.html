@@ -18,7 +18,7 @@
 
     <div class="card">
         <div class="card-header">
-            <button type="button" data-toggle="modal" data-target="#largeModal" class="btn btn-primary float-right trigger" form="f1" data-url="{% url 'gestion:agregar' %}">Agregar</button>
+            <button type="button" data-toggle="modal" data-target="#modalCRUD" class="btn btn-primary float-right trigger" form="f1" data-url="{% url 'gestion:agregar' %}">Agregar</button>
             <h4>Profesores</h4>
         </div>
         <div class="card-body">
@@ -41,11 +41,11 @@
               		<td>{{ profesor.cedula }}</td>
               		<td>{{ profesor.departamento }}</td>
               		<td class="acciones">
-                    <i class="fa fa-eye trigger" class="boton-ver" data-toggle="modal" data-target="#largeModal" data-url="{% url 'gestion:ver' profesor.pk %}" aria-hidden="true"></i>
+                    <i class="fa fa-eye trigger" class="boton-ver" data-toggle="modal" data-target="#modalCRUD" data-url="{% url 'gestion:ver' profesor.pk %}" aria-hidden="true"></i>
                     &nbsp;
-                    <i class="fa fa-pencil trigger" class="boton-editar" data-toggle="modal" data-target="#largeModal" data-url="{% url 'gestion:editar' profesor.pk %}" aria-hidden="true"></i>
+                    <i class="fa fa-pencil trigger" class="boton-editar" data-toggle="modal" data-target="#modalCRUD" data-url="{% url 'gestion:editar' profesor.pk %}" aria-hidden="true"></i>
                     &nbsp;
-                    <i class="fa fa-trash-o trigger" class="boton-eliminar" data-toggle="modal" data-target="#largeModal" data-url="{% url 'gestion:eliminar' profesor.pk %}" aria-hidden="true"></i>  
+                    <i class="fa fa-trash-o trigger" class="boton-eliminar" data-toggle="modal" data-target="#modalCRUD" data-url="{% url 'gestion:eliminar' profesor.pk %}" aria-hidden="true"></i>  
                   </td>
               	</tr>
               	{% endfor %}
@@ -55,8 +55,8 @@
     </div>
 </div>
 
-<div class="modal fade show" id="largeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
+<div class="modal fade show" id="modalCRUD" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md" role="document">
     <div class="modal-content">
     </div>
   </div>
@@ -71,7 +71,7 @@
         url: $this.data('url'),
         method: 'GET',
         success: function(data) {
-            $('#largeModal .modal-content').html(data);
+            $('#modalCRUD .modal-content').html(data);
             $('input').addClass( "form-control" );
             $('select').addClass( "form-control" );
         }
