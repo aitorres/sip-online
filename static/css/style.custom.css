@@ -6,3 +6,7 @@
 .content .card .card-body, .modal-body p, .modal-body input {
 	font-size: 14px;
 }
+
+.acciones i:hover {
+	cursor: pointer;
+}
