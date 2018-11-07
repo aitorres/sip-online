@@ -5,27 +5,40 @@
     </button>
 </div>
 <div class="modal-body">
-    <h1> {{ profesor.nombre }} {{ profesor.apellido }} </h1>
+    <h1 class="text-center"> {{ profesor.nombre }} {{ profesor.apellido }} </h1>
     <hr />
     <div class="row">
-        <div class="col-md-6 float-right">
+        <div class="col-md-3 float-right">
             <b>C.I.</b>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-9">
             {{ profesor.cedula }}
         </div>
-        <div class="col-md-6 float-right">
+        <div class="col-md-3 float-right">
             <b>Correo</b>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-9">
             {{ profesor.email }}
         </div>
-        <div class="col-md-6 float-right">
+        <div class="col-md-3 float-right">
             <b>Departamento</b>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-9">
             {{ profesor.departamento }}
         </div>
+    </div>
+    <hr/>
+    <div class="card text-center">
+        <div class="card-header">
+            <b>Asignaturas que puede dictar</b>
+        </div>
+        <ul class="list-group list-group-flush">
+            {% for asignatura in profesor.asignaturas.all %}
+                <li class="list-group-item">{{ asignatura }}</li>
+            {% empty %}
+                Ninguna por el momento...
+            {% endfor %}
+        </ul>
     </div>
 </div>
 <div class="modal-footer">
