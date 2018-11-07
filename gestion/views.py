@@ -1,7 +1,5 @@
-from django.shortcuts import render
-from django.urls import reverse_lazy
-from django.http import HttpResponse
 from django.contrib import messages
+from django.urls import reverse_lazy
 from django.views import generic
 
 from gestion.models import Profesor, Asignatura, Departamento
@@ -61,10 +59,22 @@ class AgregarProfesor(generic.CreateView):
     success_url = reverse_lazy('gestion:listar')
 
     def get_success_url(self):
+        """
+        En caso de que el agregar sea un éxito, muestra un mensaje de
+        éxito utilizando el framework de mensajes de Django y redirecciona a la URL
+        de éxito, que en este caso es la lista de profesores.
+        """
+
         messages.success(self.request, 'El profesor ha sido agregado satisfactoriamente.')
         return super(AgregarProfesor, self).get_success_url()
 
     def form_invalid(self):
+        """
+        En caso de que el formulario se reciba inválido, muestra un mensaje de
+        error utilizando el framework de mensajes de Django y redirecciona a la URL
+        de éxito, que en este caso es la lista de profesores.
+        """
+
         messages.error(self.request, 'Ocurrió un error al intentar agregar el profesor.')
         return super(AgregarProfesor, self).form_invalid()
 
@@ -79,10 +89,22 @@ class EditarProfesor(generic.UpdateView):
     success_url = reverse_lazy('gestion:listar')
 
     def get_success_url(self):
+        """
+        En caso de que el editar sea un éxito, muestra un mensaje de
+        éxito utilizando el framework de mensajes de Django y redirecciona a la URL
+        de éxito, que en este caso es la lista de profesores.
+        """
+
         messages.success(self.request, 'El profesor ha sido modificado satisfactoriamente.')
         return super(EditarProfesor, self).get_success_url()
 
     def form_invalid(self):
+        """
+        En caso de que el formulario de edicion se reciba inválido, muestra un mensaje de
+        error utilizando el framework de mensajes de Django y redirecciona a la URL
+        de éxito, que en este caso es la lista de profesores.
+        """
+
         messages.error(self.request, 'Ocurrió un error al editar el profesor.')
         return super(EditarProfesor, self).form_invalid()
 
@@ -98,9 +120,21 @@ class EliminarProfesor(generic.DeleteView):
     success_url = reverse_lazy('gestion:listar')
 
     def get_success_url(self):
+        """
+        Si la eliminación del profesor es un éxito, muestra un mensaje de
+        éxito utilizando el framework de mensajes de Django y redirecciona a la URL
+        de éxito, que en este caso es la lista de profesores.
+        """
+
         messages.success(self.request, 'El profesor ha sido eliminado satisfactoriamente.')
         return super(EliminarProfesor, self).get_success_url()
 
     def form_invalid(self):
+        """
+        En caso de que el formulario para eliminar  se reciba inválido, muestra un mensaje de
+        error utilizando el framework de mensajes de Django y redirecciona a la URL
+        de éxito, que en este caso es la lista de profesores.
+        """
+
         messages.error(self.request, 'Ocurrió un error al eliminar el profesor.')
         return super(EliminarProfesor, self).form_invalid()
