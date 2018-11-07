@@ -2,3 +2,7 @@
 	margin: 5px;
 	max-width: 220px !important;
 }
+
+.content .card .card-body, .modal-body p, .modal-body input {
+	font-size: 14px;
+}
