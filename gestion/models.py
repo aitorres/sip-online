@@ -20,6 +20,15 @@ class Departamento(models.Model):
     codigo = models.CharField(max_length=2, unique=True)
     jefe = models.ForeignKey('Profesor', related_name="jefe_de", null=True)
 
+    class Meta:
+        """
+        Provee algunas configuraciones básicas con respecto a las
+        operaciones del modelo.
+        """
+
+        # Ordenamiento por defecto: según su código
+        ordering = ["codigo"]
+
     def __str__(self):
         """
         Muestra la instancia de Departamento como
@@ -64,6 +73,15 @@ class Profesor(models.Model):
     email = models.EmailField(max_length=200)
     asignaturas = models.ManyToManyField('Asignatura', blank=True)
 
+    class Meta:
+        """
+        Provee algunas configuraciones básicas con respecto a las
+        operaciones del modelo.
+        """
+
+        # Ordenamiento por defecto: según su cédula
+        ordering = ["cedula"]
+
     def __str__(self):
         """
         Muestra la instancia de Profesor como
@@ -82,6 +100,16 @@ class Asignatura(models.Model):
     nombre = models.CharField(max_length=60)
     codigo_interno = models.CharField(max_length=4, unique=True)
     departamento = models.ForeignKey('Departamento')
+
+    class Meta:
+        """
+        Provee algunas configuraciones básicas con respecto a las
+        operaciones del modelo.
+        """
+
+        # Ordenamiento por defecto: según el departamento, luego según su
+        # código inerno
+        ordering = ["departamento", "codigo_interno"]
 
     def codigo_completo(self):
         """
@@ -133,6 +161,15 @@ class Disponibilidad(models.Model):
             MinValueValidator(1)
         ]
     )
+
+    class Meta:
+        """
+        Provee algunas configuraciones básicas con respecto a las
+        operaciones del modelo.
+        """
+
+        # Ordenamiento por defecto: según el día, y luego según el bloque
+        ordering = ["dia", "bloque"]
 
     def __str__(self):
         return self.get_dia_display() + ", bloque " + str(self.bloque)
