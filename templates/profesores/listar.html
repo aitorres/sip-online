@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}Gestión de profesores{% endblock %}
+
+{% block content %}
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-header">
+            <h4>Profesores</h4>
+        </div>
+        <div class="card-body">
+
+            <table id="bootstrap-data-table" class="table table-striped table-bordered">
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Apellido</th>
+                  <th>C.I.</th>
+                  <th>Departamento</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+              	{% for profesor in profesores %}
+              	<tr>
+              		<td>{{ profesor.nombre }}</td>
+              		<td>{{ profesor.apellido }}</td>
+              		<td>{{ profesor.cedula }}</td>
+              		<td>{{ profesor.departamento }}</td>
+              		<td></td>
+              	</tr>
+              	{% endfor %}
+              </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+	// Aquí va etiquetas javascript personalizadas si tienen
+</script>
+{% endblock %}
+
+{% block css %}
+<style type="text/css">
+/* Aquí va codigo css personalziado dentro de etiquetas style */
+</style>
+{% endblock %}
