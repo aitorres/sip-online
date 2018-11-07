@@ -574,7 +574,13 @@
       "dia": 6,
       "bloque": 12
     }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 1,
+    "fields": {
+      "nombre": "Departamento de Computación y Tecnología de la Información",
+      "codigo": "CI"
+    }
   }
-
-
 ]

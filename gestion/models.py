@@ -59,10 +59,10 @@ class Profesor(models.Model):
     nombre = models.CharField(max_length=50)
     apellido = models.CharField(max_length=50)
     cedula = models.CharField(max_length=12, unique=True)
-    disponibilidad = models.ManyToManyField('Disponibilidad')
+    disponibilidad = models.ManyToManyField('Disponibilidad', blank=True)
     departamento = models.ForeignKey('Departamento')
     email = models.EmailField(max_length=200)
-    asignaturas = models.ManyToManyField('Asignatura')
+    asignaturas = models.ManyToManyField('Asignatura', blank=True)
 
     def __str__(self):
         """
@@ -133,3 +133,6 @@ class Disponibilidad(models.Model):
             MinValueValidator(1)
         ]
     )
+
+    def __str__(self):
+        return self.get_dia_display() + ", bloque " + str(self.bloque)
