@@ -28,7 +28,11 @@
               		<td>{{ profesor.apellido }}</td>
               		<td>{{ profesor.cedula }}</td>
               		<td>{{ profesor.departamento }}</td>
-              		<td></td>
+              		<td>
+                  <i class="fa fa-eye" class="boton-ver" data-url="{% url 'gestion:ver' profesor.pk %}" aria-hidden="true"></i> 
+                  <i class="fa fa-pencil" class="boton-editar" data-url="{% url 'gestion:editar' profesor.pk %}" aria-hidden="true"></i>
+                  <i class="fa fa-trash-o" class="boton-eliminar" data-url="{% url 'gestion:eliminar' profesor.pk %}" aria-hidden="true"></i>  
+                  </td>
               	</tr>
               	{% endfor %}
               </tbody>
