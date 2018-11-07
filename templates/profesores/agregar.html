@@ -1,24 +1,25 @@
-<div class="modal fade" id="largeModal" tabindex="-1" role="dialog" aria-labelledby="largeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="largeModalLabel">Agregar Profesor</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+<div class="modal-header">
+    <h5 class="modal-title" id="largeModalLabel">Agregar Profesor</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <form method="POST" class="post-form form-horizontal" action="{% url 'gestion:agregar' %}" id="f1">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="row form-group">
+            <div class="col-md-3">
+                <label class=" form-control-label">{{ field.label_tag }}</label>
             </div>
-            <div class="modal-body">
-                <p>         
-                    <h1>Registro de Datos</h1>
-                    <form method="POST" class="post-form" id = "f1">{% csrf_token %}
-                        {{ form.as_p }}
-                    </form>
-                </p>
+            <div class="col-md-9">
+                {{ field }}
             </div>
-            <div class="modal-footer">
-                <button type="submit" form="f1" value="Submit">Agregar</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-            </div>
-        </div>
-    </div>
+      </div>
+        {% endfor %}
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="submit" class="btn btn-primary" form="f1" value="Submit">Agregar</button>
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
 </div>
