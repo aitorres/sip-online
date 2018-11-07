@@ -1,5 +1,7 @@
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.http import HttpResponse
+from django.contrib import messages
 from django.views import generic
 
 from gestion.models import Profesor, Asignatura, Departamento
@@ -56,6 +58,15 @@ class AgregarProfesor(generic.CreateView):
     template_name = 'profesores/agregar.html'
     model = Profesor
     fields = '__all__'
+    success_url = reverse_lazy('gestion:listar')
+
+    def get_success_url(self):
+        messages.success(self.request, 'El profesor ha sido agregado satisfactoriamente.')
+        return super(AgregarProfesor, self).get_success_url()
+
+    def form_invalid(self):
+        messages.error(self.request, 'Ocurrió un error al intentar agregar el profesor.')
+        return super(AgregarProfesor, self).form_invalid()
 
 class EditarProfesor(generic.UpdateView):
     """
@@ -65,6 +76,16 @@ class EditarProfesor(generic.UpdateView):
     model = Profesor
     fields = '__all__'
     template_name = 'profesores/editar.html'
+    success_url = reverse_lazy('gestion:listar')
+
+    def get_success_url(self):
+        messages.success(self.request, 'El profesor ha sido modificado satisfactoriamente.')
+        return super(EditarProfesor, self).get_success_url()
+
+    def form_invalid(self):
+        messages.error(self.request, 'Ocurrió un error al editar el profesor.')
+        return super(EditarProfesor, self).form_invalid()
+
 
 class EliminarProfesor(generic.DeleteView):
     """
@@ -74,3 +95,12 @@ class EliminarProfesor(generic.DeleteView):
 
     template_name = 'profesores/eliminar.html'
     model = Profesor
+    success_url = reverse_lazy('gestion:listar')
+
+    def get_success_url(self):
+        messages.success(self.request, 'El profesor ha sido eliminado satisfactoriamente.')
+        return super(EliminarProfesor, self).get_success_url()
+
+    def form_invalid(self):
+        messages.error(self.request, 'Ocurrió un error al eliminar el profesor.')
+        return super(EliminarProfesor, self).form_invalid()
