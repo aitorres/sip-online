@@ -579,8 +579,260 @@
     "model": "gestion.Departamento",
     "pk": 1,
     "fields": {
+      "nombre": "Departamento de Física",
+      "codigo": "FS"
+    }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 2,
+    "fields": {
+      "nombre": "Departamento de Química",
+      "codigo": "QM"
+    }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 3,
+    "fields": {
+      "nombre": "Departamento de Mecánica",
+      "codigo": "MC"
+    }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 4,
+    "fields": {
+      "nombre": "Departamento de Matemáticas Puras y Aplicadas",
+      "codigo": "MA"
+    }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 5,
+    "fields": {
       "nombre": "Departamento de Computación y Tecnología de la Información",
       "codigo": "CI"
+    }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 6,
+    "fields": {
+      "nombre": "Departamento de Cómputo Científico y Estadística",
+      "codigo": "CO"
+    }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 7,
+    "fields": {
+      "nombre": "Departamento de Electrónica y Circuitos",
+      "codigo": "EC"
+    }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 8,
+    "fields": {
+      "nombre": "Departamento de Termodinámica y Fenómenos de Transferencia",
+      "codigo": "TF"
+    }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 9,
+    "fields": {
+      "nombre": "Departamento de Conversión y Transporte de Energía",
+      "codigo": "CT"
+    }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 10,
+    "fields": {
+      "nombre": "Departamento de Procesos y Sistemas",
+      "codigo": "PS"
+    }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 11,
+    "fields": {
+      "nombre": "Departamento de Ciencias de los Materiales",
+      "codigo": "MT"
+    }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 12,
+    "fields": {
+      "nombre": "Departamento de Ciencias de la Tierra",
+      "codigo": "GC"
+    }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 13,
+    "fields": {
+      "nombre": "Departamento de Ciencia y Tecnología del Comportamiento",
+      "codigo": "CC"
+    }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 14,
+    "fields": {
+      "nombre": "Departamento de Lengua y Literatura",
+      "codigo": "LL"
+    }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 15,
+    "fields": {
+      "nombre": "Departamento de Ciencias Económicas y Administrativas",
+      "codigo": "CE"
+    }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 16,
+    "fields": {
+      "nombre": "Departamento de Idiomas",
+      "codigo": "ID"
+    }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 17,
+    "fields": {
+      "nombre": "Departamento de Filosofía",
+      "codigo": "FL"
+    }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 18,
+    "fields": {
+      "nombre": "Departamento de Ciencias Sociales",
+      "codigo": "CS"
+    }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 19,
+    "fields": {
+      "nombre": "Departamento de Diseño, Arquitectura y Artes Plásticas",
+      "codigo": "DA"
+    }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 20,
+    "fields": {
+      "nombre": "Departamento de Planificación Urbana",
+      "codigo": "PF"
+    }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 21,
+    "fields": {
+      "nombre": "Departamento de Biología Celular",
+      "codigo": "BC"
+    }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 22,
+    "fields": {
+      "nombre": "Departamento de Estudios Ambientales",
+      "codigo": "EA"
+    }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 3,
+    "fields": {
+      "nombre": "Departamento de ",
+      "codigo": "MC"
+    }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 23,
+    "fields": {
+      "nombre": "Departamento de Biología de Organismos",
+      "codigo": "BO"
+    }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 24,
+    "fields": {
+      "nombre": "Departamento de Tecnología de Procesos Biológicos y Bioquímicos",
+      "codigo": "PB"
+    }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 25,
+    "fields": {
+      "nombre": "Departamento de Tecnología de Servicios",
+      "codigo": "TS"
+    }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 26,
+    "fields": {
+      "nombre": "Departamento de Tecnología Industrial",
+      "codigo": "TI"
+    }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 27,
+    "fields": {
+      "nombre": "Departamento de Formación General y Ciencias Básicas",
+      "codigo": "FG"
+    }
+  },
+  {
+    "model": "gestion.Asignatura",
+    "pk": 1,
+    "fields": {
+      "nombre": "Estructuras Discretas I",
+      "codigo_interno": "2525",
+      "departamento": 5
+    }
+  },
+  {
+    "model": "gestion.Asignatura",
+    "pk": 2,
+    "fields": {
+      "nombre": "Lógica Simbólica",
+      "codigo_interno": "2511",
+      "departamento": 5
+    }
+  },
+  {
+    "model": "gestion.Asignatura",
+    "pk": 3,
+    "fields": {
+      "nombre": "Ingeniería de Software I",
+      "codigo_interno": "3715",
+      "departamento": 5
+    }
+  },
+  {
+    "model": "gestion.Asignatura",
+    "pk": 4,
+    "fields": {
+      "nombre": "Sistemas de Información I",
+      "codigo_interno": "1115",
+      "departamento": 10
     }
   }
 ]
