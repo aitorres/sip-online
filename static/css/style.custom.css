@@ -10,3 +10,7 @@
 .acciones i:hover {
 	cursor: pointer;
 }
+
+.table-responsive .table {
+	margin-bottom: 0;
+}

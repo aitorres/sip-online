@@ -1,3 +1,4 @@
+{% load dict_key %}
 <div class="modal-header">
     <h5 class="modal-title" id="largeModalLabel">Detalles del profesor</h5>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -39,6 +40,41 @@
                 Ninguna por el momento...
             {% endfor %}
         </ul>
+    </div>
+    <hr/>
+    <div class="card text-center">
+        <div class="card-header">
+            <b>Disponibilidad semanal</b>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                    <th>Bloque</th>
+                    <th>Lunes</th>
+                    <th>Martes</th>
+                    <th>Miércoles</th>
+                    <th>Jueves</th>
+                    <th>Viernes</th>
+                    <th>Sábado</th>
+                </thead>
+                <tbody>
+                    {% for bloque in matriz_bloques %}
+                        <tr>
+                            <td><strong>{{ bloque }}</strong></td>
+                            {% for disponibilidad in matriz_bloques|dict_key:bloque %}
+                                <td>
+                                    {% if disponibilidad in lista_disponibilidades %}
+                                        SÍ
+                                    {% endif %}
+                                </td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+              </table>
+            </div>
+        </div>
     </div>
 </div>
 <div class="modal-footer">

@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views import generic
 
-from gestion.models import Profesor, Asignatura, Departamento
+from gestion.models import Profesor, Asignatura, Departamento, Disponibilidad
 
 class Dashboard(generic.TemplateView):
     """
@@ -46,6 +46,35 @@ class VerProfesor(generic.DetailView):
     template_name = 'profesores/ver.html'
     model = Profesor
     context_object_name = "profesor"
+
+    def get_context_data(self, **kwargs):
+        """
+        Permite agregar contenido adicional al diccionario genérico de
+        contexto para pasar al template y que se renderice posteriormente.
+        """
+
+        # Obtenemos el diccionario de contexto por defecto
+        context = super(VerProfesor, self).get_context_data(**kwargs)
+
+        # Obtenemos los identificadores numéricos únicos de las disponibilidades
+        # para saber qué campos mostrar como disponibles.
+        lista_disponibilidades = []
+        for disponibilidad in context['object'].disponibilidad.all():
+            dia = disponibilidad.dia
+            bloque = disponibilidad.bloque
+
+            identificador = (12*(dia-1)) + bloque
+
+            lista_disponibilidades.append(identificador)
+
+        # Agregamos los identificadores al diccionario de contexto
+        context['lista_disponibilidades'] = lista_disponibilidades
+
+        # Agregamos un diccionario con una manera sencilla de iterar para crear
+        # la matriz de disponibilidades
+        context['matriz_bloques'] = Disponibilidad.matriz_bloques()
+
+        return context
 
 class AgregarProfesor(generic.CreateView):
     """
