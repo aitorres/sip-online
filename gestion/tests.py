@@ -7,8 +7,126 @@ ya incluida para realizar las pruebas de los modelos y funciones
 asociadas.
 """
 
-from django.test import TestCase
+from django.test import TestCase, RequestFactory
+from django.contrib.auth.models import AnonymousUser
+
 from gestion.models import Profesor, Departamento, Asignatura, Disponibilidad
+from gestion.views import (
+    Dashboard,
+    AgregarProfesor,
+    EditarProfesor,
+    ListarProfesores,
+    VerProfesor,
+    EliminarProfesor
+)
+
+class ControladoresTest(TestCase):
+    """
+    Suite de pruebas para los distintos controladores, de manera que se pueda
+    comprobar que están retornando los valores de código de respuesta (response)
+    apropiados para su funcionamiento.
+    """
+
+    def setUp(self):
+        """
+        Método para crear los valores de la base de datos por defecto
+        antes de iniciar cada prueba y los métodos que debe utilizar
+        de manera especial para probar vistas.
+        """
+
+        # Creamos un deparatmento y procedemos a crear un profesor
+        # asociado a ese departamento
+
+        dpto_compu = Departamento.objects.create(
+            nombre="Departamento de Computación y Tecnología de la Información",
+            codigo="CI",
+        )
+
+        self.prof = Profesor.objects.create(
+            nombre="Andrés",
+            apellido="Medina",
+            email="14-11082@usb.ve",
+            cedula="V-22.252.123",
+            departamento=dpto_compu
+        )
+
+        # Asociamos valores para los métodos de prueba
+        self.factory = RequestFactory()
+        self.user = AnonymousUser
+
+    def test_dashboard(self):
+        """
+        PRUEBA DASHBOARD. Determina si se está ejecutando correctamente el
+        controlador del Dashboard y si retorna el código de respuesta esperado.
+
+        VALOR ESPERADO: 200 (response OK)
+        PRIMERA EJECUCIÓN: La prueba pasa porque la vista retorna el valor esperado.
+
+        Este comportamiento está bien ya que estas pruebas se están agregando luego de
+        que las vistas ya existan, a manera de verificación final, y no como las otras
+        pruebas que sí se agregaron antes y durante la implementación de funciones
+        y métodos especiales.
+        """
+
+        # Accedemos a la vista
+        request = self.factory.get('/')
+
+        # Asociamos el usuario
+        request.user = self.user
+
+        # Obtenemos la respuesta
+        response = Dashboard.as_view()(request)
+        self.assertEqual(response.status_code, 200)
+
+    def test_agregar_profesor(self):
+        """
+        PRUEBA AGREGAR PROFESOR. Determina si se está ejecutando correctamente el
+        controlador del form de agregar profesor y si retorna el código de respuesta esperado.
+
+        VALOR ESPERADO: 200 (response OK)
+        PRIMERA EJECUCIÓN: La prueba pasa porque la vista retorna el valor esperado.
+
+        Este comportamiento está bien ya que estas pruebas se están agregando luego de
+        que las vistas ya existan, a manera de verificación final, y no como las otras
+        pruebas que sí se agregaron antes y durante la implementación de funciones
+        y métodos especiales.
+        """
+
+        # Accedemos a la vista
+        request = self.factory.get('/profesores/agregar')
+
+        # Asociamos el usuario
+        request.user = self.user
+
+        # Obtenemos la respuesta
+        response = AgregarProfesor.as_view()(request)
+        self.assertEqual(response.status_code, 200)
+
+    def test_listar_profesores(self):
+        """
+        PRUEBA LISTAR PROFESORES. Determina si se está ejecutando correctamente el
+        controlador de la vista para listar profesores y si retorna el código de
+        respuesta esperado.
+
+        VALOR ESPERADO: 200 (response OK)
+        PRIMERA EJECUCIÓN: La prueba pasa porque la vista retorna el valor esperado.
+
+        Este comportamiento está bien ya que estas pruebas se están agregando luego de
+        que las vistas ya existan, a manera de verificación final, y no como las otras
+        pruebas que sí se agregaron antes y durante la implementación de funciones
+        y métodos especiales.
+        """
+
+        # Accedemos a la vista
+        request = self.factory.get('/profesores/listar')
+
+        # Asociamos el usuario
+        request.user = self.user
+
+        # Obtenemos la respuesta
+        response = ListarProfesores.as_view()(request)
+        self.assertEqual(response.status_code, 200)
+
 
 class ProfesorModelTest(TestCase):
     """
