@@ -1,5 +1,5 @@
 # encoding=utf-8
-
+from django.core.exceptions import ObjectDoesNotExist
 """
 Módulo de pruebas unitarias para el entorno de desarrollo Django
 que utiliza una versión de PyUnit adaptada al framework y
@@ -684,6 +684,21 @@ class testModelos(TestCase):
         dpto_mc = Departamento.objects.get(codigo="MC")
         self.assertFalse(dpto_mc.tiene_jefe())
 
+    
+    def test_dpto_nuevo_sin_jefe(self):
+        """
+        PRUEBA BD 1.2: se crea un departamento nuevo, y se pide que se muetre su jefe. Prueba de tipo maliciosa.
+
+        Resultado de la prueba: Exitoso. Dpto sin jefe
+        """
+        dpto_bio = Departamento.objects.create(
+        nombre="Departamento de Biologia",
+        codigo="BI",
+        )
+
+        self.assertFalse(dpto_bio.tiene_jefe())
+
+
 
     def test_agregar_prof_ci_exitente(self):
         """
@@ -742,4 +757,12 @@ class testModelos(TestCase):
         )
 
 
-    
+    def test_eliminar_prof_no_existente(self):
+
+    	"""
+    	PRUEBA BD 5: Se intenta eliminar un profesor no existente:
+    	"""
+
+    	Profesor.objects.get(cedula="V-22.900.616").delete()
+    	with self.assertRaises(ObjectDoesNotExist):
+    		print("Prof no existe")
