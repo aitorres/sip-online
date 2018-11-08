@@ -29,6 +29,28 @@ La salida de las pruebas está mejorada por el paquete *Django-nose* y muestra u
 
 A continuación se listarán algunos scripts de desarrollo para facilitar la ejecución de algunas tareas para el programador del SIP Online.
 
+Estos scripts están orientados a usuarios de sistemas operativos *Linux* con gestor de paquetes *apt*, como las distribuciones basadas en *Debian*, pero fácilmente pueden adaptarse a otros sistemas operativos si se usan como guía.
+
+### Creación de un entorno virtual
+En un terminal abierto desde la carpeta del proyecto, una vez hayas clonado el repositorio, ejecutar (una única vez):
+```bash
+sudo apt install python3-pip
+pip3 install virtualenv
+virtualenv -p /usr/bin/python3 software
+```
+
+### Ejecución del entorno virtual
+En un terminal abierto desde la carpeta del proyecto, cada vez que se vaya a ejecutar el proyecto o realizarle modificaciones, ejecutar:
+```bash
+source software/bin/activate
+```
+
+### Instalar dependencias
+En un terminal abierto desde la carpeta del proyecto, después de crear y ejecutar el entorno virtual,
+```bash
+pip install -r requirements.txt
+```
+
 ### Creación de la base de datos
 En un terminal abierto y desde un usuario que pueda hacer `sudo`, ejecuta:
 ```bash
@@ -38,6 +60,23 @@ python manage.py migrate
 
 El script mencionado procederá a crear una base de datos en el gestor PostgreSQL con los datos asociados para poder ejecutar la aplicación.
 
+### Ejecución de miraciones 
+**IMPORTANTE**. Realizar esto cada vez que se notifica al equipo de un cambio en los modelos de la base de datos. Si no estás seguro si el cambio ha ocurrido, puedes ejecutarlo e igual no hará nada negativo.
+
+En un terminal abierto desde la carpeta del proyecto, con la base de datos creada y ejecutando el entorno virtual con las dependencias instaladas, ejecutar:
+```bash
+git pull
+python manage.py migrate
+```
+
+### Generación de migraciones
+**IMPORTANTE**. Realizar esto cada vez que se modifique algún modelo de la base de datos y notificar al equipo de desarrollo de estos cambios. Si no estás seguro si el cambio ha ocurrido, puedes ejecutarlo e igual no hará nada negativo. Recuerda hacer *commit* del archivo de migraciones generado automáticamente y subirlo al repositorio **siempre** que se genere.
+
+En un terminal abierto desde la carpeta del proyecto, con la base de datos creada y ejecutando el entorno virtual con las dependencias instaladas, ejecutar:
+```bash
+python manage.py makemigrations
+```
+
 ### Inclusión de la data inicial
 En un terminal abierto, con la base de datos cargada y migrada, ejecutar:
 ```bash
@@ -45,3 +84,9 @@ python manage.py loaddata gestion/fixtures/fixtures.json
 ```
 
 Django cargará la data inicial de los bloques 1 a 12 para los días lunes a sábado, al igual que la data de los 27 departamentos existentes a la fecha (noviembre de 2018) en la estructura de la Universidad Simón Bolívar.
+
+### Ejecutar el proyecto
+En un terminal abierto desde la carpeta del proyecto, con la base de datos creada y migrada y desde el entorno virtual habiendo instalado previamente los requerimientos, hacer:
+```bash
+python manage.py runserver
+```
