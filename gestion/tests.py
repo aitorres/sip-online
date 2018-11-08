@@ -386,6 +386,7 @@ class DisponibilidadModelTest(TestCase):
         sus días y bloques.
 
         PRIMERA CORRIDA: Falla porque el método no existe aún en la clase Disponibilidad.
+        SIGUIENTE CORRIDA: La prueba pasa satisfactoriamente.
         """
 
         matriz_bloques = {
@@ -415,6 +416,7 @@ class DisponibilidadModelTest(TestCase):
 
         PRIMERA CORRIDA: Falla porque el método no ha sido extendido
         en la clase Disponibilidad, y usa el str por defecto.
+        SIGUIENTE CORRIDA: La prueba pasa satisfactoriamente.
         """
 
         disponibilidad = Disponibilidad.objects.get(dia=1, bloque=6)
@@ -427,6 +429,9 @@ class DisponibilidadModelTest(TestCase):
         """
         PRUEBA 3. Determina si se obtiene el identificador único de una instancia
         de la clase Disponibilidad en función de la biyección entre R² y R hallada.
+
+        PRIMERA CORRIDA: Falla porque el método no existe aún en la clase Disponibilidad.
+        SIGUIENTE CORRIDA: La prueba pasa satisfactoriamente.
         """
 
         disponibilidad = Disponibilidad.objects.get(dia=1, bloque=6)
