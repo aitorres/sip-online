@@ -740,6 +740,3 @@ class testModelos(TestCase):
             nombre="Departamento de Procesos y Sistemas",
             codigo="CI",
         )
-
-
-    
