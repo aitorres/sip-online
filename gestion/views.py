@@ -1,8 +1,9 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.contrib import messages
+from django.urls import reverse_lazy
 from django.views import generic
+from django.shortcuts import redirect
 
-from gestion.models import Profesor, Asignatura, Departamento
+from gestion.models import Profesor, Asignatura, Departamento, Disponibilidad
 
 class Dashboard(generic.TemplateView):
     """
@@ -47,6 +48,34 @@ class VerProfesor(generic.DetailView):
     model = Profesor
     context_object_name = "profesor"
 
+    def get_context_data(self, **kwargs):
+        """
+        Permite agregar contenido adicional al diccionario genérico de
+        contexto para pasar al template y que se renderice posteriormente.
+        """
+
+        # Obtenemos el diccionario de contexto por defecto
+        context = super(VerProfesor, self).get_context_data(**kwargs)
+
+        # Obtenemos los identificadores numéricos únicos de las disponibilidades
+        # para saber qué campos mostrar como disponibles.
+        lista_disponibilidades = []
+        for disponibilidad in context['object'].disponibilidad.all():
+            
+            # Obtenemos el identificador único del dia/bloque en particular
+            # y lo almacenamos en la lista
+            identificador = disponibilidad.identificador_unico()
+            lista_disponibilidades.append(identificador)
+
+        # Agregamos los identificadores al diccionario de contexto
+        context['lista_disponibilidades'] = lista_disponibilidades
+
+        # Agregamos un diccionario con una manera sencilla de iterar para crear
+        # la matriz de disponibilidades
+        context['matriz_bloques'] = Disponibilidad.matriz_bloques()
+
+        return context
+
 class AgregarProfesor(generic.CreateView):
     """
     Controlador que maneja la lógica de agregar un profesor
@@ -56,6 +85,27 @@ class AgregarProfesor(generic.CreateView):
     template_name = 'profesores/agregar.html'
     model = Profesor
     fields = '__all__'
+    success_url = reverse_lazy('gestion:listar')
+
+    def get_success_url(self):
+        """
+        En caso de que el agregar sea un éxito, muestra un mensaje de
+        éxito utilizando el framework de mensajes de Django y redirecciona a la URL
+        de éxito, que en este caso es la lista de profesores.
+        """
+
+        messages.success(self.request, 'El profesor ha sido agregado satisfactoriamente.')
+        return super(AgregarProfesor, self).get_success_url()
+
+    def form_invalid(self, form):
+        """
+        En caso de que el formulario se reciba inválido, muestra un mensaje de
+        error utilizando el framework de mensajes de Django y redirecciona a la URL
+        de éxito, que en este caso es la lista de profesores.
+        """
+
+        messages.warning(self.request, 'Ocurrió un error al intentar agregar el profesor.')
+        return redirect(self.success_url)
 
 class EditarProfesor(generic.UpdateView):
     """
@@ -65,6 +115,28 @@ class EditarProfesor(generic.UpdateView):
     model = Profesor
     fields = '__all__'
     template_name = 'profesores/editar.html'
+    success_url = reverse_lazy('gestion:listar')
+
+    def get_success_url(self):
+        """
+        En caso de que el editar sea un éxito, muestra un mensaje de
+        éxito utilizando el framework de mensajes de Django y redirecciona a la URL
+        de éxito, que en este caso es la lista de profesores.
+        """
+
+        messages.success(self.request, 'El profesor ha sido modificado satisfactoriamente.')
+        return super(EditarProfesor, self).get_success_url()
+
+    def form_invalid(self, form):
+        """
+        En caso de que el formulario de edicion se reciba inválido, muestra un mensaje de
+        error utilizando el framework de mensajes de Django y redirecciona a la URL
+        de éxito, que en este caso es la lista de profesores.
+        """
+
+        messages.warning(self.request, 'Ocurrió un error al editar el profesor.')
+        return redirect(self.success_url)
+
 
 class EliminarProfesor(generic.DeleteView):
     """
@@ -74,3 +146,24 @@ class EliminarProfesor(generic.DeleteView):
 
     template_name = 'profesores/eliminar.html'
     model = Profesor
+    success_url = reverse_lazy('gestion:listar')
+
+    def get_success_url(self):
+        """
+        Si la eliminación del profesor es un éxito, muestra un mensaje de
+        éxito utilizando el framework de mensajes de Django y redirecciona a la URL
+        de éxito, que en este caso es la lista de profesores.
+        """
+
+        messages.success(self.request, 'El profesor ha sido eliminado satisfactoriamente.')
+        return super(EliminarProfesor, self).get_success_url()
+
+    def form_invalid(self, form):
+        """
+        En caso de que el formulario para eliminar  se reciba inválido, muestra un mensaje de
+        error utilizando el framework de mensajes de Django y redirecciona a la URL
+        de éxito, que en este caso es la lista de profesores.
+        """
+
+        messages.warning(self.request, 'Ocurrió un error al eliminar el profesor.')
+        return redirect(self.success_url)
