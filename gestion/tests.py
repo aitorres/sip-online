@@ -692,21 +692,19 @@ class ModelosBDTest(TestCase):
         dpto_mc = Departamento.objects.get(codigo="MC")
         self.assertFalse(dpto_mc.tiene_jefe())
 
-    
     def test_dpto_nuevo_sin_jefe(self):
         """
-        PRUEBA BD 1.2: se crea un departamento nuevo, y se pide que se muetre su jefe. Prueba de tipo maliciosa.
+        PRUEBA BD 1.2: se crea un departamento nuevo, y se pide que se muestre su jefe.
+        Prueba de tipo maliciosa.
 
         Resultado de la prueba: Exitoso. Dpto sin jefe
         """
         dpto_bio = Departamento.objects.create(
-        nombre="Departamento de Biologia",
-        codigo="BI",
+            nombre="Departamento de Biologia",
+            codigo="BI",
         )
 
         self.assertFalse(dpto_bio.tiene_jefe())
-
-
 
     def test_agregar_prof_ci_exitente(self):
         """
@@ -727,16 +725,14 @@ class ModelosBDTest(TestCase):
                 cedula="V-25.766.738",
                 departamento=dpto_mc
             )
-
-
-          
+   
     def test_agregar_asig_cod_existente(self):
         """
         PRUEBA BD 3: se agrega una asignatura con codigo ya registrado en la base de datos.
         El dato de la materia que varia es el nombre.
 
         Resultado de la prueba: no se agrega la materia ya que el codigo ya existe. El programa
-        lanza una excepcion. 
+        lanza una excepcion.
         """
 
         dpto_ci = Departamento.objects.get(codigo="CI")
