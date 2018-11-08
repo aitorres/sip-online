@@ -1,6 +1,8 @@
 # GUÍA DEL PROGRAMADOR
 
-Este documento pretende dar una idea general del proyecto desde el punto de vista del programador, sirviendo como guía a profundidad de los detalles de implementación, códigos, scripts, instalación, entre otros detalles, orientada a ser leída por un programador.
+Este documento pretende dar una idea general del proyecto desde el punto de vista del programador, sirviendo como guía a profundidad de los detalles de implementación, códigos, scripts, instalación, entre otros detalles, orientada a ser leída por un programador. El documento se encuentra en constante actualización en el proceso de desarrollo del Sistema de Inscripción de Postgrado, e incluirá una guía de entidades, métodos y shortcuts de instalación.
+
+Para revisar una documentación más amigable al usuario y fácil de leer y entender sobre la funcionalidad del sistema, puedes revisar la [guía del usuario](GUIA-USUARIO.md).
 
 ## Base de datos
 

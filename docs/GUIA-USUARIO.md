@@ -1,6 +1,8 @@
 # GUÍA DEL USUARIO
 
-Este documento pretende servir como guía para el uso de la aplicación, de una manera sencilla y acompañada de guías visuales, para poder acceder a las diversas funcionalidades presentes.
+Este documento pretende servir como guía para el uso de la aplicación, de una manera sencilla y acompañada de guías visuales, para poder acceder a las diversas funcionalidades presentes. El documento se encuentra en constante actualización en el proceso de desarrollo del Sistema de Inscripción de Postgrado, e incluirá una guía de todas las acciones posibles.
+
+Para revisar una documentación más técnica, puedes revisar la [guía del programador](GUIA-PROGRAMADOR.md).
 
 ## Inicio
 
@@ -41,11 +43,21 @@ Esta vista incluye validaciones y mensajes de error o éxito en función del res
 
 Al hacer clic al botón de agregar un profesor, se puede llenar el formulario de inclusión de los datos de profesores y hacer *envío* del mismo. Los campos de *asignaturas* y *disponibilidades* se muestran como listas desplegables *autocompletables*: se puede empezar a escribir y se filtrarán sus contenidos. Esta vista muestra errores de validación, como cédulas que se repiten.
 
+### Visualizar detalles de profesor
+
+![Ver detalles](imagenes/ver.png "Ver detalles de profesor")
+
+Al hacer clic al ícono de ver un profesor (*ojo*), se puede visualizar la información almacenada de ese profesor en dos secciones. La primera, que se muestra en la imagen superior, lista los datos básicos y la lista de asignaturas que puede dictar un profesor.
+
+![Ver disponibilidad de horarios](imagenes/ver_disponibilidad.png "Ver disponibilidad horaria de profesor")
+
+Si se sigue revisando el contenido de la ventana emergente (modal), se verá una matriz que incluye la disponibilidad horaria del profesor según sus datos almacenados en el sistema, indicando con un mensaje afirmativo en qué horarios puede dictar asignaturas dentro de la Universidad Simón Bolívar.
+
 ### Editar un profesor
 
 ![Editar](imagenes/editar.png "Vista de Editar Profesores")
 
-Al hacer clic al ícono de editar un profesor (*ojo*), se puede visualizar el formulario de edición de sus datos y hacer *envío* del mismo. Los campos son los mismos que se muestran en el formulario de *Agregar un profesor* pero vienen pre-llenados con los datos actuales del profesor en cuestión. De igual manera, cuenta con validaciones y muestra los errores en caso de existir.
+Al hacer clic al ícono de editar un profesor (*lápiz*), se puede visualizar el formulario de edición de sus datos y hacer *envío* del mismo. Los campos son los mismos que se muestran en el formulario de *Agregar un profesor* pero vienen pre-llenados con los datos actuales del profesor en cuestión. De igual manera, cuenta con validaciones y muestra los errores en caso de existir.
 
 ### Eliminar un profesor
 
