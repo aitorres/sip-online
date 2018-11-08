@@ -61,11 +61,10 @@ class VerProfesor(generic.DetailView):
         # para saber qué campos mostrar como disponibles.
         lista_disponibilidades = []
         for disponibilidad in context['object'].disponibilidad.all():
-            dia = disponibilidad.dia
-            bloque = disponibilidad.bloque
-
-            identificador = (12*(dia-1)) + bloque
-
+            
+            # Obtenemos el identificador único del dia/bloque en particular
+            # y lo almacenamos en la lista
+            identificador = disponibilidad.identificador_unico()
             lista_disponibilidades.append(identificador)
 
         # Agregamos los identificadores al diccionario de contexto
