@@ -37,8 +37,18 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'gestion'
+    'gestion',
+    'django_nose'
 ]
+
+# Django-nose Measuring coverage
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+
+NOSE_ARGS = [
+    '--cover-package=gestion',
+    '--verbosity=2'
+]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
