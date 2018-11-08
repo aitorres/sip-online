@@ -23,6 +23,16 @@ La documentación del SIP Online se encuentra repartida en los siguientes lugare
 
 Estos artefactos de documentación se irán actualizando progresivamente conforme se desarrolle el sistema.
 
+## Pruebas
+
+El sistema tiene una serie de suites y casos de prueba alojados en el archivo [*gestion/tests.py*](gestion/tests.py), que se pueden ejecutar con el siguiente comando en el terminal:
+
+```bash
+python manage.py test
+```
+
+Las pruebas verifican integridad de modelos, métodos adicionales y algunos controladores con sus respuestas, para garantizar la calidad del código del producto.
+
 ## Autores
 - Andrés Ignacio Torres
 - Javier Medina

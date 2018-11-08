@@ -15,6 +15,16 @@ Todas las clases tienen un método __str__ para definir su impresión.
 | Profesor      | nombre, apellido, cedula, disponibilidad,departamentos,email,asignaturas|   codigo_completo,__str__ |
 | Asignatura    | nombre,código,departamento          | __str__                             |
 
+## Ejecución de pruebas
+
+Para ejecutar las pruebas unitarias, en un terminal abierto se debe ejecutar:
+
+```bash
+python manage.py test
+```
+
+La salida de las pruebas está mejorada por el paquete *Django-nose* y muestra una breve descripción de cada prueba, así como los errores posibles (que, a fecha de redacción de este documento, no hay) y otros datos de las pruebas.
+
 ## Scripts de desarrollo
 
 A continuación se listarán algunos scripts de desarrollo para facilitar la ejecución de algunas tareas para el programador del SIP Online.
