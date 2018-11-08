@@ -669,6 +669,7 @@ class testModelos(TestCase):
         profesorMC1.asignaturas.add(asignaturaMT)
 
 
+    # Pruebas de malicia que prueban el comportamiento de la base de datos.
 
     def test_dpto_sin_jefe(self):
         """
@@ -724,6 +725,21 @@ class testModelos(TestCase):
                 departamento=dpto_ci
             )
 
+    def test_agregar_dept_cod_existente(self):
+        """
+        PRUEBA BD 4: se agrega un departamento con codigo ya registrado en la base de datos.
+        El dato del departamento que varia es el nombre. Prueba de malicia.
+
+        Resultado de la prueba: no se agrega el departamento ya que el codigo ya existe. El programa
+        lanza una excepcion.
+          
+        """
+
+        with self.assertRaises(IntegrityError):
+            Departamento.objects.create(
+            nombre="Departamento de Procesos y Sistemas",
+            codigo="CI",
+        )
 
 
-        
+    
