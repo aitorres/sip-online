@@ -705,7 +705,24 @@ class testModelos(TestCase):
             )
 
 
-    
+          
+    def test_agregar_asig_cod_existente(self):
+        """
+        PRUEBA BD 3: se agrega una asignatura con codigo ya registrado en la base de datos.
+        El dato de la materia que varia es el nombre.
+
+        Resultado de la prueba: no se agrega la materia ya que el codigo ya existe. El programa
+        lanza una excepcion.
+          
+        """
+
+        dpto_ci = Departamento.objects.get(codigo="CI")
+        with self.assertRaises(IntegrityError):
+            Asignatura.objects.create(
+                nombre="Lenguajes de programación II",
+                codigo_interno="3661",
+                departamento=dpto_ci
+            )
 
 
 
