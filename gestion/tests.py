@@ -9,7 +9,7 @@ asociadas.
 
 from django.test import TestCase, RequestFactory
 from django.contrib.auth.models import AnonymousUser
-
+from django.db import IntegrityError
 from gestion.models import Profesor, Departamento, Asignatura, Disponibilidad
 from gestion.views import (
     Dashboard,
@@ -649,7 +649,7 @@ class testModelos(TestCase):
             apellido="Fernandez",
             email="12-10314@usb.ve",
             cedula="V-25.766.738",
-            departamento=dpto_materiales
+            departamento=dpto_meca
         )
 
         dpto_compu.jefe = profesorCI
@@ -675,7 +675,7 @@ class testModelos(TestCase):
         PRUEBA BD 1: se asocia un profesor como jefe de dpto y luego se elimina el profesor. Por
         lo tanto el departamento queda sin jefe asociado. Prueba de tipo maliciosa. 
 
-        PRIMERA CORRIDA: error se elimina el departamento al eliminar el jefe. SIGUIENTES CORRIDAS:
+        Resultado de la prueba: error se elimina el departamento al eliminar el jefe. SIGUIENTES CORRIDAS:
         pasa la prueba ya que el modelo de BD se modifico  
         """
 
@@ -684,7 +684,28 @@ class testModelos(TestCase):
         self.assertFalse(dpto_mc.tiene_jefe())
 
 
-        
+    def test_agregar_prof_ci_exitente(self):
+        """
+        PRUEBA BD 2: se agrega un profesor con una cedula ya registrada en la base de datos.
+        Los datos del profesor varian del profesor registrado en nombre y correo. Prueba de tipo
+        malicia.
+
+        Resultado de la prueba: no se agrega el profesor porque la cedula se repite. El programa
+        lanza una excepcion.
+          
+        """
+        dpto_mc = Departamento.objects.get(codigo="MC")
+        with self.assertRaises(IntegrityError):
+            Profesor.objects.create(
+                nombre="Ysabel",
+                apellido="Fernandez",
+                email="ysa@usb.ve",
+                cedula="V-25.766.738",
+                departamento=dpto_mc
+            )
+
+
+    
 
 
 
