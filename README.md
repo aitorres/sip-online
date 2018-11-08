@@ -34,14 +34,15 @@ python manage.py test
 Las pruebas verifican integridad de modelos, métodos adicionales y algunos controladores con sus respuestas, para garantizar la calidad del código del producto.
 
 ## Autores
-- Andrés Ignacio Torres
-- Javier Medina
-- Mariagabriela Jaimes
-- María Grimaldi
-- Francisco Marcos
-- Javier Vivas
-- Julio Pérez
-- Giacomo Tosone
+Equipo de desarrollo de software **BIG Developers**.
+- Andrés Ignacio Torres (14-11082)
+- Javier Medina (12-10400)
+- Mariagabriela Jaimes (14-10526)
+- María Grimaldi (14-10444)
+- Francisco Marcos (11-10569)
+- Javier Vivas (12-11067)
+- Julio Pérez (14-10820)
+- Giacomo Tosone (14-11085)
 
 ## Contacto
 
