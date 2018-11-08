@@ -8,7 +8,7 @@ asociadas.
 """
 
 from django.test import TestCase
-from gestion.models import Profesor, Departamento, Asignatura
+from gestion.models import Profesor, Departamento, Asignatura, Disponibilidad
 
 class ProfesorModelTest(TestCase):
     """
@@ -237,6 +237,21 @@ class DepartamentoModelTest(TestCase):
         self.assertTrue(dpto_ci.jefe_coherente())
         self.assertRaises(ValueError, dpto_qm.jefe_coherente)
 
+    def test_nombre_corto(self):
+        """
+        PRUEBA 7. Verifica si el método para obtener el nombre corto del Departamento existe,
+        y se ejecuta correctamente retornando la palabra correcta.
+
+        PRIMERA CORRIDA: Falla porque el modelo Departamento no tiene el método dado, aún.
+        """
+
+        dpto_ci = Departamento.objects.get(codigo="CI")
+        dpto_qm = Departamento.objects.get(codigo="QM")
+
+        self.assertEqual(dpto_ci.nombre_corto(), "Computación y Tecnología de la Información (CI)")
+        self.assertEqual(dpto_qm.nombre_corto(), "Química (QM)")
+
+
 class AsignaturaModelTest(TestCase):
     """
     Suite de pruebas para el modelo Asignatura, que incluye
@@ -343,10 +358,48 @@ class AsignaturaModelTest(TestCase):
         el código correcto de la asignatura.
 
         PRIMERA CORRIDA: Falla porque el método no existe aún.
+        SIGUIENTE CORRIDA: La prueba pasa satisfactoriamente.
         """
 
         asignatura = Asignatura.objects.get(codigo_interno="3715")
         self.assertEqual(
             asignatura.codigo_completo(),
             "CI3715"
+        )
+
+class DisponibilidadModelTest(TestCase):
+    """
+    Suite de pruebas para el modelo Disponibilidad, que incluye unas pocas
+    pruebas de frontera, de esquina y de malicia para los atributos
+    de este modelo, y para sus métodos asociados en caso de
+    que se agreguen posteriormente.
+    """
+
+    def test_matriz_bloques(self):
+        """
+        PRUEBA 1. Determina si el método matriz_bloques de la Clase, no la
+        instancia, se ejecuta y retorna el valor adecuado de la matriz según
+        sus días y bloques.
+
+        PRIMERA CORRIDA: Falla porque el método no existe aún en la clase Disponibilidad.
+        """
+
+        matriz_bloques = {
+            1: [1, 13, 25, 36, 49, 61],
+            2: [2, 14, 26, 38, 50, 62],
+            3: [3, 15, 27, 39, 51, 63],
+            4: [4, 16, 28, 40, 52, 64],
+            5: [5, 17, 29, 41, 53, 65],
+            6: [6, 18, 30, 42, 54, 66],
+            7: [7, 19, 31, 43, 55, 67],
+            8: [8, 20, 32, 44, 56, 68],
+            9: [9, 21, 33, 45, 57, 69],
+            10: [10, 22, 34, 46, 58, 70],
+            11: [11, 23, 35, 47, 59, 71],
+            12: [12, 24, 36, 48, 60, 72],
+        }
+
+        self.assertEqual(
+            matriz_bloques, 
+            Disponibilidad.matriz_bloques()
         )
