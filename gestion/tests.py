@@ -47,7 +47,7 @@ class ProfesorModelTest(TestCase):
 
     def test_nombre_profesor(self):
         """
-        PRUEBA 1 PROFESOR. Se verifica que se guarde el nombre del profesor
+        PRUEBA 1. Se verifica que se guarde el nombre del profesor
         en la entidad, y que luego corresponda con el nombre guardado.
 
         PRIMERA CORRIDA: Falla porque el modelo profesor no tiene atributos.
@@ -61,7 +61,7 @@ class ProfesorModelTest(TestCase):
 
     def test_apellido_profesor(self):
         """
-        PRUEBA 2 PROFESOR. Se verifica que se guarde el apellido del profesor
+        PRUEBA 2. Se verifica que se guarde el apellido del profesor
         en la entidad, y que luego corresponda con el apellido guardado.
 
         PRIMERA CORRIDA: Falla porque el modelo profesor no tiene atributos.
@@ -76,7 +76,7 @@ class ProfesorModelTest(TestCase):
 
     def test_email_profesor(self):
         """
-        PRUEBA 3 PROFESOR. Se verifica que se guarde el correo electrónico (email) del
+        PRUEBA 3. Se verifica que se guarde el correo electrónico (email) del
         profesor en la entidad, y que luego el correo guardado corresponda
         con el apellido guardado.
 
@@ -92,7 +92,7 @@ class ProfesorModelTest(TestCase):
 
     def test_string_profesor(self):
         """
-        PRUEBA 4 PROFESOR. Se verifica que la representación como cadena de caracteres
+        PRUEBA 4. Se verifica que la representación como cadena de caracteres
         del modelo Profesor sea su nonmbre y su apellido.
 
         PRIMERA CORRIDA: Falla porque la representación por cadena de
@@ -144,7 +144,7 @@ class DepartamentoModelTest(TestCase):
 
     def test_nombre_departamento(self):
         """
-        PRUEBA 1 DEPARTAMENTO. Se verifica que el nombre del Departamento se guarde
+        PRUEBA 1. Se verifica que el nombre del Departamento se guarde
         correctamente en la entidad, y que luego el nombre guardado
         corresponda al departamento.
 
@@ -160,7 +160,7 @@ class DepartamentoModelTest(TestCase):
 
     def test_codigo_departamento(self):
         """
-        PRUEBA 2 DEPARTAMENTO. Se verifica que el código del Departamento se guarde
+        PRUEBA 2. Se verifica que el código del Departamento se guarde
         correctamente en la base de datos, y que corresponda al código
         que se quiso almacenar.
 
@@ -175,7 +175,7 @@ class DepartamentoModelTest(TestCase):
 
     def test_jefe_departamento(self):
         """
-        PRUEBA 3 DEPARTAMENTO. Se verifica que se asocie la cuenta de un profesor
+        PRUEBA 3. Se verifica que se asocie la cuenta de un profesor
         en la base de datos como jefe del Departamento y que sea
         el usuario que se quiso almacenar.
 
@@ -192,7 +192,7 @@ class DepartamentoModelTest(TestCase):
 
     def test_string_departamento(self):
         """
-        PRUEBA 4 DEPARTAMENTO. Se verifica que la representación como cadena de caracteres
+        PRUEBA 4. Se verifica que la representación como cadena de caracteres
         del modelo Departamento sea su nonmbre y su código.
 
         PRIMERA CORRIDA: Falla porque la representación por cadena de
@@ -206,7 +206,7 @@ class DepartamentoModelTest(TestCase):
 
     def test_tiene_jefe_departamento(self):
         """
-        PRUEBA 5 DEPARTAMENTO. Verifica que el método "tiene_jefe()" del modelo Departamento
+        PRUEBA 5. Verifica que el método "tiene_jefe()" del modelo Departamento
         devuelva el resultado apropiado, en caso de que el Departamento posea o no
         un jefe ne el momento dado.
 
@@ -223,7 +223,7 @@ class DepartamentoModelTest(TestCase):
 
     def test_jefe_coherente_departamento(self):
         """
-        PRUEBA 6 DEPARTAMENTO. Verifica la coherencia en la jefatura de un Departamento, dada por la
+        PRUEBA 6. Verifica la coherencia en la jefatura de un Departamento, dada por la
         función jefe_coherente(), que chequea si el departamento al que está asociado
         el jefe es el departamento que dirige.
 
@@ -239,7 +239,7 @@ class DepartamentoModelTest(TestCase):
 
     def test_nombre_corto(self):
         """
-        PRUEBA 7 DEPARTAMENTO. Verifica si el método para obtener el nombre corto del Departamento existe,
+        PRUEBA 7. Verifica si el método para obtener el nombre corto del Departamento existe,
         y se ejecuta correctamente retornando la palabra correcta.
 
         PRIMERA CORRIDA: Falla porque el modelo Departamento no tiene el método dado, aún.
@@ -290,7 +290,7 @@ class AsignaturaModelTest(TestCase):
 
     def test_nombre_asignatura(self):
         """
-        PRUEBA 1 ASIGNATURA. Se verifica que el nombre de la Asignatura se guarde
+        PRUEBA 1. Se verifica que el nombre de la Asignatura se guarde
         correctamente en la entidad, y que luego el nombre guardado
         corresponda al departamento.
 
@@ -306,7 +306,7 @@ class AsignaturaModelTest(TestCase):
 
     def test_codigo_asignatura(self):
         """
-        PRUEBA 2 ASIGNATURA. Se verifica que el código interno de la Asignatura se guarde
+        PRUEBA 2. Se verifica que el código interno de la Asignatura se guarde
         correctamente en la base de datos, y que corresponda al código
         que se quiso almacenar.
 
@@ -321,7 +321,7 @@ class AsignaturaModelTest(TestCase):
 
     def test_departamento_asignatura(self):
         """
-        PRUEBA 3 ASIGNATURA. Se verifica que se asocie un Departamento ya existente
+        PRUEBA 3. Se verifica que se asocie un Departamento ya existente
         como el departamento asociado de la Asignatura.
 
         PRIMERA CORRIDA: Falla porque el modelo Asignatura no está creado.
@@ -337,7 +337,7 @@ class AsignaturaModelTest(TestCase):
 
     def test_string_asignatura(self):
         """
-        PRUEBA 4 ASIGNATURA. Se verifica que la representación como cadena de caracteres
+        PRUEBA 4. Se verifica que la representación como cadena de caracteres
         del modelo Asignatura sea su código completo y su nombre.
 
         PRIMERA CORRIDA: Falla porque la representación por cadena de
@@ -354,7 +354,7 @@ class AsignaturaModelTest(TestCase):
 
     def test_codigo_completo_asignatura(self):
         """
-        PRUEBA 5 ASIGNATURA. Verifica que el método codigo_completo() de Asignatura devuelva
+        PRUEBA 5. Verifica que el método codigo_completo() de Asignatura devuelva
         el código correcto de la asignatura.
 
         PRIMERA CORRIDA: Falla porque el método no existe aún.
@@ -381,7 +381,7 @@ class DisponibilidadModelTest(TestCase):
 
     def test_matriz_bloques(self):
         """
-        PRUEBA 1 DISPONIBILIDAD. Determina si el método matriz_bloques de la Clase, no la
+        PRUEBA 1. Determina si el método matriz_bloques de la Clase, no la
         instancia, se ejecuta y retorna el valor adecuado de la matriz según
         sus días y bloques.
 
@@ -411,7 +411,7 @@ class DisponibilidadModelTest(TestCase):
 
     def test_string_disponibilidad(self):
         """
-        PRUEBA 2 DISPONIBILIDAD. Determina si se muestra correctamente como cadena de
+        PRUEBA 2. Determina si se muestra correctamente como cadena de
         caracteres una instancia de la clase Disponibilidad.
 
         PRIMERA CORRIDA: Falla porque el método no ha sido extendido
@@ -427,7 +427,7 @@ class DisponibilidadModelTest(TestCase):
 
     def test_id_unico_disponibilidad(self):
         """
-        PRUEBA 3 DISPONIBILIDAD. Determina si se obtiene el identificador único de una instancia
+        PRUEBA 3. Determina si se obtiene el identificador único de una instancia
         de la clase Disponibilidad en función de la biyección entre R² y R hallada.
 
         PRIMERA CORRIDA: Falla porque el método no existe aún en la clase Disponibilidad.
@@ -439,3 +439,135 @@ class DisponibilidadModelTest(TestCase):
             disponibilidad.identificador_unico(),
             self.cantidad_bloques * (disponibilidad.dia-1) + disponibilidad.bloque
         )
+
+
+class testModelos(TestCase):
+    """
+    Suite de pruebas para probar el comportamiento de los modelos como una unidad.
+    Se pretende crear un conjunto de departamentos con profesores asociados y asignaturas 
+    dictadas por dichos profesores. 
+    """
+
+
+    def setUp(self):
+
+
+        dpto_compu = Departamento.objects.create(
+            nombre="Departamento de Computación y Tecnología de la Información",
+            codigo="CI",
+        )
+
+        dpto_meca = Departamento.objects.create(
+            nombre="Departamento de Mecánica",
+            codigo="MC",
+        )
+
+        dpto_materiales = Departamento.objects.create(
+            nombre="Departamento de Materiales",
+            codigo="MT",
+        )
+
+        asignaturaCI1 = Asignatura.objects.create(
+            nombre="Ingeniería de Software I",
+            codigo_interno="3715",
+            departamento=dpto_compu
+        )
+
+        asignaturaCI2 = Asignatura.objects.create(
+            nombre="Lenguajes de programación I",
+            codigo_interno="3661",
+            departamento=dpto_compu
+        )
+
+        asignaturaCI3 = Asignatura.objects.create(
+            nombre="Organización del computador",
+            codigo_interno="3815",
+            departamento=dpto_compu
+        )
+
+        asignaturaMC1 = Asignatura.objects.create(
+            nombre="Mecánica computacional I",
+            codigo_interno="2421",
+            departamento=dpto_meca
+        )
+
+        asignaturaMC2 = Asignatura.objects.create(
+            nombre="Mecánica de materiales I",
+            codigo_interno="2141",
+            departamento=dpto_meca
+        )
+
+        asignaturaMT = Asignatura.objects.create(
+            nombre="Ciencia de los materiales",
+            codigo_interno="1113",
+            departamento=dpto_materiales
+        )
+
+        profesorCI = Profesor.objects.create(
+            nombre="Javier",
+            apellido="Medina",
+            email="14-4444@usb.ve",
+            cedula="V-22.252.023",
+            departamento=dpto_compu
+        )
+
+        profesorCI2 = Profesor.objects.create(
+            nombre="Ricardo",
+            apellido="Monad",
+            email="rick@usb.ve",
+            cedula="V-18.555.555",
+            departamento=dpto_compu
+        )
+        profesorMC = Profesor.objects.create(
+            nombre="Luis",
+            apellido="Plaza",
+            email="12-10314@usb.ve",
+            cedula="V-25.666.768",
+            departamento=dpto_meca
+        )
+
+        profesorMC1 = Profesor.objects.create(
+            nombre="Marcela",
+            apellido="Fernandez",
+            email="12-10314@usb.ve",
+            cedula="V-25.766.738",
+            departamento=dpto_materiales
+        )
+
+        dpto_compu.jefe = profesorCI
+        dpto_compu.save()
+
+        dpto_meca.jefe = profesorMC
+        dpto_meca.save()
+
+        profesorCI.asignaturas.add(asignaturaCI1)
+        profesorCI.asignaturas.add(asignaturaCI2)
+        profesorCI.asignaturas.add(asignaturaCI3)
+        profesorCI2.asignaturas.add(asignaturaCI2)
+
+        profesorMC.asignaturas.add(asignaturaMC1)
+        profesorMC.asignaturas.add(asignaturaMC2)
+
+        profesorMC1.asignaturas.add(asignaturaMT)
+
+
+
+    def test_dpto_sin_jefe(self):
+        """
+        PRUEBA BD 1: se asocia un profesor como jefe de dpto y luego se elimina el profesor. Por
+        lo tanto el departamento queda sin jefe asociado. Prueba de tipo maliciosa. 
+
+        PRIMERA CORRIDA: error se elimina el departamento al eliminar el jefe. SIGUIENTES CORRIDAS:
+        pasa la prueba ya que el modelo de BD se modifico  
+        """
+
+        Profesor.objects.get(cedula="V-25.666.768").delete()
+        dpto_mc = Departamento.objects.get(codigo="MC")
+        self.assertFalse(dpto_mc.tiene_jefe())
+
+
+        
+
+
+
+        
