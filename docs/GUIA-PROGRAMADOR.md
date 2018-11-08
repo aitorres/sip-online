@@ -4,6 +4,10 @@ Este documento pretende dar una idea general del proyecto desde el punto de vist
 
 Para revisar una documentación más amigable al usuario y fácil de leer y entender sobre la funcionalidad del sistema, puedes revisar la [guía del usuario](GUIA-USUARIO.md).
 
+## Versiones principales de paquetes
+
+La versión de Python utilizada para desarrollar y ejecutar el servidor es **Python 3.6.6**. La versión de Django utilizada para ejecutar la aplicación es **Django 1.11.15**. El resto de paquetes requeridos están listados en el [archivo de requerimientos (requirements.txt)](../requirements.txt).
+
 ## Base de datos
 
 Cada entidad de la base de datos cuenta con diversos métodos para permitir su gestión.

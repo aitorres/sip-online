@@ -11,7 +11,7 @@ Actualmente, el SIP Online permite:
 
 ### Desarrollo
 
-El SIP Online se encuentra en desarrollo actualmente. El desarrollo se hace utilizando *Python 3.6.6* y *Django 1.11*. El resto de requerimientos se encuentran en el [archivo de requerimientos (requirements.txt)](requirements.txt).
+El SIP Online se encuentra en desarrollo actualmente. El desarrollo se hace utilizando *Python 3.6.6* y *Django 1.11.15*. El resto de requerimientos se encuentran en el [archivo de requerimientos (requirements.txt)](requirements.txt).
 
 ## Documentación 
 
