@@ -1,5 +1,6 @@
-# SIP
-Este documento pretende dar una idea general del proyecto desde el punto de vista del programador.
+# GUÍA DEL PROGRAMADOR
+
+Este documento pretende dar una idea general del proyecto desde el punto de vista del programador, sirviendo como guía a profundidad de los detalles de implementación, códigos, scripts, instalación, entre otros detalles, orientada a ser leída por un programador.
 
 ## Base de datos
 
