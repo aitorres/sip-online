@@ -375,6 +375,10 @@ class DisponibilidadModelTest(TestCase):
     que se agreguen posteriormente.
     """
 
+    def setUp(self):
+        Disponibilidad.objects.create(dia=1, bloque=6)
+        self.cantidad_bloques = 12
+
     def test_matriz_bloques(self):
         """
         PRUEBA 1. Determina si el método matriz_bloques de la Clase, no la
@@ -400,6 +404,33 @@ class DisponibilidadModelTest(TestCase):
         }
 
         self.assertEqual(
-            matriz_bloques, 
+            matriz_bloques,
             Disponibilidad.matriz_bloques()
+        )
+
+    def test_string_disponibilidad(self):
+        """
+        PRUEBA 2. Determina si se muestra correctamente como cadena de
+        caracteres una instancia de la clase Disponibilidad.
+
+        PRIMERA CORRIDA: Falla porque el método no ha sido extendido
+        en la clase Disponibilidad, y usa el str por defecto.
+        """
+
+        disponibilidad = Disponibilidad.objects.get(dia=1, bloque=6)
+        self.assertEqual(
+            str(disponibilidad),
+            disponibilidad.get_dia_display() + ", bloque " + str(disponibilidad.bloque)
+        )
+
+    def test_id_unico_disponibilidad(self):
+        """
+        PRUEBA 3. Determina si se obtiene el identificador único de una instancia
+        de la clase Disponibilidad en función de la biyección entre R² y R hallada.
+        """
+
+        disponibilidad = Disponibilidad.objects.get(dia=1, bloque=6)
+        self.assertEqual(
+            disponibilidad.identificador_unico(),
+            self.cantidad_bloques * (disponibilidad.dia-1) + disponibilidad.bloque
         )
