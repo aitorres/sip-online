@@ -23,6 +23,8 @@ Todas las operaciones están concentradas en la misma vista.
 
 ### Listar profesores
 
+![Listar](imagenes/listar.png "Vista de Listar Profesores")
+
 El apartado de listar profesores es la vista por defecto de la página. Los profesores se distribuyen en una tabla dinámica que muestra la cédula, el nombre, el apellido, el departamento asociado y la lista de materias que puede dictar cada profesor. La tabla, en su parte inferior, cuenta con opciones de paginación para ver entre 10 y 100 profesores por página y avanzar entre ellas. En su parte superior, cuenta con un campo de búsqueda dinámico que puede filtrar por todos los campos mostrados con solo empezar a escribir. 
 
 Las acciones posibles en cuanto a gestión de la información son:
@@ -31,4 +33,10 @@ Las acciones posibles en cuanto a gestión de la información son:
 - Modificar un profesor, haciendo clic en el ícono de *lápiz* en la celda de acciones de ese profesor
 - Eliminar un profesor, haciendo clic en el ícono de *papelera* en la celda de acciones de ese profesor
 
+Esta vista incluye validaciones y mensajes de error o éxito en función del resultado de las acciones de gestión de la información.
 
+### Agregar un profesor
+
+![Agregar](imagenes/agregar.png "Vista de Agregar Profesores")
+
+Al hacer clic al botón de agregar un profesor, se puede llenar el formulario de inclusión de los datos de profesores y hacer *envío* del mismo. Los campos de *asignaturas* y *disponibilidades* se muestran como listas desplegables *autocompletables*: se puede empezar a escribir y se filtrarán sus contenidos. Esta vista muestra errores de validación, como cédulas que se repiten.
