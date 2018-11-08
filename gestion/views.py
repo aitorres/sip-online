@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views import generic
+from django.shortcuts import redirect
 
 from gestion.models import Profesor, Asignatura, Departamento, Disponibilidad
 
@@ -97,15 +98,15 @@ class AgregarProfesor(generic.CreateView):
         messages.success(self.request, 'El profesor ha sido agregado satisfactoriamente.')
         return super(AgregarProfesor, self).get_success_url()
 
-    def form_invalid(self):
+    def form_invalid(self, form):
         """
         En caso de que el formulario se reciba inválido, muestra un mensaje de
         error utilizando el framework de mensajes de Django y redirecciona a la URL
         de éxito, que en este caso es la lista de profesores.
         """
 
-        messages.error(self.request, 'Ocurrió un error al intentar agregar el profesor.')
-        return super(AgregarProfesor, self).form_invalid()
+        messages.warning(self.request, 'Ocurrió un error al intentar agregar el profesor.')
+        return redirect(self.success_url)
 
 class EditarProfesor(generic.UpdateView):
     """
@@ -127,15 +128,15 @@ class EditarProfesor(generic.UpdateView):
         messages.success(self.request, 'El profesor ha sido modificado satisfactoriamente.')
         return super(EditarProfesor, self).get_success_url()
 
-    def form_invalid(self):
+    def form_invalid(self, form):
         """
         En caso de que el formulario de edicion se reciba inválido, muestra un mensaje de
         error utilizando el framework de mensajes de Django y redirecciona a la URL
         de éxito, que en este caso es la lista de profesores.
         """
 
-        messages.error(self.request, 'Ocurrió un error al editar el profesor.')
-        return super(EditarProfesor, self).form_invalid()
+        messages.warning(self.request, 'Ocurrió un error al editar el profesor.')
+        return redirect(self.success_url)
 
 
 class EliminarProfesor(generic.DeleteView):
@@ -158,12 +159,12 @@ class EliminarProfesor(generic.DeleteView):
         messages.success(self.request, 'El profesor ha sido eliminado satisfactoriamente.')
         return super(EliminarProfesor, self).get_success_url()
 
-    def form_invalid(self):
+    def form_invalid(self, form):
         """
         En caso de que el formulario para eliminar  se reciba inválido, muestra un mensaje de
         error utilizando el framework de mensajes de Django y redirecciona a la URL
         de éxito, que en este caso es la lista de profesores.
         """
 
-        messages.error(self.request, 'Ocurrió un error al eliminar el profesor.')
-        return super(EliminarProfesor, self).form_invalid()
+        messages.warning(self.request, 'Ocurrió un error al eliminar el profesor.')
+        return redirect(self.success_url)
