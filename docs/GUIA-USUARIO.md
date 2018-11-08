@@ -40,3 +40,15 @@ Esta vista incluye validaciones y mensajes de error o éxito en función del res
 ![Agregar](imagenes/agregar.png "Vista de Agregar Profesores")
 
 Al hacer clic al botón de agregar un profesor, se puede llenar el formulario de inclusión de los datos de profesores y hacer *envío* del mismo. Los campos de *asignaturas* y *disponibilidades* se muestran como listas desplegables *autocompletables*: se puede empezar a escribir y se filtrarán sus contenidos. Esta vista muestra errores de validación, como cédulas que se repiten.
+
+### Editar un profesor
+
+![Editar](imagenes/editar.png "Vista de Editar Profesores")
+
+Al hacer clic al ícono de editar un profesor (*ojo*), se puede visualizar el formulario de edición de sus datos y hacer *envío* del mismo. Los campos son los mismos que se muestran en el formulario de *Agregar un profesor* pero vienen pre-llenados con los datos actuales del profesor en cuestión. De igual manera, cuenta con validaciones y muestra los errores en caso de existir.
+
+### Eliminar un profesor
+
+![Eliminar](imagenes/eliminar.png "Vista de Eliminar Profesor")
+
+Al hacer clic al ícono de eliminar un proefsor (*papelera*), se puede visualizar la ventana de confirmación de eliminación y hacer *confirmación* de la misma. Si se hace clic en el botón rojo, el profesor quedará eliminado del sistema. Si se hace clic en Cerrar o fuera de la ventana modal, se cerrará esta y no ocurrirá ningún cambio en la información.
