@@ -14,25 +14,14 @@ Actualmente, el SIP Online permite:
 El SIP Online se encuentra en desarrollo actualmente. El desarrollo se hace utilizando *Python 3.6.6* y *Django 1.11*. El resto de requerimientos se encuentran en el [archivo de requerimientos (requirements.txt)](requirements.txt).
 
 ## Documentación 
-*En proceso*.
 
-### Creación de la base de datos
-En un terminal abierto y desde un usuario que pueda hacer `sudo`, ejecuta:
-```bash
-./crear_db.sh
-python manage.py migrate
-```
+La documentación del SIP Online se encuentra repartida en los siguientes lugares:
 
-El script mencionado procederá a crear una base de datos en el gestor PostgreSQL con los datos asociados para poder ejecutar la aplicación.
+- **Comentarios del código**, que aseguran la legibilidad del mismo siguiendo todos los estándares de calidad y convenciones de redacción de comentarios para Python y Django.
+- **Guía del usuario**, documento de fácil lectura y acompañado de guías visuales para entender las funcionalidades del sistema, disponible aquí: [guía del usuario](docs/GUIA-USUARIO.md).
+- **Guía del programador**, documento técnico con detalles de implementación y scripts para comprender los detalles de diseño y código del sistema, disponible aquí:  [guía del programador](docs/GUIA-PROGRAMADOR.md).
 
-### Inclusión de la data inicial
-En un terminal abierto, con la base de datos cargada y migrada, ejecutar:
-```bash
-python manage.py loaddata gestion/fixtures/fixtures.json 
-```
-
-Django cargará la data inicial de los bloques 1 a 12 para los días lunes a sábado.
-
+Estos artefactos de documentación se irán actualizando progresivamente conforme se desarrolle el sistema.
 
 ## Autores
 - Andrés Ignacio Torres

@@ -15,4 +15,23 @@ Todas las clases tienen un método __str__ para definir su impresión.
 | Profesor      | nombre, apellido, cedula, disponibilidad,departamentos,email,asignaturas|   codigo_completo,__str__ |
 | Asignatura    | nombre,código,departamento          | __str__                             |
 
+## Scripts de desarrollo
 
+A continuación se listarán algunos scripts de desarrollo para facilitar la ejecución de algunas tareas para el programador del SIP Online.
+
+### Creación de la base de datos
+En un terminal abierto y desde un usuario que pueda hacer `sudo`, ejecuta:
+```bash
+./crear_db.sh
+python manage.py migrate
+```
+
+El script mencionado procederá a crear una base de datos en el gestor PostgreSQL con los datos asociados para poder ejecutar la aplicación.
+
+### Inclusión de la data inicial
+En un terminal abierto, con la base de datos cargada y migrada, ejecutar:
+```bash
+python manage.py loaddata gestion/fixtures/fixtures.json 
+```
+
+Django cargará la data inicial de los bloques 1 a 12 para los días lunes a sábado, al igual que la data de los 27 departamentos existentes a la fecha (noviembre de 2018) en la estructura de la Universidad Simón Bolívar.
