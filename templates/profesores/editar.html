@@ -6,7 +6,7 @@
 </div>
 <div class="modal-body">
     <p>         
-        <form method="POST" action="{% url 'gestion:editar' profesor.pk %}" id="f1" class="post-form">
+        <form method="POST" action="{% url 'gestion:editar-profesor' profesor.pk %}" id="f1" class="post-form">
             {% csrf_token %}
             {% for field in form %}
             <div class="row form-group">

@@ -85,7 +85,7 @@ class AgregarProfesor(generic.CreateView):
     template_name = 'profesores/agregar.html'
     model = Profesor
     fields = '__all__'
-    success_url = reverse_lazy('gestion:listar')
+    success_url = reverse_lazy('gestion:listar-profesores')
 
     def get_success_url(self):
         """
@@ -115,7 +115,7 @@ class EditarProfesor(generic.UpdateView):
     model = Profesor
     fields = '__all__'
     template_name = 'profesores/editar.html'
-    success_url = reverse_lazy('gestion:listar')
+    success_url = reverse_lazy('gestion:listar-profesores')
 
     def get_success_url(self):
         """
@@ -146,7 +146,7 @@ class EliminarProfesor(generic.DeleteView):
 
     template_name = 'profesores/eliminar.html'
     model = Profesor
-    success_url = reverse_lazy('gestion:listar')
+    success_url = reverse_lazy('gestion:listar-profesores')
 
     def get_success_url(self):
         """

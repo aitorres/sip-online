@@ -9,7 +9,7 @@
         ¿Esta seguro de querer eliminar al profesor {{ profesor.nombre }} {{ profesor.apellido }}? 
         Por favor, confirme la acción con los botones inferiores.
         </p>
-        <form method="post" action="{% url 'gestion:eliminar' profesor.pk %}" id="f1">
+        <form method="post" action="{% url 'gestion:eliminar-profesor' profesor.pk %}" id="f1">
             {% csrf_token %}
         </form>
 </div>
