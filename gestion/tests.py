@@ -761,7 +761,7 @@ class ModelosBDTest(TestCase):
     def test_asignar_2_jefes_a_un_dpto(self):
 
         """
-        PRUEBA BD 5: Se asigna un profesor como jefe de dpto a un dpto que ya tiene jefe.
+        PRUEBA BD 5: Se asigna un profesor como jefe de dos departamentos distintos.
         
         PRIMERA CORRIDA: Falla. No se levanta IntegrityError porque el campo es de tipo 
         FOREINGKEY sin el atributo unique=True.
