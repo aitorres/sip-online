@@ -400,10 +400,26 @@ class AsignaturaModelTest(TestCase):
         dpto_compu.jefe = jefe_compu
         dpto_compu.save()
 
+
+        Asignatura.objects.create(
+            nombre="Sistema de bases de datos I",
+            codigo_interno="3311",
+            departamento=dpto_compu,
+            horas_laboratorio=0,
+            horas_teoria=4,
+            horas_practica=0,
+            unidad_creditos = 3
+        )
+
+
         Asignatura.objects.create(
             nombre="Ingeniería de Software I",
             codigo_interno="3715",
-            departamento=dpto_compu
+            departamento=dpto_compu,
+            horas_laboratorio=0,
+            horas_teoria=4,
+            horas_practica=3,
+            unidad_creditos = 5,
         )
 
     def test_nombre_asignatura(self):
@@ -484,6 +500,18 @@ class AsignaturaModelTest(TestCase):
             asignatura.codigo_completo(),
             "CI3715"
         )
+
+    def test_horas_positivas(self):
+        """
+        PRUEBA 6: Se probara que los campos de horas en el modelo Asignatura 
+        sean mayor o igual a 0.
+
+        PRIMERA CORRIDA: FALLA, los metodos no existen.
+        """
+
+        self.assertGreaterEqual(0, self.horas_l())
+        self.assertGreaterEqual(0, self.horas_p())
+        self.assertGreaterEqual(0, self.horas_t())
 
 class DisponibilidadModelTest(TestCase):
     """

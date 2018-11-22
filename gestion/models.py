@@ -104,15 +104,18 @@ class Profesor(models.Model):
 
 class Asignatura(models.Model):
     """
-    Modelo TEMPORAL que representa una asignatura con su
-    nombre, código y departamento asociado. Este modelo
-    deberá ser modificado posteriormente para incorporarse
-    con el desarrollo del equipo Delta Developers.
+    Modelo que representa una asignatura con su
+    nombre, código y departamento asociado.
     """
 
     nombre = models.CharField(max_length=60)
     codigo_interno = models.CharField(max_length=4, unique=True)
     departamento = models.ForeignKey('Departamento')
+    horas_laboratorio = models.IntegerField(default=0)
+    horas_teoria = models.IntegerField(default=0)
+    horas_practica = models.IntegerField(default=0)
+    unidad_creditos = models.IntegerField(default=0)
+    requisitos = models.ManyToManyField('Asignatura', blank=True, null = True)
 
     class Meta:
         """
@@ -131,6 +134,9 @@ class Asignatura(models.Model):
         asignatura.
         """
         return self.departamento.codigo + self.codigo_interno
+
+
+
 
     def __str__(self):
         """
