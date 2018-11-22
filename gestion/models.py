@@ -18,7 +18,8 @@ class Departamento(models.Model):
 
     nombre = models.CharField(max_length=200)
     codigo = models.CharField(max_length=2, unique=True)
-    jefe = models.ForeignKey('Profesor', related_name="jefe_de", null=True, on_delete=models.SET_NULL)
+    jefe = models.OneToOneField('Profesor', related_name="jefe_de", null=True, on_delete=models.SET_NULL) 
+
     class Meta:
         """
         Provee algunas configuraciones básicas con respecto a las

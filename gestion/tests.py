@@ -765,6 +765,9 @@ class ModelosBDTest(TestCase):
         
         PRIMERA CORRIDA: Falla. No se levanta IntegrityError porque el campo es de tipo 
         FOREINGKEY sin el atributo unique=True.
+
+        SEGUNDA CORRIDA: Pasa. Se levanta la exc, dado que jefe es un campo de tipo
+        OneToOneField. 
         """
         profesorCI1 = Profesor.objects.get(cedula="V-22.252.023")
         
