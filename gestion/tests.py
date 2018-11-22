@@ -507,11 +507,12 @@ class AsignaturaModelTest(TestCase):
         sean mayor o igual a 0.
 
         PRIMERA CORRIDA: FALLA, los metodos no existen.
+        SEGUNDA CORRIDA: PASA. 
         """
-
-        self.assertGreaterEqual(0, self.horas_l())
-        self.assertGreaterEqual(0, self.horas_p())
-        self.assertGreaterEqual(0, self.horas_t())
+        asignatura = Asignatura.objects.get(codigo_interno="3715")
+        self.assertGreaterEqual(asignatura.horas_l(),0)
+        self.assertGreaterEqual(asignatura.horas_p(),0)
+        self.assertGreaterEqual(asignatura.horas_t(),0)
 
 class DisponibilidadModelTest(TestCase):
     """

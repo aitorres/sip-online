@@ -134,7 +134,27 @@ class Asignatura(models.Model):
         asignatura.
         """
         return self.departamento.codigo + self.codigo_interno
+    
+    def horas_l(self):
+    	"""
+    	Devuelve la cantidad de horas de laboratorio de
+    	la asignatura
+    	"""
+    	return self.horas_laboratorio
 
+    def horas_p(self):
+    	"""
+    	Devuelve la cantidad de horas de practica de
+    	la asignatura
+    	"""
+    	return self.horas_practica
+
+    def horas_t(self):
+    	"""
+    	Devuelve la cantidad de horas de teoria de
+    	la asignatura
+    	"""
+    	return self.horas_teoria
 
 
 
