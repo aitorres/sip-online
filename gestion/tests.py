@@ -411,7 +411,6 @@ class AsignaturaModelTest(TestCase):
             unidad_creditos = 3
         )
 
-
         Asignatura.objects.create(
             nombre="Ingeniería de Software I",
             codigo_interno="3715",
@@ -513,6 +512,14 @@ class AsignaturaModelTest(TestCase):
         self.assertGreaterEqual(asignatura.horas_l(),0)
         self.assertGreaterEqual(asignatura.horas_p(),0)
         self.assertGreaterEqual(asignatura.horas_t(),0)
+
+    def test_creditos_positivos(self):
+        """
+        PRUEBA 7: Se probara que el campo unidad_creditos sea siempre positivo
+        PRIMERA CORRIDA: Falla, los metodo que devuelve el valor, no exite.
+        """
+        asignatura = Asignatura.objects.get(codigo_interno="3715")
+        self.assertGreaterEqual(asignatura.creditos(),0)
 
 class DisponibilidadModelTest(TestCase):
     """
