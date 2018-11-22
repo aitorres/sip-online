@@ -757,3 +757,21 @@ class ModelosBDTest(TestCase):
                 nombre="Departamento de Procesos y Sistemas",
                 codigo="CI",
             )
+
+    def test_asignar_2_jefes_a_un_dpto(self):
+
+        """
+        PRUEBA BD 5: Se asigna un profesor como jefe de dpto a un dpto que ya tiene jefe.
+        
+        PRIMERA CORRIDA: Falla. No se levanta IntegrityError porque el campo es de tipo 
+        FOREINGKEY sin el atributo unique=True.
+        """
+        profesorCI1 = Profesor.objects.get(cedula="V-22.252.023")
+        
+        dpto_ci = Departamento.objects.get(codigo="CI")
+        dpto_mc = Departamento.objects.get(codigo="MC")
+        with self.assertRaises(IntegrityError):
+            dpto_ci.jefe = profesorCI1
+            dpto_mc.jefe = profesorCI1
+            dpto_ci.save()
+            dpto_mc.save()
