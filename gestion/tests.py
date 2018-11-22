@@ -516,7 +516,9 @@ class AsignaturaModelTest(TestCase):
     def test_creditos_positivos(self):
         """
         PRUEBA 7: Se probara que el campo unidad_creditos sea siempre positivo
-        PRIMERA CORRIDA: Falla, los metodo que devuelve el valor, no exite.
+        PRIMERA CORRIDA: FALLA, los metodo que devuelve el valor, no exite.
+        SEGUNDA CORRIDA: PASA
+
         """
         asignatura = Asignatura.objects.get(codigo_interno="3715")
         self.assertGreaterEqual(asignatura.creditos(),0)

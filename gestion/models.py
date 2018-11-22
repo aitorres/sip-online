@@ -115,7 +115,7 @@ class Asignatura(models.Model):
     horas_teoria = models.IntegerField(default=0)
     horas_practica = models.IntegerField(default=0)
     unidad_creditos = models.IntegerField(default=0)
-    requisitos = models.ManyToManyField('Asignatura', blank=True, null = True)
+    requisitos = models.ManyToManyField('Asignatura', blank=True)
 
     class Meta:
         """
@@ -156,6 +156,11 @@ class Asignatura(models.Model):
     	"""
     	return self.horas_teoria
 
+    def creditos(self):
+    	"""
+		Devuelve el valor de unidad_creditos de la asignatura
+    	"""
+    	return self.unidad_creditos
 
 
     def __str__(self):
