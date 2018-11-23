@@ -84,7 +84,15 @@ class AgregarProfesor(generic.CreateView):
 
     template_name = 'profesores/agregar.html'
     model = Profesor
-    fields = '__all__'
+    fields = (
+        'nombre',
+        'apellido',
+        'cedula',
+        'email',
+        'disponibilidad',
+        'departamento',
+        'asignaturas'
+    )
     success_url = reverse_lazy('gestion:listar-profesores')
 
     def get_success_url(self):
@@ -113,7 +121,15 @@ class EditarProfesor(generic.UpdateView):
     modificar un profesor dado.
     """
     model = Profesor
-    fields = '__all__'
+    fields = (
+        'nombre',
+        'apellido',
+        'cedula',
+        'email',
+        'disponibilidad',
+        'departamento',
+        'asignaturas'
+    )
     template_name = 'profesores/editar.html'
     success_url = reverse_lazy('gestion:listar-profesores')
 
