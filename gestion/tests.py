@@ -827,7 +827,8 @@ class ModelosBDTest(TestCase):
         PRUEBA 8: Se probara que si una materia es eliminada
         se elimina tambien como requisito de alguna otra materia.
 
-        PRIMERA CORRIDA: FALLA porque el metodo no existe,
+        PRIMERA CORRIDA: FALLA porque el metodo no existe.
+        SEGUNDA CORRIDA: PASA.
         """
         asignatura = Asignatura.objects.get(codigo_interno="3661").delete()
         asignatura2 = Asignatura.objects.get(codigo_interno="3715")

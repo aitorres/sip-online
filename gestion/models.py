@@ -126,7 +126,12 @@ class Asignatura(models.Model):
         # Ordenamiento por defecto: según el departamento, luego según su
         # código inerno
         ordering = ["departamento", "codigo_interno"]
+    def tiene_requisito(self):
+        """
+        Determina si una asignatura tiene un requisito.
+        """
 
+        return bool(self.requisitos.all())
 
     def codigo_completo(self):
         """
