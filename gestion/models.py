@@ -127,6 +127,7 @@ class Asignatura(models.Model):
         # código inerno
         ordering = ["departamento", "codigo_interno"]
 
+
     def codigo_completo(self):
         """
         Devuelve el código completo (compuesto) de la asignatura,

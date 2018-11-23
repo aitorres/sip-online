@@ -523,6 +523,7 @@ class AsignaturaModelTest(TestCase):
         asignatura = Asignatura.objects.get(codigo_interno="3715")
         self.assertGreaterEqual(asignatura.creditos(),0)
 
+
 class DisponibilidadModelTest(TestCase):
     """
     Suite de pruebas para el modelo Disponibilidad, que incluye unas pocas
@@ -707,8 +708,11 @@ class ModelosBDTest(TestCase):
         profesorCI.asignaturas.add(asignaturaCI1)
         profesorCI.asignaturas.add(asignaturaCI2)
         profesorCI.asignaturas.add(asignaturaCI3)
+        
         profesorCI2.asignaturas.add(asignaturaCI2)
 
+        asignaturaCI1.requisitos.add(asignaturaCI2)
+        
         profesorMC.asignaturas.add(asignaturaMC1)
         profesorMC.asignaturas.add(asignaturaMC2)
 
@@ -816,3 +820,15 @@ class ModelosBDTest(TestCase):
             dpto_mc.jefe = profesorCI1
             dpto_ci.save()
             dpto_mc.save()
+
+
+    def test_eliminar_asignatura_requisito(self):
+        """
+        PRUEBA 8: Se probara que si una materia es eliminada
+        se elimina tambien como requisito de alguna otra materia.
+
+        PRIMERA CORRIDA: FALLA porque el metodo no existe,
+        """
+        asignatura = Asignatura.objects.get(codigo_interno="3661").delete()
+        asignatura2 = Asignatura.objects.get(codigo_interno="3715")
+        self.assertFalse(asignatura2.tiene_requisito()) 
