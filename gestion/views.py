@@ -167,3 +167,52 @@ class EliminarProfesor(generic.DeleteView):
 
         messages.warning(self.request, 'Ocurrió un error al eliminar el profesor.')
         return redirect(self.success_url)
+
+class ListarAsignaturas(generic.ListView):
+    """
+    Controlador que muestra una lista en tabla de todas las asignaturas.
+    """
+    template_name = 'asginaturas/listar.html'
+    model = Asignatura
+    context_object_name = "asignaturas"
+    
+class EliminarAsignatura(generic.DeleteView):
+    """
+    Controlador que maneja la lógica y el formulario para
+    eliminar una asignatura dada.
+    """
+
+    template_name = 'asignaturas/eliminar.html'
+    model = Profesor
+    success_url = reverse_lazy('gestion:listar-asignaturas')
+
+    def get_success_url(self):
+        """
+        Si la eliminación de la asignatura es un éxito, muestra un mensaje de
+        éxito utilizando el framework de mensajes de Django y redirecciona a la URL
+        de éxito, que en este caso es la lista de asignaturas.
+        """
+
+        messages.success(self.request, 'La asignatura ha sido eliminada satisfactoriamente.')
+        return super(EliminarAsignatura, self).get_success_url()
+
+    def form_invalid(self, form):
+        """
+        En caso de que el formulario para eliminar  se reciba inválido, muestra un mensaje de
+        error utilizando el framework de mensajes de Django y redirecciona a la URL
+        de éxito, que en este caso es la lista de profesores.
+        """
+
+        messages.warning(self.request, 'Ocurrió un error al eliminar la asignatura.')
+        return redirect(self.success_url)
+
+class VerAsignatura(generic.DetailView):
+    """
+    Controlador que permite visualizar los datos en detalle de una asignatura
+    """
+
+    template_name = 'asignaturas/ver.html'
+    model = Asignatura
+    context_object_name = "asignatura"
+    
+
