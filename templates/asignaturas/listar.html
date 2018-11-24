@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Gestión de profesores{% endblock %}
+{% block title %}Gestión de asignaturas{% endblock %}
 
 {% block content %}
 <div class="col-md-12">
@@ -18,7 +18,7 @@
 
     <div class="card">
         <div class="card-header">
-            <button type="button" data-toggle="modal" data-target="#modalCRUD" class="btn btn-primary float-right trigger" form="f1" data-url="{% url 'gestion:agregar-profesor' %}">Agregar</button>
+            <button type="button" data-toggle="modal" data-target="#modalCRUD" class="btn btn-primary float-right trigger" form="f1" data-url="{% url 'gestion:agregar-asignatura' %}">Agregar</button>
             <h4>Asignaturas</h4>
         </div>
         <div class="card-body">
@@ -39,11 +39,11 @@
               		<td>{{ asignatura.nombre }}</td>
               		<td>{{ asignatura.departamento }}</td>
               		<td class="acciones">
-                    <i class="fa fa-eye trigger" class="boton-ver" data-toggle="modal" data-target="#modalCRUD" data-url="{% url 'gestion:ver-profesor' profesor.pk %}" aria-hidden="true"></i>
+                    <i class="fa fa-eye trigger" class="boton-ver" data-toggle="modal" data-target="#modalCRUD" data-url="{% url 'gestion:ver-asignatura' asignatura.pk %}" aria-hidden="true"></i>
                     &nbsp;
-                    <i class="fa fa-pencil trigger" class="boton-editar" data-toggle="modal" data-target="#modalCRUD" data-url="{% url 'gestion:editar-profesor' profesor.pk %}" aria-hidden="true"></i>
+                    <i class="fa fa-pencil trigger" class="boton-editar" data-toggle="modal" data-target="#modalCRUD" data-url="{% url 'gestion:editar-asignatura' asignatura.pk %}" aria-hidden="true"></i>
                     &nbsp;
-                    <i class="fa fa-trash-o trigger" class="boton-eliminar" data-toggle="modal" data-target="#modalCRUD" data-url="{% url 'gestion:eliminar-profesor' profesor.pk %}" aria-hidden="true"></i>  
+                    <i class="fa fa-trash-o trigger" class="boton-eliminar" data-toggle="modal" data-target="#modalCRUD" data-url="{% url 'gestion:eliminar-asignatura' asignatura.pk %}" aria-hidden="true"></i>  
                   </td>
               	</tr>
               	{% endfor %}
