@@ -172,7 +172,7 @@ class ListarAsignaturas(generic.ListView):
     """
     Controlador que muestra una lista en tabla de todas las asignaturas.
     """
-    template_name = 'asginaturas/listar.html'
+    template_name = 'asignaturas/listar.html'
     model = Asignatura
     context_object_name = "asignaturas"
     
