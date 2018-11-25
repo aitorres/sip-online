@@ -139,7 +139,7 @@ class EditarProfesor(generic.UpdateView):
 
 class EliminarProfesor(generic.DeleteView):
     """
-    Controlador que maneja la lógica y el formulario paraProfe
+    Controlador que maneja la lógica y el formulario para
     eliminar un profesor dado.
     """
 
@@ -182,7 +182,7 @@ class AgregarAsignatura(generic.CreateView):
     """
 
     template_name = 'asignaturas/agregar.html'
-    model = Asigantura
+    model = Asignatura
     fields = '__all__'
     success_url = reverse_lazy('gestion:listar-asignaturas')
 
@@ -193,7 +193,7 @@ class AgregarAsignatura(generic.CreateView):
         de éxito, que en este caso es la lista de asignaturas.
         """
 
-        messages.success(self.request, 'La asigantura ha sido agregado satisfactoriamente.')
+        messages.success(self.request, 'La asignatura ha sido agregado satisfactoriamente.')
         return super(AgregarAsignatura, self).get_success_url()
 
     def form_invalid(self, form):
@@ -209,7 +209,7 @@ class AgregarAsignatura(generic.CreateView):
 class EditarAsignatura(generic.UpdateView):
     """
     Controlador que maneja la lógica y el formulario para
-    modificar una asigantura dada.
+    modificar una asignatura dada.
     """
     model = Asignatura
     fields = '__all__'
@@ -224,7 +224,7 @@ class EditarAsignatura(generic.UpdateView):
         """
 
         messages.success(self.request, 'La asignatura ha sido modificado satisfactoriamente.')
-        return super(EditarAsigantura, self).get_success_url()
+        return super(EditarAsignatura, self).get_success_url()
 
     def form_invalid(self, form):
         """
