@@ -183,7 +183,7 @@ class EliminarAsignatura(generic.DeleteView):
     """
 
     template_name = 'asignaturas/eliminar.html'
-    model = Profesor
+    model = Asignatura
     success_url = reverse_lazy('gestion:listar-asignaturas')
 
     def get_success_url(self):
