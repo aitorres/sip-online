@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.contrib.auth.models import User
 
 """
 Módulo que incluye los modelos a utilizar en el
@@ -85,6 +86,7 @@ class Profesor(models.Model):
     departamento = models.ForeignKey('Departamento')
     email = models.EmailField(max_length=200)
     asignaturas = models.ManyToManyField('Asignatura', blank=True)
+    usuario = models.OneToOneField(User,blank=True, default=None, null=True)
 
     class Meta:
         """
