@@ -2,10 +2,10 @@ from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views import generic
 from django.shortcuts import redirect
-
+from django.contrib.auth.mixins import LoginRequiredMixin 
 from gestion.models import Profesor, Asignatura, Departamento, Disponibilidad
 
-class Dashboard(generic.TemplateView):
+class Dashboard(LoginRequiredMixin, generic.TemplateView):
     """
     Controlador para el dashboard principal de la aplicación.
     Renderiza la plantilla incluyendo contadores dinámicos
@@ -29,7 +29,7 @@ class Dashboard(generic.TemplateView):
 
         return context
 
-class ListarProfesores(generic.ListView):
+class ListarProfesores(LoginRequiredMixin, generic.ListView):
     """
     Controlador que muestra una lista en tabla de todos los
     profesores.
@@ -38,7 +38,7 @@ class ListarProfesores(generic.ListView):
     model = Profesor
     context_object_name = "profesores"
 
-class VerProfesor(generic.DetailView):
+class VerProfesor(LoginRequiredMixin, generic.DetailView):
     """
     Controlador que permite visualizar los datos en detalle de un profesor
     en particular.
@@ -76,7 +76,7 @@ class VerProfesor(generic.DetailView):
 
         return context
 
-class AgregarProfesor(generic.CreateView):
+class AgregarProfesor(LoginRequiredMixin, generic.CreateView):
     """
     Controlador que maneja la lógica de agregar un profesor
     dado.
@@ -107,7 +107,7 @@ class AgregarProfesor(generic.CreateView):
         messages.warning(self.request, 'Ocurrió un error al intentar agregar el profesor.')
         return redirect(self.success_url)
 
-class EditarProfesor(generic.UpdateView):
+class EditarProfesor(LoginRequiredMixin, generic.UpdateView):
     """
     Controlador que maneja la lógica y el formulario para
     modificar un profesor dado.
@@ -138,7 +138,7 @@ class EditarProfesor(generic.UpdateView):
         return redirect(self.success_url)
 
 
-class EliminarProfesor(generic.DeleteView):
+class EliminarProfesor(LoginRequiredMixin, generic.DeleteView):
     """
     Controlador que maneja la lógica y el formulario para
     eliminar un profesor dado.
