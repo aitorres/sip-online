@@ -118,7 +118,7 @@ AUTH_PASSWORD_VALIDATORS = [
 AUTHENTICATION_BACKENDS = ['sip.authentication.EmailBackend']
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'gestion:dashboard'
-
+LOGOUT_REDIRECT_URL = 'login'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
