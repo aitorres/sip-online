@@ -1,5 +1,8 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save, post_delete
+from django.dispatch import receiver
 
 """
 Módulo que incluye los modelos a utilizar en el
@@ -85,6 +88,7 @@ class Profesor(models.Model):
     departamento = models.ForeignKey('Departamento')
     email = models.EmailField(max_length=200)
     asignaturas = models.ManyToManyField('Asignatura', blank=True)
+    usuario = models.OneToOneField(User, blank=True, default=None, null=True)
 
     class Meta:
         """
@@ -94,6 +98,13 @@ class Profesor(models.Model):
 
         # Ordenamiento por defecto: según su cédula
         ordering = ["cedula"]
+
+    def es_jefe(self):
+        """
+        Determina si un profesor es jefe de su departamento asignado.
+        """
+
+        return self.departamento.jefe == self
 
     def __str__(self):
         """
@@ -263,3 +274,66 @@ class Disponibilidad(models.Model):
         """
 
         return self.get_dia_display() + ", bloque " + str(self.bloque)
+
+@receiver(post_save, sender=Profesor)
+def trigger_actualizar_profesor(sender, instance, created, **kwargs):
+    """
+    Trigger de la base de datos para crear un usuario asociado al profesor cuando
+    se crea este mismo, o modificar los datos del usuario cuando se modifica
+    el profesor.
+    """
+
+    # Marcamos la instancia recibida como profesor
+    profesor = instance
+
+    if created:
+        # Creamos el usuario asociado al profesor con una contraseña aleatoria
+        usuario = User.objects.create_user(
+            first_name=profesor.nombre,
+            last_name=profesor.apellido,
+            email=profesor.email,
+            username=profesor.email,
+        )
+        password = User.objects.make_random_password()
+        usuario.set_password(password)
+        usuario.save()
+
+        # PENDIENTE: Enviar correo electrónico para solicitar establecimiento
+        # de contraseña al profesor
+
+        # Desconectamos el trigger para poder asociar el usuario al profesor
+        post_save.disconnect(trigger_actualizar_profesor, sender=sender)
+        profesor.usuario = usuario
+        profesor.save()
+
+        # Volvemos a conectar el trigger
+        post_save.connect(trigger_actualizar_profesor, sender=sender)
+    else:
+        # Obtenemos el usuario ya asociado
+        usuario = profesor.usuario
+
+        # Cambiamos los datos que pudieran haber cambiado y guardamos el usuario
+        usuario.first_name = profesor.nombre
+        usuario.last_name = profesor.apellido
+        usuario.email = profesor.email
+        usuario.username = profesor.email
+
+        usuario.save()
+    return
+
+@receiver(post_delete, sender=Profesor)
+def trigger_eliminar_profesor(sender, instance, **kwargs):
+    """
+    Trigger de la base de datos para eliminar un usuario cuando su instancia
+    de profesor asociada es eliminada también.
+    """
+
+    # Marcamos la instancia recibida como profesor
+    profesor = instance
+
+    # Obtenemos el usuario ya asociado
+    usuario = profesor.usuario
+
+    # Eliminamos el usuario y terminamos la ejecución
+    usuario.delete()
+    return

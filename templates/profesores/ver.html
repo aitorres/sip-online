@@ -7,6 +7,9 @@
 </div>
 <div class="modal-body">
     <h1 class="text-center"> {{ profesor.nombre }} {{ profesor.apellido }} </h1>
+    {% if profesor.es_jefe %}
+        <h5 class="text-center">Jefe de Departamento</h5>
+    {% endif %}
     <hr />
     <div class="row">
         <div class="col-md-3 float-right">

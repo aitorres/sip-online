@@ -1,0 +1,46 @@
+{% extends 'base-site.html' %}
+
+{% block title %}Inicio de sesión{% endblock %}
+
+{% block content %}
+  <h2 class="text-center">Inicio de sesión</h2>
+  <hr/>
+
+  {% if form.errors %}
+    {% for error in form.non_field_errors %}
+      <div class="alert alert-danger alert-dismissible fade show">
+        {{ error }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Cerrar">
+            <span aria-hidden="true">×</span>
+        </button>
+      </div>
+    {% endfor %}
+  {% endif %}
+
+  <form method="post" class="form">
+    {% csrf_token %}
+    {% for field in form %}
+    <div class="row form-group">
+      <div class="col-md-5">
+          <label class="form-control-label">
+          	<b>
+          		{% if field.name != "username" %}
+          			{{ field.label_tag }}
+          		{% else %}
+          			Correo electrónico:
+          		{% endif %}
+          	</b>
+          </label>
+      </div>
+      <div class="col-md-7">
+        {{ field }}
+      </div>
+    </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+  </form>
+
+  <script type="text/javascript">
+  	$("input").addClass('form-control');
+  </script>
+{% endblock %}

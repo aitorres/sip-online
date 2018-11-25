@@ -834,5 +834,23 @@
       "codigo_interno": "1115",
       "departamento": 10
     }
+  },
+  {
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$36000$kBPK8e4L97hc$L4znr9o7ppF1ZAP/7cWLWy8DMlXRM+Pz0TegC2kcWwQ=",
+        "last_login": null,
+        "is_superuser": true,
+        "username": "admin",
+        "first_name": "Admin",
+        "last_name": "Super Usuario",
+        "email": "admin@usb.ve",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2018-11-25T19:53:38.524Z",
+        "groups": [],
+        "user_permissions": []
+    }
   }
 ]

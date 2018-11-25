@@ -89,6 +89,15 @@ python manage.py loaddata gestion/fixtures/fixtures.json
 
 Django cargará la data inicial de los bloques 1 a 12 para los días lunes a sábado, al igual que la data de los 27 departamentos existentes a la fecha (noviembre de 2018) en la estructura de la Universidad Simón Bolívar.
 
+#### Usuario administrador
+Si se carga la data inicial siguiendo el comando anterior, se creará un usuario administrador (superusuario) para acceder al Admin de Django y utilizar el sistema (aunque no asociado a un Departamento). **Se recomienda utilizar este usuario SÓLO para crear profesores o jefes de Departamento**, y utilizar el sistema con usuarios Jefes de Departamento (se incluye un comando para crearlos desde el terminal).
+
+Los datos del usuario administrador son los siguientes:
+```
+email: admin@usb.ve
+password: 1234abcd
+```
+
 ### Ejecutar el proyecto
 En un terminal abierto desde la carpeta del proyecto, con la base de datos creada y migrada y desde el entorno virtual habiendo instalado previamente los requerimientos, hacer:
 ```bash
