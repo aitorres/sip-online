@@ -843,7 +843,7 @@
         "last_login": null,
         "is_superuser": true,
         "username": "admin",
-        "first_name": "Administrador",
+        "first_name": "Admin",
         "last_name": "Super Usuario",
         "email": "admin@usb.ve",
         "is_staff": true,
