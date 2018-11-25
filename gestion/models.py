@@ -86,7 +86,7 @@ class Profesor(models.Model):
     departamento = models.ForeignKey('Departamento')
     email = models.EmailField(max_length=200)
     asignaturas = models.ManyToManyField('Asignatura', blank=True)
-    usuario = models.OneToOneField(User,blank=True, default=None, null=True)
+    usuario = models.OneToOneField(User, blank=True, default=None, null=True)
 
     class Meta:
         """
