@@ -140,7 +140,7 @@ class EditarProfesor(generic.UpdateView):
 
 class EliminarProfesor(generic.DeleteView):
     """
-    Controlador que maneja la lógica y el formulario para
+    Controlador que maneja la lógica y el formulario paraProfe
     eliminar un profesor dado.
     """
 
@@ -175,6 +175,67 @@ class ListarAsignaturas(generic.ListView):
     template_name = 'asignaturas/listar.html'
     model = Asignatura
     context_object_name = "asignaturas"
+
+class AgregarAsignatura(generic.CreateView):
+    """
+    Controlador que maneja la lógica de agregar una asignatura
+    dada.
+    """
+
+    template_name = 'asignaturas/agregar.html'
+    model = Asigantura
+    fields = '__all__'
+    success_url = reverse_lazy('gestion:listar-asignaturas')
+
+    def get_success_url(self):
+        """
+        En caso de que el agregar sea un éxito, muestra un mensaje de
+        éxito utilizando el framework de mensajes de Django y redirecciona a la URL
+        de éxito, que en este caso es la lista de asignaturas.
+        """
+
+        messages.success(self.request, 'La asigantura ha sido agregado satisfactoriamente.')
+        return super(AgregarAsignatura, self).get_success_url()
+
+    def form_invalid(self, form):
+        """
+        En caso de que el formulario se reciba inválido, muestra un mensaje de
+        error utilizando el framework de mensajes de Django y redirecciona a la URL
+        de éxito, que en este caso es la lista de asignaturas.
+        """
+
+        messages.warning(self.request, 'Ocurrió un error al intentar agregar una asignatura.')
+        return redirect(self.success_url)
+
+class EditarAsignatura(generic.UpdateView):
+    """
+    Controlador que maneja la lógica y el formulario para
+    modificar una asigantura dada.
+    """
+    model = Asignatura
+    fields = '__all__'
+    template_name = 'asignaturas/editar.html'
+    success_url = reverse_lazy('gestion:listar-asignaturas')
+
+    def get_success_url(self):
+        """
+        En caso de que el editar sea un éxito, muestra un mensaje de
+        éxito utilizando el framework de mensajes de Django y redirecciona a la URL
+        de éxito, que en este caso es la lista de asignaturas.
+        """
+
+        messages.success(self.request, 'La asignatura ha sido modificado satisfactoriamente.')
+        return super(EditarAsigantura, self).get_success_url()
+
+    def form_invalid(self, form):
+        """
+        En caso de que el formulario de edicion se reciba inválido, muestra un mensaje de
+        error utilizando el framework de mensajes de Django y redirecciona a la URL
+        de éxito, que en este caso es la lista de asignaturas.
+        """
+
+        messages.warning(self.request, 'Ocurrió un error al editar la asignatura.')
+        return redirect(self.success_url)
     
 class EliminarAsignatura(generic.DeleteView):
     """
@@ -183,7 +244,7 @@ class EliminarAsignatura(generic.DeleteView):
     """
 
     template_name = 'asignaturas/eliminar.html'
-    model = Profesor
+    model = Asignatura
     success_url = reverse_lazy('gestion:listar-asignaturas')
 
     def get_success_url(self):
@@ -200,7 +261,7 @@ class EliminarAsignatura(generic.DeleteView):
         """
         En caso de que el formulario para eliminar  se reciba inválido, muestra un mensaje de
         error utilizando el framework de mensajes de Django y redirecciona a la URL
-        de éxito, que en este caso es la lista de profesores.
+        de éxito, que en este caso es la lista de asignaturas.
         """
 
         messages.warning(self.request, 'Ocurrió un error al eliminar la asignatura.')
