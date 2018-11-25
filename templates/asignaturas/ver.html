@@ -1,0 +1,86 @@
+{% load dict_key %}
+<div class="modal-header">
+    <h5 class="modal-title" id="largeModalLabel">Detalles de la asignatura</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <h1 class="text-center"> {{ asignatura.nombre }} </h1>
+    <hr />
+    <div class="row">
+        <div class="col-md-3 float-right">
+            <b>Código</b>
+        </div>
+        <div class="col-md-9">
+            {{ asignatura.codigo_completo }}
+        </div>
+        <div class="col-md-3 float-right">
+            <b>Departamento</b>
+        </div>
+        <div class="col-md-9">
+            {{ asignatura.departamento }}
+        </div>
+    </div>
+    <hr/>
+
+    <!--
+    Esta parte en teoria deberia decir los profesores que pueden dictar la asignatura
+
+    <div class="card text-center">
+        <div class="card-header">
+            <b>Profesores disponibles para dictarla</b>
+        </div>
+        <ul class="list-group list-group-flush">
+            {% for asignatura in profesor.asignaturas.all %}
+                <li class="list-group-item">{{ asignatura }}</li>
+            {% empty %}
+                Ninguna por el momento...
+            {% endfor %}
+        </ul>
+    </div>
+    -->
+
+    <!--
+    Esta parte en teoria deberia mostrar todos los horarios de la semana disponibles para la asignatura
+    -->
+
+    <hr/>
+    <div class="card text-center">
+        <div class="card-header">
+            <b>Posibles horarios semanales</b>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                    <th>Bloque</th>
+                    <th>Lunes</th>
+                    <th>Martes</th>
+                    <th>Miércoles</th>
+                    <th>Jueves</th>
+                    <th>Viernes</th>
+                    <th>Sábado</th>
+                </thead>
+                <tbody>
+                    {% for bloque in matriz_bloques %}
+                        <tr>
+                            <td><strong>{{ bloque }}</strong></td>
+                            {% for disponibilidad in matriz_bloques|dict_key:bloque %}
+                                <td>
+                                    {% if disponibilidad in lista_disponibilidades %}
+                                        SÍ
+                                    {% endif %}
+                                </td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+</div>

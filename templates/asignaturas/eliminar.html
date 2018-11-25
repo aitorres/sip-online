@@ -1,0 +1,19 @@
+<div class="modal-header">
+    <h5 class="modal-title" id="largeModalLabel">Eliminar asignatura</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <p>
+        ¿Esta seguro de querer eliminar la asignatura {{ asignatura.nombre }} ({{ asignatura.codigo_completo }})? 
+        Por favor, confirme la acción con los botones inferiores.
+        </p>
+        <form method="post" action="{% url 'gestion:eliminar-asignatura' asignatura.pk %}" id="f1">
+            {% csrf_token %}
+        </form>
+</div>
+<div class="modal-footer">
+    <button type="submit" class="btn btn-danger" form="f1" value="Submit" form="f1">Confirmar</button>
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+</div>
