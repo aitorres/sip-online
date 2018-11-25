@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Inicio{% endblock %}
+
+{% block content %}
+<div class="row">
+    <!-- Tarjeta de bienvenida -->
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <h4>Inicio</h4>
+            </div>
+            <div class="card-body">
+                ¡Bienvenido al Sistema de Inscripción de Postgrado Online!
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Widget de perfil de usuario -->
+    <div class="col-lg-6">
+        <aside class="profile-nav alt">
+            <section class="card">
+                <div class="card-header user-header alt bg-dark">
+                    <div class="media">
+                        <a href="#">
+                            <img class="align-self-center rounded-circle mr-3" style="width:50px; height:50px;" alt="" src="{% static 'images/admin.jpg' %}">
+                        </a>
+                        <div class="media-body">
+                            <h2 class="text-light display-6">
+                                {% if request.user.first_name and request.user.last_name %}
+                                    {{ request.user.first_name }} {{ request.user.last_name }}
+                                {% elif request.user.username %}
+                                    {{ request.user.username }}
+                                {% else %}
+                                    Usuario
+                                {% endif %}
+                            </h2>
+                            <p>Jefe de Departamento</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </aside>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Widget de Departamentos -->
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="stat-widget-one">
+                    <div class="stat-icon dib"><i class="ti-folder text-success border-success"></i></div>
+                    <div class="stat-content dib">
+                        <div class="stat-text">Departamentos agregados</div>
+                        <div class="stat-digit">{{ departamentos }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Widget de Profesores -->
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="stat-widget-one">
+                    <div class="stat-icon dib"><i class="ti-user text-primary border-primary"></i></div>
+                    <div class="stat-content dib">
+                        <div class="stat-text">Profesores agregados</div>
+                        <div class="stat-digit">{{ profesores }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Widget de Asignaturas -->
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="stat-widget-one">
+                    <div class="stat-icon dib"><i class="ti-layout-grid2 text-warning border-warning"></i></div>
+                    <div class="stat-content dib">
+                        <div class="stat-text">Asignaturas agregadas</div>
+                        <div class="stat-digit">{{ asignaturas }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

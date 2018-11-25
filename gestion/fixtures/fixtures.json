@@ -1,0 +1,838 @@
+[
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 1,
+    "fields": {
+      "dia": 1,
+      "bloque": 1
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 2,
+    "fields": {
+      "dia": 1,
+      "bloque": 2
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 3,
+    "fields": {
+      "dia": 1,
+      "bloque": 3
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 4,
+    "fields": {
+      "dia": 1,
+      "bloque": 4
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 5,
+    "fields": {
+      "dia": 1,
+      "bloque": 5
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 6,
+    "fields": {
+      "dia": 1,
+      "bloque": 6
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 7,
+    "fields": {
+      "dia": 1,
+      "bloque": 7
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 8,
+    "fields": {
+      "dia": 1,
+      "bloque": 8
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 9,
+    "fields": {
+      "dia": 1,
+      "bloque": 9
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 10,
+    "fields": {
+      "dia": 1,
+      "bloque": 10
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 11,
+    "fields": {
+      "dia": 1,
+      "bloque": 11
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 12,
+    "fields": {
+      "dia": 1,
+      "bloque": 12
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 13,
+    "fields": {
+      "dia": 2,
+      "bloque": 1
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 14,
+    "fields": {
+      "dia": 2,
+      "bloque": 2
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 15,
+    "fields": {
+      "dia": 2,
+      "bloque": 3
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 16,
+    "fields": {
+      "dia": 2,
+      "bloque": 4
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 17,
+    "fields": {
+      "dia": 2,
+      "bloque": 5
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 18,
+    "fields": {
+      "dia": 2,
+      "bloque": 6
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 19,
+    "fields": {
+      "dia": 2,
+      "bloque": 7
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 20,
+    "fields": {
+      "dia": 2,
+      "bloque": 8
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 21,
+    "fields": {
+      "dia": 2,
+      "bloque": 9
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 22,
+    "fields": {
+      "dia": 2,
+      "bloque": 10
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 23,
+    "fields": {
+      "dia": 2,
+      "bloque": 11
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 24,
+    "fields": {
+      "dia": 2,
+      "bloque": 12
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 24,
+    "fields": {
+      "dia": 3,
+      "bloque": 1
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 26,
+    "fields": {
+      "dia": 3,
+      "bloque": 2
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 27,
+    "fields": {
+      "dia": 3,
+      "bloque": 3
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 28,
+    "fields": {
+      "dia": 3,
+      "bloque": 4
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 29,
+    "fields": {
+      "dia": 3,
+      "bloque": 5
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 30,
+    "fields": {
+      "dia": 3,
+      "bloque": 6
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 31,
+    "fields": {
+      "dia": 3,
+      "bloque": 7
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 32,
+    "fields": {
+      "dia": 3,
+      "bloque": 8
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 33,
+    "fields": {
+      "dia": 3,
+      "bloque": 9
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 34,
+    "fields": {
+      "dia": 3,
+      "bloque": 10
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 35,
+    "fields": {
+      "dia": 3,
+      "bloque": 11
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 36,
+    "fields": {
+      "dia": 3,
+      "bloque": 12
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 37,
+    "fields": {
+      "dia": 4,
+      "bloque": 1
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 38,
+    "fields": {
+      "dia": 4,
+      "bloque": 2
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 39,
+    "fields": {
+      "dia": 4,
+      "bloque": 3
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 40,
+    "fields": {
+      "dia": 4,
+      "bloque": 4
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 41,
+    "fields": {
+      "dia": 4,
+      "bloque": 5
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 42,
+    "fields": {
+      "dia": 4,
+      "bloque": 6
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 43,
+    "fields": {
+      "dia": 4,
+      "bloque": 7
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 44,
+    "fields": {
+      "dia": 4,
+      "bloque": 8
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 45,
+    "fields": {
+      "dia": 4,
+      "bloque": 9
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 46,
+    "fields": {
+      "dia": 4,
+      "bloque": 10
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 47,
+    "fields": {
+      "dia": 4,
+      "bloque": 11
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 48,
+    "fields": {
+      "dia": 4,
+      "bloque": 12
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 49,
+    "fields": {
+      "dia": 5,
+      "bloque": 1
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 50,
+    "fields": {
+      "dia": 5,
+      "bloque": 2
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 51,
+    "fields": {
+      "dia": 5,
+      "bloque": 3
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 52,
+    "fields": {
+      "dia": 5,
+      "bloque": 4
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 53,
+    "fields": {
+      "dia": 5,
+      "bloque": 5
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 54,
+    "fields": {
+      "dia": 5,
+      "bloque": 6
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 55,
+    "fields": {
+      "dia": 5,
+      "bloque": 7
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 56,
+    "fields": {
+      "dia": 5,
+      "bloque": 8
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 57,
+    "fields": {
+      "dia": 5,
+      "bloque": 9
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 58,
+    "fields": {
+      "dia": 5,
+      "bloque": 10
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 59,
+    "fields": {
+      "dia": 5,
+      "bloque": 11
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 60,
+    "fields": {
+      "dia": 5,
+      "bloque": 12
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 61,
+    "fields": {
+      "dia": 6,
+      "bloque": 1
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 62,
+    "fields": {
+      "dia": 6,
+      "bloque": 2
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 63,
+    "fields": {
+      "dia": 6,
+      "bloque": 3
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 64,
+    "fields": {
+      "dia": 6,
+      "bloque": 4
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 65,
+    "fields": {
+      "dia": 6,
+      "bloque": 5
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 66,
+    "fields": {
+      "dia": 6,
+      "bloque": 6
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 67,
+    "fields": {
+      "dia": 6,
+      "bloque": 7
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 68,
+    "fields": {
+      "dia": 6,
+      "bloque": 8
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 69,
+    "fields": {
+      "dia": 6,
+      "bloque": 9
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 70,
+    "fields": {
+      "dia": 6,
+      "bloque": 10
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 71,
+    "fields": {
+      "dia": 6,
+      "bloque": 11
+    }
+  },
+  {
+    "model": "gestion.Disponibilidad",
+    "pk": 72,
+    "fields": {
+      "dia": 6,
+      "bloque": 12
+    }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 1,
+    "fields": {
+      "nombre": "Departamento de Física",
+      "codigo": "FS"
+    }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 2,
+    "fields": {
+      "nombre": "Departamento de Química",
+      "codigo": "QM"
+    }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 3,
+    "fields": {
+      "nombre": "Departamento de Mecánica",
+      "codigo": "MC"
+    }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 4,
+    "fields": {
+      "nombre": "Departamento de Matemáticas Puras y Aplicadas",
+      "codigo": "MA"
+    }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 5,
+    "fields": {
+      "nombre": "Departamento de Computación y Tecnología de la Información",
+      "codigo": "CI"
+    }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 6,
+    "fields": {
+      "nombre": "Departamento de Cómputo Científico y Estadística",
+      "codigo": "CO"
+    }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 7,
+    "fields": {
+      "nombre": "Departamento de Electrónica y Circuitos",
+      "codigo": "EC"
+    }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 8,
+    "fields": {
+      "nombre": "Departamento de Termodinámica y Fenómenos de Transferencia",
+      "codigo": "TF"
+    }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 9,
+    "fields": {
+      "nombre": "Departamento de Conversión y Transporte de Energía",
+      "codigo": "CT"
+    }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 10,
+    "fields": {
+      "nombre": "Departamento de Procesos y Sistemas",
+      "codigo": "PS"
+    }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 11,
+    "fields": {
+      "nombre": "Departamento de Ciencias de los Materiales",
+      "codigo": "MT"
+    }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 12,
+    "fields": {
+      "nombre": "Departamento de Ciencias de la Tierra",
+      "codigo": "GC"
+    }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 13,
+    "fields": {
+      "nombre": "Departamento de Ciencia y Tecnología del Comportamiento",
+      "codigo": "CC"
+    }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 14,
+    "fields": {
+      "nombre": "Departamento de Lengua y Literatura",
+      "codigo": "LL"
+    }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 15,
+    "fields": {
+      "nombre": "Departamento de Ciencias Económicas y Administrativas",
+      "codigo": "CE"
+    }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 16,
+    "fields": {
+      "nombre": "Departamento de Idiomas",
+      "codigo": "ID"
+    }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 17,
+    "fields": {
+      "nombre": "Departamento de Filosofía",
+      "codigo": "FL"
+    }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 18,
+    "fields": {
+      "nombre": "Departamento de Ciencias Sociales",
+      "codigo": "CS"
+    }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 19,
+    "fields": {
+      "nombre": "Departamento de Diseño, Arquitectura y Artes Plásticas",
+      "codigo": "DA"
+    }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 20,
+    "fields": {
+      "nombre": "Departamento de Planificación Urbana",
+      "codigo": "PF"
+    }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 21,
+    "fields": {
+      "nombre": "Departamento de Biología Celular",
+      "codigo": "BC"
+    }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 22,
+    "fields": {
+      "nombre": "Departamento de Estudios Ambientales",
+      "codigo": "EA"
+    }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 3,
+    "fields": {
+      "nombre": "Departamento de ",
+      "codigo": "MC"
+    }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 23,
+    "fields": {
+      "nombre": "Departamento de Biología de Organismos",
+      "codigo": "BO"
+    }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 24,
+    "fields": {
+      "nombre": "Departamento de Tecnología de Procesos Biológicos y Bioquímicos",
+      "codigo": "PB"
+    }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 25,
+    "fields": {
+      "nombre": "Departamento de Tecnología de Servicios",
+      "codigo": "TS"
+    }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 26,
+    "fields": {
+      "nombre": "Departamento de Tecnología Industrial",
+      "codigo": "TI"
+    }
+  },
+  {
+    "model": "gestion.Departamento",
+    "pk": 27,
+    "fields": {
+      "nombre": "Departamento de Formación General y Ciencias Básicas",
+      "codigo": "FG"
+    }
+  },
+  {
+    "model": "gestion.Asignatura",
+    "pk": 1,
+    "fields": {
+      "nombre": "Estructuras Discretas I",
+      "codigo_interno": "2525",
+      "departamento": 5
+    }
+  },
+  {
+    "model": "gestion.Asignatura",
+    "pk": 2,
+    "fields": {
+      "nombre": "Lógica Simbólica",
+      "codigo_interno": "2511",
+      "departamento": 5
+    }
+  },
+  {
+    "model": "gestion.Asignatura",
+    "pk": 3,
+    "fields": {
+      "nombre": "Ingeniería de Software I",
+      "codigo_interno": "3715",
+      "departamento": 5
+    }
+  },
+  {
+    "model": "gestion.Asignatura",
+    "pk": 4,
+    "fields": {
+      "nombre": "Sistemas de Información I",
+      "codigo_interno": "1115",
+      "departamento": 10
+    }
+  }
+]

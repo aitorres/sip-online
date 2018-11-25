@@ -25,7 +25,7 @@ SECRET_KEY = '&6wk!_(nl%dl51p7pca&un=oqcp!)6^!t=%r!+326y24bszb^#'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '0.0.0.0', '127.0.0.1']
 
 
 # Application definition
@@ -37,8 +37,18 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'gestion'
+    'gestion',
+    'django_nose'
 ]
+
+# Django-nose Measuring coverage
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+
+NOSE_ARGS = [
+    '--cover-package=gestion',
+    '--verbosity=2'
+]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

@@ -1,0 +1,23 @@
+{% extends 'base-error.html' %}
+
+{% block title %}Error 404{% endblock %}
+
+{% block content %}
+<h1 class="text-center">ERROR 404</h1>
+<hr/>
+<p>La página a la que intentaste solicitar, o la entidad que intentaste revisar, no existe. Si piensas que este es un error, contacta al equipo de desarrollo encargado.</p>
+<hr/>
+<a class="btn btn-primary text-center" href="{% url 'gestion:dashboard' %}">Volver al inicio</a>
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+	// Aquí va etiquetas javascript personalizadas si tienen
+</script>
+{% endblock %}
+
+{% block css %}
+<style type="text/css">
+/* Aquí va codigo css personalziado dentro de etiquetas style */
+</style>
+{% endblock %}

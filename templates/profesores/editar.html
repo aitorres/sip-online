@@ -1,0 +1,27 @@
+<div class="modal-header">
+    <h5 class="modal-title" id="largeModalLabel">Editar {{ profesor.nombre }} {{ profesor.apellido}}</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <p>         
+        <form method="POST" action="{% url 'gestion:editar-profesor' profesor.pk %}" id="f1" class="post-form">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="row form-group">
+                <div class="col-md-3">
+                    <label class=" form-control-label">{{ field.label_tag }}</label>
+                </div>
+                <div class="col-md-9">
+                    {{ field }}
+                </div>
+            </div>
+            {% endfor %}
+        </form>
+    </p>
+</div>
+<div class="modal-footer">
+    <button type="submit" class="btn btn-primary" form="f1">Modificar</button>
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+</div>
