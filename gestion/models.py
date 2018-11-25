@@ -1,6 +1,8 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 """
 Módulo que incluye los modelos a utilizar en el
@@ -228,3 +230,36 @@ class Disponibilidad(models.Model):
         """
 
         return self.get_dia_display() + ", bloque " + str(self.bloque)
+
+@receiver(post_save, sender=Profesor)
+def trigger_crear_usuario(sender, instance, **kwargs):
+    """
+    Trigger de la base de datos para crear un usuario asociado al profesor cuando
+    se crea este mismo.
+    """
+
+    # Marcamos la instancia recibida como profesor
+    profesor = instance
+
+    # Creamos el usuario asociado al profesor con una contraseña aleatoria
+    usuario = User.objects.create_user(
+        first_name=profesor.nombre,
+        last_name=profesor.apellido,
+        email=profesor.email,
+        username=profesor.email,
+    )
+    password = User.objects.make_random_password()
+    usuario.set_password(password)
+    usuario.save()
+
+    # PENDIENTE: Enviar correo electrónico para solicitar establecimiento
+    # de contraseña al profesor
+
+    # Desconectamos el trigger para poder asociar el usuario al profesor
+    post_save.disconnect(trigger_crear_usuario, sender=sender)
+    profesor.usuario = usuario
+    profesor.save()
+
+    # Volvemos a conectar el trigger
+    post_save.connect(trigger_crear_usuario, sender=sender)
+    return
