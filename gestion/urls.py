@@ -24,6 +24,8 @@ urlpatterns = [
     url(r'^profesores/eliminar/(?P<pk>[-\w]+)/$', views.EliminarProfesor.as_view() , name='eliminar-profesor'),
     url(r'^profesores/(?P<pk>[-\w]+)/$', views.VerProfesor.as_view(), name='ver-profesor'),
     url(r'^asignaturas$', views.ListarAsignaturas.as_view(), name='listar-asignaturas'),
+    url(r'^asignaturas/agregar/$', views.AgregarAsignatura.as_view(), name='agregar-asignatura'),
+    url(r'^asiganturas/editar/(?P<pk>[-\w]+)/$', views.EditarAsignatura.as_view() , name='editar-asignatura'),
     url(r'^asignaturas/eliminar/(?P<pk>[-\w]+)/$', views.EliminarAsignatura.as_view() , name='eliminar-asignatura'),
     url(r'^asignaturas/(?P<pk>[-\w]+)/$', views.VerAsignatura.as_view(), name='ver-asignatura'),
 ]
