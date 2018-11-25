@@ -21,14 +21,26 @@
     {% csrf_token %}
     {% for field in form %}
     <div class="row form-group">
-        <div class="col-md-5">
-            <label class=" form-control-label"><b>{{ field.label_tag }}</b></label>
-        </div>
-        <div class="col-md-7">
-            {{ field }}
-        </div>
+      <div class="col-md-5">
+          <label class="form-control-label">
+          	<b>
+          		{% if field.name != "username" %}
+          			{{ field.label_tag }}
+          		{% else %}
+          			Correo electrónico:
+          		{% endif %}
+          	</b>
+          </label>
+      </div>
+      <div class="col-md-7">
+        {{ field }}
+      </div>
     </div>
     {% endfor %}
     <button type="submit" class="btn btn-primary">Iniciar sesión</button>
   </form>
+
+  <script type="text/javascript">
+  	$("input").addClass('form-control');
+  </script>
 {% endblock %}
