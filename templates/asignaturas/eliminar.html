@@ -6,7 +6,7 @@
 </div>
 <div class="modal-body">
     <p>
-        ¿Esta seguro de querer eliminar la asignatura {{ asignatura.nombre }} {{ asignatura.departamento.codigo }}{{asignatura.codigo_interno}}? 
+        ¿Esta seguro de querer eliminar la asignatura {{ asignatura.nombre }} ({{ asignatura.codigo_completo }})? 
         Por favor, confirme la acción con los botones inferiores.
         </p>
         <form method="post" action="{% url 'gestion:eliminar-asignatura' asignatura.pk %}" id="f1">

@@ -61,7 +61,6 @@ class VerProfesor(generic.DetailView):
         # para saber qué campos mostrar como disponibles.
         lista_disponibilidades = []
         for disponibilidad in context['object'].disponibilidad.all():
-            
             # Obtenemos el identificador único del dia/bloque en particular
             # y lo almacenamos en la lista
             identificador = disponibilidad.identificador_unico()
@@ -275,5 +274,3 @@ class VerAsignatura(generic.DetailView):
     template_name = 'asignaturas/ver.html'
     model = Asignatura
     context_object_name = "asignatura"
-    
-
