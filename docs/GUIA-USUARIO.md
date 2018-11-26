@@ -8,7 +8,8 @@ Para revisar una documentación más técnica, puedes revisar la [guía del prog
 
 Al entrar en el link se muestra el login de la aplicacion. Este cuenta con un campo para ingresar el correo electronico del usuario y un campo para su contraseña. Los datos de superusuario del sistema son:
 
-*correo electronico: admin@usb.ve* \n
+*correo electronico: admin@usb.ve*
+
 *contraseña: 1234abcd*
 
 ![Inicio_sesion](imagenes/inicio_sesion.png "Vista de inicio de sesion")
