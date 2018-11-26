@@ -86,7 +86,7 @@ class Profesor(models.Model):
     cedula = models.CharField(max_length=12, unique=True)
     disponibilidad = models.ManyToManyField('Disponibilidad', blank=True)
     departamento = models.ForeignKey('Departamento')
-    email = models.EmailField(max_length=200)
+    email = models.EmailField(max_length=200, unique=True)
     asignaturas = models.ManyToManyField('Asignatura', blank=True)
     usuario = models.OneToOneField(User, blank=True, default=None, null=True)
 
