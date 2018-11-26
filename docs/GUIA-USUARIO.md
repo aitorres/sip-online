@@ -4,6 +4,16 @@ Este documento pretende servir como guía para el uso de la aplicación, de una 
 
 Para revisar una documentación más técnica, puedes revisar la [guía del programador](GUIA-PROGRAMADOR.md).
 
+## Login
+
+
+Al entrar en el link se muestra el login de la aplicacion. Este cuenta con un campo para ingresar el correo electronico del usuario y un campo para su contrase;a. Los datos de superusuario del sistema son:
+
+correo electronico: admin@usb.ven
+contrase;a: 1234abcd
+
+![Inicio_sesion](imagenes/inicio_sesion.png" "Vista de inicio de sesion")
+
 ## Inicio
 
 ![Dashboard](imagenes/dashboard.png "Vista del Dashboard")
@@ -27,7 +37,7 @@ Todas las operaciones están concentradas en la misma vista.
 
 ![Listar](imagenes/listar.png "Vista de Listar Profesores")
 
-El apartado de listar profesores es la vista por defecto de la página. Los profesores se distribuyen en una tabla dinámica que muestra la cédula, el nombre, el apellido, el departamento asociado y la lista de materias que puede dictar cada profesor. La tabla, en su parte inferior, cuenta con opciones de paginación para ver entre 10 y 100 profesores por página y avanzar entre ellas. En su parte superior, cuenta con un campo de búsqueda dinámico que puede filtrar por todos los campos mostrados con solo empezar a escribir. 
+El apartado de listar asignatura es la vista que aparece al momento de seleccionar "Gestionar profesores" en la barra lateral. Los profesores se distribuyen en una tabla dinámica que muestra la cédula, el nombre, el apellido, el departamento asociado y la lista de materias que puede dictar cada profesor. La tabla, en su parte inferior, cuenta con opciones de paginación para ver entre 10 y 100 profesores por página y avanzar entre ellas. En su parte superior, cuenta con un campo de búsqueda dinámico que puede filtrar por todos los campos mostrados con solo empezar a escribir. 
 
 Las acciones posibles en cuanto a gestión de la información son:
 - Agregar un profesor, haciendo clic en el botón azul que se encuentra encima de la tabla
@@ -64,3 +74,35 @@ Al hacer clic al ícono de editar un profesor (*lápiz*), se puede visualizar el
 ![Eliminar](imagenes/eliminar.png "Vista de Eliminar Profesor")
 
 Al hacer clic al ícono de eliminar un proefsor (*papelera*), se puede visualizar la ventana de confirmación de eliminación y hacer *confirmación* de la misma. Si se hace clic en el botón rojo, el profesor quedará eliminado del sistema. Si se hace clic en Cerrar o fuera de la ventana modal, se cerrará esta y no ocurrirá ningún cambio en la información.
+
+
+
+## Gestión Asignaturas
+
+
+El apartado de Gestión de asignaturas, al que se puede acceder con la barra de navegación lateral, permite realizar operaciones sobre los datos de asignaturas, como:
+
+- Agregar una asignatura nueva asignatura con sus datos respectivos
+- Modificar los datos de una asignatura existente
+- Eliminar una asignatura existente
+- Listar todas las asignaturas cargadas en sistema
+- Realizar búsquedas por nombre, codigo y departamento
+- Ver los detalles de atributos, horas de laboratorio, teoria y practica, unidad de credito y requisitos
+
+Todas las operaciones están concentradas en la misma vista
+
+
+
+### Listar asignatura
+
+![Listar_asignatura](imagenes/listar_asignatura.png "Vista de Listar Asignaturas")
+
+El apartado de listar asignatura es la vista que aparece al momento de seleccionar "Gestionar asignaturas" en la barra lateral. Las asignaturas se distribuyen en la tabla mostrando su codigo, nombre y departamento al que pertenece. La tabla, en su parte inferior, cuenta con opciones de paginación para ver entre 10 y 100 asignaturas por página y avanzar entre ellas. En su parte superior, cuenta con un campo de búsqueda dinámico que puede filtrar por todos los campos mostrados con solo empezar a escribir. 
+
+Las acciones posibles en cuanto a gestión de la información son:
+- Agregar una aginatura, haciendo clic en el botón azul que se encuentra encima de la tabla
+- Ver detalles de una asignatura, haciendo clic en el ícono de *ojo* en la celda de acciones de esa asignatura
+- Modificar una asignatura, haciendo clic en el ícono de *lápiz* en la celda de acciones de esa asignatura
+- Eliminar una asignatura, haciendo clic en el ícono de *papelera* en la celda de acciones de esa asignatura
+
+Esta vista incluye validaciones y mensajes de error o éxito en función del resultado de las acciones de gestión de la información.
