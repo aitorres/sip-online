@@ -12,7 +12,7 @@ Al entrar en el link se muestra el login de la aplicacion. Este cuenta con un ca
 correo electronico: admin@usb.ven
 contrase;a: 1234abcd
 
-![Inicio_sesion](imagenes/inicio_sesion.png" "Vista de inicio de sesion")
+![Inicio_sesion](imagenes/inicio_sesion.png "Vista de inicio de sesion")
 
 ## Inicio
 
@@ -95,7 +95,7 @@ Todas las operaciones están concentradas en la misma vista
 
 ### Listar asignatura
 
-![Listar_asignatura](imagenes/listar_asignatura.png "Vista de Listar Asignaturas")
+![Listar_asignatura](imagenes/listar_asignaturas.png "Vista de Listar Asignaturas")
 
 El apartado de listar asignatura es la vista que aparece al momento de seleccionar "Gestionar asignaturas" en la barra lateral. Las asignaturas se distribuyen en la tabla mostrando su codigo, nombre y departamento al que pertenece. La tabla, en su parte inferior, cuenta con opciones de paginación para ver entre 10 y 100 asignaturas por página y avanzar entre ellas. En su parte superior, cuenta con un campo de búsqueda dinámico que puede filtrar por todos los campos mostrados con solo empezar a escribir. 
 
