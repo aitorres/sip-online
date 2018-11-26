@@ -6,11 +6,10 @@ Para revisar una documentación más técnica, puedes revisar la [guía del prog
 
 ## Login
 
+Al entrar en el link se muestra el login de la aplicacion. Este cuenta con un campo para ingresar el correo electronico del usuario y un campo para su contraseña. Los datos de superusuario del sistema son:
 
-Al entrar en el link se muestra el login de la aplicacion. Este cuenta con un campo para ingresar el correo electronico del usuario y un campo para su contrase;a. Los datos de superusuario del sistema son:
-
-correo electronico: admin@usb.ven
-contrase;a: 1234abcd
+*correo electronico: admin@usb.ve* \n
+*contraseña: 1234abcd*
 
 ![Inicio_sesion](imagenes/inicio_sesion.png "Vista de inicio de sesion")
 
@@ -73,7 +72,7 @@ Al hacer clic al ícono de editar un profesor (*lápiz*), se puede visualizar el
 
 ![Eliminar](imagenes/eliminar.png "Vista de Eliminar Profesor")
 
-Al hacer clic al ícono de eliminar un proefsor (*papelera*), se puede visualizar la ventana de confirmación de eliminación y hacer *confirmación* de la misma. Si se hace clic en el botón rojo, el profesor quedará eliminado del sistema. Si se hace clic en Cerrar o fuera de la ventana modal, se cerrará esta y no ocurrirá ningún cambio en la información.
+Al hacer clic al ícono de eliminar un profesor (*papelera*), se puede visualizar la ventana de confirmación de eliminación y hacer *confirmación* de la misma. Si se hace clic en el botón rojo, el profesor quedará eliminado del sistema. Si se hace clic en Cerrar o fuera de la ventana modal, se cerrará esta y no ocurrirá ningún cambio en la información.
 
 
 
@@ -106,3 +105,29 @@ Las acciones posibles en cuanto a gestión de la información son:
 - Eliminar una asignatura, haciendo clic en el ícono de *papelera* en la celda de acciones de esa asignatura
 
 Esta vista incluye validaciones y mensajes de error o éxito en función del resultado de las acciones de gestión de la información.
+
+
+### Agregar una asignatura
+
+![Agregar_asignatura](imagenes/agregar_asignatura.png "Vista de Agregar Asignaturas")
+
+Al hacer clic al botón de agregar una asignatura, se puede llenar el formulario de inclusión de los datos de la asignatura y hacer *envío* del mismo. El campo *Departamento* es una lista desplegables con todos los departamentos existentes dentro del sistema. Los campos de *horas* permiten agregar datos numericos sobre la carga horaria de la asignatura. El campo *Requisitos* carga todas las asignaturas de ese departamento para ser agregadas como requisitos.
+
+
+### Visualizar detalles de asignatura
+
+![Ver detalles_asignatura](imagenes/detalles_asignatura.png "Ver detalles de asignatura")
+
+Al hacer clic al ícono de ver una asignatura (*ojo*), se puede visualizar la información almacenada de esa asignatura en dos secciones. La primera, muestra los datos de nombre, codigo y departamento. La segunda muestra una tabla con los posibles horarios semanales de la asignatura.
+
+### Editar una asignatura
+
+![Editar_asignatura](imagenes/editar_asignatura.png "Vista de Editar Asignatura")
+
+Al hacer clic al ícono de editar una asignatura (*lápiz*), se puede visualizar el formulario de edición de sus datos y hacer *envío* del mismo. Los campos son los mismos que se muestran en el formulario de *Agregar una aginatura* pero vienen pre-llenados con los datos actuales de la asignatura en cuestión. De igual manera, cuenta con validaciones y muestra los errores en caso de existir.
+
+### Eliminar una asignatura
+
+![Eliminar_asignatura](imagenes/eliminar_asignatura.png "Vista de Eliminar Asignatura")
+
+Al hacer clic al ícono de eliminar una asignatura (*papelera*), se puede visualizar la ventana de confirmación de eliminación y hacer *confirmación* de la misma. Si se hace clic en el botón rojo, el profesor quedará eliminado del sistema. Si se hace clic en Cerrar o fuera de la ventana modal, se cerrará esta y no ocurrirá ningún cambio en la información.
