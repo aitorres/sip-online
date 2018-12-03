@@ -275,6 +275,29 @@ class Disponibilidad(models.Model):
 
         return self.get_dia_display() + ", bloque " + str(self.bloque)
 
+class AsignacionProfesoral(models.Model):
+    """
+    Modelo que representa una asignación de una asignatura en un trimestre a un profesor de la USB.
+    Incluye la oferta trimestral, el profesor asociado, la asignatura asociada,un campo booleano que indica si la 
+    asignacion es final y el campo tipo que indica la modalidad de la materia
+    """
+    oferta_trimestral = models.ForeignKey('OfertaTrimestral')
+    profesor = models.ForeignKey('Profesor')
+    asignatura = models.ForeignKey('Asignatura')
+    final = models.BooleanField(default=False)
+    TEORIA = 'TEO'
+    PRACTICA = 'PRA'
+    OTRO ='OTR'
+    TIPO_CHOICES = (
+        (TEORIA, 'Teoría'),
+        (PRACTICA, 'Práctica'),
+        (OTRO,'Otro'),
+    )
+    tipo = models.CharField(
+        max_length=3,
+        choices=TIPO_CHOICES,
+    )
+
 @receiver(post_save, sender=Profesor)
 def trigger_actualizar_profesor(sender, instance, created, **kwargs):
     """
@@ -337,3 +360,4 @@ def trigger_eliminar_profesor(sender, instance, **kwargs):
     # Eliminamos el usuario y terminamos la ejecución
     usuario.delete()
     return
+
