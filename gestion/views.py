@@ -290,3 +290,11 @@ class VerAsignatura(generic.DetailView):
     template_name = 'asignaturas/ver.html'
     model = Asignatura
     context_object_name = "asignatura"
+
+class ListarOfertaView(generic.ListView):
+    """
+    Controlador que muestra una lista la oferta trimestral.
+    """
+    template_name = 'ofertas/listar.html'
+    model = OfertaTrimestral
+    context_object_name = "ofertas"
