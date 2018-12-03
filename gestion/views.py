@@ -291,7 +291,7 @@ class VerAsignatura(generic.DetailView):
     model = Asignatura
     context_object_name = "asignatura"
 
-class ListarOfertaView(generic.ListView):
+class ListarOfertasView(generic.ListView):
     """
     Controlador que muestra una lista la oferta trimestral.
     """
