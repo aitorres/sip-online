@@ -10,7 +10,7 @@ asociadas.
 from django.test import TestCase, RequestFactory
 from django.contrib.auth.models import AnonymousUser
 from django.db import IntegrityError
-from gestion.models import Profesor, Departamento, Asignatura, Disponibilidad
+from gestion.models import Profesor, Departamento, Asignatura, Disponibilidad, OfertaTrimestral
 from gestion.views import (
     Dashboard,
     AgregarProfesor,
@@ -602,6 +602,25 @@ class DisponibilidadModelTest(TestCase):
             self.cantidad_bloques * (disponibilidad.dia-1) + disponibilidad.bloque
         )
 
+class OfertaTrimestralModelTest(TestCase):
+    """
+    Suite de pruebas para el modelo OfertaTrimestral, que incluye
+    pruebas de frontera, de esquina y de malicia para los atributos
+    de este modelo, y para sus métodos asociados en caso de
+    que se agreguen posteriormente.
+    """
+
+    def setUp(self):
+        """
+        Método para crear los valores de la base de datos por defecto
+        antes de iniciar cada prueba.
+        """
+        OfertaTrimestral.objects.create(
+            trimestre="EM18",
+            codigo="EA-7841",
+            unidad_creditos=2,
+            denominacion="Evaluacion del impacto ambiental"
+            )
 
 class ModelosBDTest(TestCase):
     """
