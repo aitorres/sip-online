@@ -275,6 +275,18 @@ class Disponibilidad(models.Model):
 
         return self.get_dia_display() + ", bloque " + str(self.bloque)
 
+class OfertaTrimestral(models.Model):
+    """
+    Modelo que representa la oferta 
+    trimestra de un DEPARTAMENTO con los datos sobre:
+    trimestre de la oferta, su codigo, unidad de creditos de la materia, nombre de la materia y el profesor.
+    """
+    trimestre = models.CharField(max_length=4)
+    codigo = models.CharField(max_length=7, unique=True)
+    unidad_creditos = models.IntegerField(default=0)
+    denominacion = models.CharField(max_length=20)
+    profesor = models.ManyToManyField('Profesor', blank=True)
+
 class AsignacionProfesoral(models.Model):
     """
     Modelo que representa una asignación de una asignatura en un trimestre a un profesor de la USB.

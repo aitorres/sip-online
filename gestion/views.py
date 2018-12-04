@@ -3,7 +3,7 @@ from django.urls import reverse_lazy
 from django.views import generic
 from django.shortcuts import redirect
 from django.contrib.auth.mixins import LoginRequiredMixin 
-from gestion.models import Profesor, Asignatura, Departamento, Disponibilidad
+from gestion.models import Profesor, Asignatura, Departamento, Disponibilidad, OfertaTrimestral
 
 class Dashboard(LoginRequiredMixin, generic.TemplateView):
     """

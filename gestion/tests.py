@@ -615,12 +615,20 @@ class OfertaTrimestralModelTest(TestCase):
         Método para crear los valores de la base de datos por defecto
         antes de iniciar cada prueba.
         """
-        OfertaTrimestral.objects.create(
+    def test_nombre_asignatura(self):
+        """
+        PRUEBA 1 OFERTA TRIMESTAL: Se prueba el metodo nombre_asignatura del modelo OfertaTrimestral
+        PRIMERA CORRIDA: El metodo no existe
+        """
+
+        oferta = OfertaTrimestral.objects.create(
             trimestre="EM18",
             codigo="EA-7841",
             unidad_creditos=2,
-            denominacion="Evaluacion del impacto ambiental"
+            denominacion="Impacto ambiental"
             )
+        self.assertEqual(oferta.nombre_asignatura(), "Impacto ambiental")
+
 
 class ModelosBDTest(TestCase):
     """
