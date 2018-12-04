@@ -288,7 +288,10 @@ class OfertaTrimestral(models.Model):
     profesor = models.ManyToManyField('Profesor', blank=True)
 
     def nombre_asignatura(self):
-        return self.denominacion
+        """
+        Metdo que retorna el nombre de la asignatura de esta oferta
+        """
+        return self.denominacion   
 
 class AsignacionProfesoral(models.Model):
     """
