@@ -683,6 +683,7 @@ class ModelosBDTest(TestCase):
             cedula="V-18.555.555",
             departamento=dpto_compu
         )
+
         profesorMC = Profesor.objects.create(
             nombre="Luis",
             apellido="Plaza",
@@ -694,7 +695,7 @@ class ModelosBDTest(TestCase):
         profesorMC1 = Profesor.objects.create(
             nombre="Marcela",
             apellido="Fernandez",
-            email="12-10314@usb.ve",
+            email="12-10315@usb.ve",
             cedula="V-25.766.738",
             departamento=dpto_meca
         )
