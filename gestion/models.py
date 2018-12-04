@@ -291,7 +291,9 @@ class OfertaTrimestral(models.Model):
         """
         Metdo que retorna el nombre de la asignatura de esta oferta
         """
-        return self.denominacion   
+        return self.denominacion  
+    def tiene_profesor(self):
+        return bool(self.profesor) 
 
 class AsignacionProfesoral(models.Model):
     """
