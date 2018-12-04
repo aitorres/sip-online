@@ -284,8 +284,11 @@ class OfertaTrimestral(models.Model):
     trimestre = models.CharField(max_length=4)
     codigo = models.CharField(max_length=7, unique=True)
     unidad_creditos = models.IntegerField(default=0)
-    denominacion = models.CharField(max_length=20)
+    denominacion = models.CharField(max_length=50)
     profesor = models.ManyToManyField('Profesor', blank=True)
+
+    def nombre_asignatura(self):
+        return self.denominacion
 
 class AsignacionProfesoral(models.Model):
     """

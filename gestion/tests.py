@@ -618,7 +618,8 @@ class OfertaTrimestralModelTest(TestCase):
     def test_nombre_asignatura(self):
         """
         PRUEBA 1 OFERTA TRIMESTAL: Se prueba el metodo nombre_asignatura del modelo OfertaTrimestral
-        PRIMERA CORRIDA: El metodo no existe
+        PRIMERA CORRIDA: El metodo no existe. Falla
+        SEGUNDA CORRIDA: La prueba pasa.
         """
 
         oferta = OfertaTrimestral.objects.create(
