@@ -279,21 +279,13 @@ class OfertaTrimestral(models.Model):
     """
     Modelo que representa la oferta 
     trimestra de un DEPARTAMENTO con los datos sobre:
-    trimestre de la oferta, su codigo, unidad de creditos de la materia, nombre de la materia y el profesor.
+    El codigo de la forma XX00, donde la X representan la letra del trimestre por ejemplo EM
+    y los 00 representan el a;o, por ejemplo 18. Teniendo asi como trimestre EM18.
+    El campo estado, de tipo booleano, indica si la oferta es final o no.
     """
     trimestre = models.CharField(max_length=4)
-    codigo = models.CharField(max_length=7, unique=True)
-    unidad_creditos = models.IntegerField(default=0)
-    denominacion = models.CharField(max_length=50)
-    profesor = models.ManyToManyField('Profesor', blank=True)
-
-    def nombre_asignatura(self):
-        """
-        Metdo que retorna el nombre de la asignatura de esta oferta
-        """
-        return self.denominacion  
-    def tiene_profesor(self):
-        return bool(self.profesor) 
+    estado = models.BooleanField(default=False)
+    asignacion_profesoral = models.ForeignKey('AsignacionProfesoral')
 
 class AsignacionProfesoral(models.Model):
     """

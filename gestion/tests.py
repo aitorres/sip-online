@@ -602,61 +602,6 @@ class DisponibilidadModelTest(TestCase):
             self.cantidad_bloques * (disponibilidad.dia-1) + disponibilidad.bloque
         )
 
-class OfertaTrimestralModelTest(TestCase):
-    """
-    Suite de pruebas para el modelo OfertaTrimestral, que incluye
-    pruebas de frontera, de esquina y de malicia para los atributos
-    de este modelo, y para sus métodos asociados en caso de
-    que se agreguen posteriormente.
-    """
-
-    def setUp(self):
-        """
-        Método para crear los valores de la base de datos por defecto
-        antes de iniciar cada prueba.
-        """
-
-        
-        dpto_compu = Departamento.objects.create(
-            nombre="Departamento de Computación y Tecnología de la Información",
-            codigo="CI",
-        )
-
-        profesor1 = Profesor.objects.create(
-            nombre="Ángela",
-            apellido="Di Serio",
-            email="adiserio@usb.ve",
-            cedula="V-14.241.234",
-            departamento=dpto_compu,
-        )
-        oferta_tri = OfertaTrimestral.objects.create(
-            trimestre="EM18",
-            codigo="EA-7841",
-            unidad_creditos=2,
-            denominacion="Impacto ambiental",
-            )
-        oferta_tri.profesor.add(profesor1)
-
-
-    def test_nombre_asignatura(self):
-        """
-        PRUEBA 1 OFERTA TRIMESTAL: Se prueba el metodo nombre_asignatura del modelo OfertaTrimestral
-        PRIMERA CORRIDA: El metodo no existe. Falla
-        SEGUNDA CORRIDA: La prueba pasa.
-        """
-        oferta = OfertaTrimestral.objects.get(codigo="EA-7841")
-
-        self.assertEqual(oferta.nombre_asignatura(), "Impacto ambiental")
-
-    def test_tiene_profesor(self):
-        """
-        PRUEBA 2 OFERTA TRIMESTRAL: Se prueba el metodo tiene_profesor que retorna true en caso que la materia 
-        tenga un profesor asociado. False en caso contrario.
-        Primera corrida: La prueba falla, el metodo no existe
-        """
-        oferta = OfertaTrimestral.objects.get(codigo="EA-7841")
-        self.assertTrue(oferta.tiene_profesor())
-
 class ModelosBDTest(TestCase):
     """
     Suite de pruebas para probar el comportamiento de los modelos como una unidad.
