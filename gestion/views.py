@@ -3,7 +3,7 @@ from django.urls import reverse_lazy
 from django.views import generic
 from django.shortcuts import redirect
 from django.contrib.auth.mixins import LoginRequiredMixin 
-from gestion.models import Profesor, Asignatura, Departamento, Disponibilidad
+from gestion.models import Profesor, Asignatura, Departamento, Disponibilidad, OfertaTrimestral
 
 class Dashboard(LoginRequiredMixin, generic.TemplateView):
     """
@@ -290,3 +290,11 @@ class VerAsignatura(generic.DetailView):
     template_name = 'asignaturas/ver.html'
     model = Asignatura
     context_object_name = "asignatura"
+
+class ListarOfertasView(generic.ListView):
+    """
+    Controlador que muestra una lista la oferta trimestral.
+    """
+    template_name = 'ofertas/listar.html'
+    model = OfertaTrimestral
+    context_object_name = "ofertas"
