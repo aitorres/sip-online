@@ -910,19 +910,26 @@ class ModelosBDTest(TestCase):
         SEGUNDA CORRIDA: PASA
         """
 
+        dpto_ci = Departamento.objects.get(codigo="CI")
         oferta = OfertaTrimestral.objects.create(
             trimestre="EM18",
+            departamento=dpto_ci,
             es_final=False
             )
-        self.assertEqual(oferta.nombre_completo(),"Enero - Marzo 2018")
+        self.assertEqual(oferta.nombre_completo(), "Enero - Marzo 2018")
 
     def test_estado_oferta(self):
         """
         PRUEBA 13: Se prueba el campo booleano estado.
         PRIMERA CORRIDA: PASA
-        """ 
+        """
+
+        dpto_ci = Departamento.objects.get(codigo="CI")
+
         oferta = OfertaTrimestral.objects.create(
             trimestre="EM18",
+            departamento=dpto_ci,
             es_final=False
             )
-        self.assertEqual(oferta.estado(),"preliminar")
+
+        self.assertEqual(oferta.estado(), "preliminar")
