@@ -900,6 +900,7 @@ class ModelosBDTest(TestCase):
         """
         PRUEBA 12: Se prueba el metodo que retorna eel nombre y el estado.
         PRIMERA CORRIDA: FALLA
+        SEGUNDA CORRIDA: PASA
         """
 
         oferta = OfertaTrimestral.objects.create(
@@ -907,3 +908,14 @@ class ModelosBDTest(TestCase):
             es_final=False
             )
         self.assertEqual(oferta.nombre_completo(),"Enero - Marzo 2018")
+
+    def test_estado_oferta(self):
+        """
+        PRUEBA 13: Se prueba el campo booleano estado.
+        PRIMERA CORRIDA: PASA
+        """ 
+        oferta = OfertaTrimestral.objects.create(
+            trimestre="EM18",
+            es_final=False
+            )
+        self.assertEqual(oferta.estado(),"preliminar")
