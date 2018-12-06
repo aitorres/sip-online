@@ -1,6 +1,8 @@
 from django.db import models
+from django.core.mail import send_mail
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.contrib.auth.models import User
+from django.template import loader
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 
@@ -11,6 +13,25 @@ Sistema de Inscripción de Postgrado Online (SIP-Online).
 Incluye modelos para representar departamentos, profesores,
 asignaturas y otros modelos auxiliares que se referencian entre sí.
 """
+
+def _enviar_correo(para, asunto, plantilla_mensaje, contexto):
+    """
+    Función privada para enviar un correo electrónico a los profesores
+    según sea necesario.
+    """
+
+    mensaje = loader.render_to_string(
+        plantilla_mensaje,
+        contexto
+    )
+
+    return send_mail(
+        asunto,
+        mensaje,
+        "SIP Online <no-reply@sip-online.com>",
+        [para],
+        fail_silently=False,
+    )
 
 class Departamento(models.Model):
     """
@@ -365,6 +386,19 @@ class OfertaTrimestral(models.Model):
 
         return asignaturas
 
+    def profesores_ofertados(self):
+        """
+        Retorna un queryset que incluye todos los profesores ofertados en un trimestre
+        según la asignación profesoral.
+        """
+
+        asignaciones = AsignacionProfesoral.objects.filter(oferta_trimestral=self)
+        profesores = set(
+            [asignacion.profesor for asignacion in asignaciones]
+        )
+
+        return profesores
+
     def __str__(self):
         """
         Retorna una representación como cadena de caracteres de la oferta trimestral.
@@ -394,6 +428,7 @@ class AsignacionProfesoral(models.Model):
     profesor = models.ForeignKey('Profesor')
     asignatura = models.ForeignKey('Asignatura')
     es_final = models.BooleanField(default=False)
+    es_preferida = models.BooleanField(default=False)
     tipo = models.CharField(
         max_length=3,
         choices=TIPO_CHOICES,
@@ -423,8 +458,16 @@ def trigger_actualizar_profesor(sender, instance, created, **kwargs):
         usuario.set_password(password)
         usuario.save()
 
-        # PENDIENTE: Enviar correo electrónico para solicitar establecimiento
-        # de contraseña al profesor
+        # Notificamos la creación del usuario
+        _enviar_correo(
+            profesor.email,
+            "[SIP ONLINE] Usuario creado",
+            'emails/usuario_creado.html',
+            {
+                'password': password,
+                'nombre': "%s %s" % (profesor.nombre, profesor.apellido)
+            }
+        )
 
         # Desconectamos el trigger para poder asociar el usuario al profesor
         post_save.disconnect(trigger_actualizar_profesor, sender=sender)

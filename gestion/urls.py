@@ -35,4 +35,7 @@ urlpatterns = [
     ]), name='agregar-oferta'),
     url(r'^ofertas/eliminar/(?P<pk>[-\w]+)/$', views.EliminarOferta.as_view(), name='eliminar-oferta'),
     url(r'^ofertas/(?P<pk>[-\w]+)/$', views.VerOferta.as_view(), name='ver-oferta'),
+    url(r'^ofertas-asignacion/$', views.ListarOfertasIncluyentes.as_view(), name='listar-ofertas-asignacion'),
+    url(r'^ofertas-asignacion/actualizar/(?P<pk_oferta>[-\w]+)/$', views.actualizar_preferencias, name='actualizar-preferencias'),
+    url(r'^ofertas-asignacion/(?P<pk>[-\w]+)/$', views.VerOfertaIncluyente.as_view(), name='ver-oferta-asignacion'),
 ]
