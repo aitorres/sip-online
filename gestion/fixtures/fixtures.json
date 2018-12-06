@@ -612,7 +612,8 @@
     "pk": 5,
     "fields": {
       "nombre": "Departamento de Computación y Tecnología de la Información",
-      "codigo": "CI"
+      "codigo": "CI",
+      "jefe": 1
     }
   },
   {
@@ -846,15 +847,15 @@
   },
   {
     "model": "auth.user",
-    "pk": 10,
+    "pk": 1,
     "fields": {
         "password": "pbkdf2_sha256$36000$kBPK8e4L97hc$L4znr9o7ppF1ZAP/7cWLWy8DMlXRM+Pz0TegC2kcWwQ=",
         "last_login": null,
         "is_superuser": true,
         "username": "admin",
-        "first_name": "Admin",
-        "last_name": "Super Usuario",
-        "email": "admin@usb.ve",
+        "first_name": "Javier",
+        "last_name": "Medina",
+        "email": "javi393@gmail.com",
         "is_staff": true,
         "is_active": true,
         "date_joined": "2018-11-25T19:53:38.524Z",
@@ -864,15 +865,15 @@
   },
   {
     "model": "auth.user",
-    "pk": 20,
+    "pk": 2,
     "fields": {
         "password": "pbkdf2_sha256$36000$kBPK8e4L97hc$L4znr9o7ppF1ZAP/7cWLWy8DMlXRM+Pz0TegC2kcWwQ=",
         "last_login": null,
         "is_superuser": true,
         "username": "admin2",
-        "first_name": "Admin2",
-        "last_name": "Super Usuario",
-        "email": "admin2@usb.ve",
+        "first_name": "Andrés",
+        "last_name": "Torres",
+        "email": "andres@gmail.com",
         "is_staff": true,
         "is_active": true,
         "date_joined": "2018-11-25T19:53:38.524Z",
@@ -882,15 +883,15 @@
   },
   {
     "model": "auth.user",
-    "pk": 30,
+    "pk": 3,
     "fields": {
         "password": "pbkdf2_sha256$36000$kBPK8e4L97hc$L4znr9o7ppF1ZAP/7cWLWy8DMlXRM+Pz0TegC2kcWwQ=",
         "last_login": null,
         "is_superuser": true,
         "username": "admin3",
-        "first_name": "Admin3",
-        "last_name": "Super Usuario",
-        "email": "admin3@usb.ve",
+        "first_name": "Federico",
+        "last_name": "Flaviani",
+        "email": "federicof@gmail.com",
         "is_staff": true,
         "is_active": true,
         "date_joined": "2018-11-25T19:53:38.524Z",
@@ -907,7 +908,7 @@
       "cedula": "V-22.900.616",
       "departamento": 5,
       "email": "javi393@gmail.com",
-      "usuario": 10
+      "usuario": 1
     }
   },
   {
@@ -918,8 +919,8 @@
       "apellido": "Torres",
       "cedula": "V-23.900.616",
       "departamento": 5,
-      "email": "Andres@gmail.com",
-      "usuario": 20
+      "email": "andres@gmail.com",
+      "usuario": 2
     }
   },
   {
@@ -931,8 +932,8 @@
       "cedula": "V-11.443.616",
       "departamento": 5,
       "email": "federicof@gmail.com",
-      "usuario": 30
+      "usuario": 3
     }
-  }
+  },
 
 ]
