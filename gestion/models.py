@@ -99,7 +99,12 @@ class Profesor(models.Model):
         # Ordenamiento por defecto: según su cédula
         ordering = ["cedula"]
 
+    def es_jefe(self):
+        """
+        Determina si un profesor es jefe de su departamento asignado.
+        """
 
+        return self.departamento.jefe == self
 
     def __str__(self):
         """
