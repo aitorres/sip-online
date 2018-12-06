@@ -28,16 +28,16 @@
                 <tr>
                   <th>Código</th>
                   <th>Nombre</th>
-                  <th>Departamento</th>
+                  <th>Estado</th>
                   <th>Acciones</th>
                 </tr>
               </thead>
               <tbody>
-              	{% for asignatura in asignaturas %}
+              	{% for oferta in ofertas %}
               	<tr>
-                  <td>{{ asignatura.codigo_completo}}</td>
-              		<td>{{ asignatura.nombre }}</td>
-              		<td>{{ asignatura.departamento }}</td>
+                  <td>{{ oferta.trimestre}}</td>
+              		<td>{{ oferta.nombre_completo }}</td>
+              		<td>{{ oferta.estado }}</td>
               		<td class="acciones">
                     <i class="fa fa-eye trigger" class="boton-ver" data-toggle="modal" data-target="#modalCRUD" data-url="{% url 'gestion:ver-asignatura' asignatura.pk %}" aria-hidden="true"></i>
                     &nbsp;
