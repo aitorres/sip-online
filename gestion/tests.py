@@ -10,7 +10,14 @@ asociadas.
 from django.test import TestCase, RequestFactory
 from django.contrib.auth.models import AnonymousUser
 from django.db import IntegrityError
-from gestion.models import Profesor, Departamento, Asignatura, Disponibilidad, OfertaTrimestral
+
+from gestion.models import (
+    Profesor,
+    Departamento,
+    Asignatura,
+    Disponibilidad,
+    OfertaTrimestral
+)
 from gestion.views import (
     Dashboard,
     AgregarProfesor,

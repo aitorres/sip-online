@@ -28,6 +28,6 @@ urlpatterns = [
     url(r'^asiganturas/editar/(?P<pk>[-\w]+)/$', views.EditarAsignatura.as_view() , name='editar-asignatura'),
     url(r'^asignaturas/eliminar/(?P<pk>[-\w]+)/$', views.EliminarAsignatura.as_view() , name='eliminar-asignatura'),
     url(r'^asignaturas/(?P<pk>[-\w]+)/$', views.VerAsignatura.as_view(), name='ver-asignatura'),
-    url(r'^ofertas/listar$', views.ListarOfertasView.as_view(), name='listar-ofertas'),
-
+    url(r'^ofertas/listar$', views.ListarOfertas.as_view(), name='listar-ofertas'),
+    url(r'^ofertas/eliminar/(?P<pk>[-\w]+)/$', views.EliminarOferta.as_view(), name='eliminar-ofertas'),
 ]

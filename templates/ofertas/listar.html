@@ -19,7 +19,7 @@
     <div class="card">
         <div class="card-header">
             <button type="button" data-toggle="modal" data-target="#modalCRUD" class="btn btn-primary float-right trigger" form="f1" data-url="{% url 'gestion:agregar-asignatura' %}">Agregar</button>
-            <h4>Asignaturas</h4>
+            <h4>Ofertas Trimestrales</h4>
         </div>
         <div class="card-body">
 
@@ -28,22 +28,22 @@
                 <tr>
                   <th>Código</th>
                   <th>Nombre</th>
-                  <th>Departamento</th>
+                  <th>Estado</th>
                   <th>Acciones</th>
                 </tr>
               </thead>
               <tbody>
-              	{% for asignatura in asignaturas %}
+              	{% for oferta in ofertas %}
               	<tr>
-                  <td>{{ asignatura.codigo_completo}}</td>
-              		<td>{{ asignatura.nombre }}</td>
-              		<td>{{ asignatura.departamento }}</td>
+                  <td>{{ oferta.trimestre}}</td>
+              		<td>{{ oferta.nombre_completo }}</td>
+              		<td>{{ oferta.estado }}</td>
               		<td class="acciones">
-                    <i class="fa fa-eye trigger" class="boton-ver" data-toggle="modal" data-target="#modalCRUD" data-url="{% url 'gestion:ver-asignatura' asignatura.pk %}" aria-hidden="true"></i>
+                    <i class="fa fa-eye trigger" class="boton-ver" data-toggle="modal" data-target="#modalCRUD" data-url="{% url 'gestion:ver-oferta' oferta.pk %}" aria-hidden="true"></i>
                     &nbsp;
-                    <i class="fa fa-pencil trigger" class="boton-editar" data-toggle="modal" data-target="#modalCRUD" data-url="{% url 'gestion:editar-asignatura' asignatura.pk %}" aria-hidden="true"></i>
+                    <i class="fa fa-pencil trigger" class="boton-editar" data-toggle="modal" data-target="#modalCRUD" data-url="{% url 'gestion:editar-oferta' oferta.pk %}" aria-hidden="true"></i>
                     &nbsp;
-                    <i class="fa fa-trash-o trigger" class="boton-eliminar" data-toggle="modal" data-target="#modalCRUD" data-url="{% url 'gestion:eliminar-asignatura' asignatura.pk %}" aria-hidden="true"></i>  
+                    <i class="fa fa-trash-o trigger" class="boton-eliminar" data-toggle="modal" data-target="#modalCRUD" data-url="{% url 'gestion:eliminar-oferta' oferta.pk %}" aria-hidden="true"></i>
                   </td>
               	</tr>
               	{% endfor %}
