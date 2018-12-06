@@ -283,7 +283,11 @@ class OfertaTrimestral(models.Model):
     El campo es_final, de tipo booleano, indica si la oferta es final o no.
     """
 
-    trimestre = models.CharField(max_length=4, unique=True)
+    trimestre = models.CharField(max_length=4)
+    departamento = models.ForeignKey(
+        "Departamento",
+        on_delete=models.CASCADE
+    )
     es_final = models.BooleanField(default=False)
 
     def nombre_completo(self):
