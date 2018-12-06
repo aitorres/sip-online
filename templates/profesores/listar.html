@@ -101,9 +101,12 @@
           $(".chosen").chosen({ width: '100%', no_results_text: "No hay resultados para: "});
 
           var regExpMask = new IMask(
-          document.getElementById('cedula'), // aquí el valor debería ser 'id_cedula'
+          document.getElementById('id_cedula'), // aquí el valor debería ser 'id_cedula'
           {
-            mask: /$^/ // aquí debería ir un regex
+            mask: '#-00.000.000',
+            definitions: {
+             '#': /[VvEe]/
+            }  // aquí debería ir un regex
           });
       }
     })
