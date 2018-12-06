@@ -119,14 +119,14 @@ class Asignatura(models.Model):
     nombre, código y departamento asociado.
     """
 
-    nombre = models.CharField(max_length=60)
-    codigo_interno = models.CharField(max_length=4, unique=True)
-    departamento = models.ForeignKey('Departamento')
-    horas_laboratorio = models.IntegerField(default=0)
-    horas_teoria = models.IntegerField(default=0)
-    horas_practica = models.IntegerField(default=0)
-    unidad_creditos = models.IntegerField(default=0)
-    requisitos = models.ManyToManyField('Asignatura', blank=True)
+    nombre = models.CharField(max_length=60, verbose_name="Nombre de la asignatura")
+    codigo_interno = models.CharField(max_length=4, unique=True, verbose_name="Código interno")
+    departamento = models.ForeignKey('Departamento', verbose_name="Departamento asociado")
+    horas_laboratorio = models.IntegerField(default=0, verbose_name="Horas de Laboratorio")
+    horas_teoria = models.IntegerField(default=0, verbose_name="Horas de Teoría")
+    horas_practica = models.IntegerField(default=0, verbose_name="Horas de Práctica")
+    unidad_creditos = models.IntegerField(default=0, verbose_name="Unidades de Crédito (U.C.)")
+    requisitos = models.ManyToManyField('Asignatura', blank=True, verbose_name="Requisitos")
 
     class Meta:
         """
@@ -192,6 +192,16 @@ class Asignatura(models.Model):
                 lista_profesores.add(prof)
 
         return lista_profesores
+
+    def horarios(self):
+        profesores = self.profesores()
+        disponibilidades = set()
+
+        for profesor in profesores:
+            for momento in profesor.disponibilidad.all():
+                disponibilidades.add(momento.identificador_unico())
+        
+        return disponibilidades
 
     def __str__(self):
         """

@@ -22,7 +22,8 @@ class AgregarOfertaTrimestralPaso1(forms.Form):
 
     ano = forms.IntegerField(
         min_value=1967,
-        max_value=2200
+        max_value=2200,
+        label="Año"
     )
 
     departamento = forms.ModelChoiceField(
