@@ -99,12 +99,7 @@ class Profesor(models.Model):
         # Ordenamiento por defecto: según su cédula
         ordering = ["cedula"]
 
-    def es_jefe(self):
-        """
-        Determina si un profesor es jefe de su departamento asignado.
-        """
 
-        return self.departamento.jefe == self
 
     def __str__(self):
         """
@@ -293,7 +288,7 @@ class OfertaTrimestral(models.Model):
         """
 
         NOMBRES = {
-            'EM': "Enero  Marzo",
+            'EM': "Enero - Marzo",
             'AJ': "Abril - Julio",
             'JA': "Julio - Agosto",
             'SD': "Septiembre - Diciembre"

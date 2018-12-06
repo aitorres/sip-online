@@ -904,7 +904,7 @@
     "fields": {
       "nombre": "Javier",
       "apellido": "Medina",
-      "cedula": "22900616",
+      "cedula": "V-22.900.616",
       "departamento": 5,
       "email": "javi393@gmail.com",
       "usuario": 10
@@ -916,7 +916,7 @@
     "fields": {
       "nombre": "Andres",
       "apellido": "Torres",
-      "cedula": "23900616",
+      "cedula": "V-23.900.616",
       "departamento": 5,
       "email": "Andres@gmail.com",
       "usuario": 20
@@ -928,7 +928,7 @@
     "fields": {
       "nombre": "Federico",
       "apellido": "Flaviani",
-      "cedula": "10887432",
+      "cedula": "V-11.443.616",
       "departamento": 5,
       "email": "federicof@gmail.com",
       "usuario": 30

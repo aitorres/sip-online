@@ -833,3 +833,23 @@ class ModelosBDTest(TestCase):
         Asignatura.objects.get(codigo_interno="3661").delete()
         asignatura2 = Asignatura.objects.get(codigo_interno="3715")
         self.assertFalse(asignatura2.tiene_requisito())
+
+    def test_es_jefe_mismo_dpto(self):
+        """
+        PRUEBA 9: Se probara que un profesor es jefe de su propio departamento
+
+        PRIMERA CORRIDA: FALLA porq no existe el metodo.
+        
+        """
+        dpto_ci = Departamento.objects.get(codigo="CI")
+        vicente=Profesor.objects.create(
+                nombre="Vicente",
+                apellido="Yriarte",
+                email="vy@usb.ve",
+                cedula="V-9.877.999",
+                departamento=dpto_ci
+            )
+        dpto_ci.jefe = vicente
+        dpto_ci.save()
+        self.assertTrue(vicente.es_jefe())
+
