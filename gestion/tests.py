@@ -821,7 +821,6 @@ class ModelosBDTest(TestCase):
             dpto_ci.save()
             dpto_mc.save()
 
-
     def test_eliminar_asignatura_requisito(self):
         """
         PRUEBA 8: Se probara que si una materia es eliminada
@@ -897,3 +896,14 @@ class ModelosBDTest(TestCase):
         vicente.save()
         self.assertFalse(vicente.es_jefe())
 
+    def test_nombre_oferta(self):
+        """
+        PRUEBA 12: Se prueba el metodo que retorna eel nombre y el estado.
+        PRIMERA CORRIDA: FALLA
+        """
+
+        oferta = OfertaTrimestral.objects.create(
+            trimestre="EM18",
+            es_final=False
+            )
+        self.assertEqual(oferta.nombre_completo(),"Enero - Marzo 2018")
