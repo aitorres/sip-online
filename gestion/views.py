@@ -291,10 +291,40 @@ class VerAsignatura(generic.DetailView):
     model = Asignatura
     context_object_name = "asignatura"
 
-class ListarOfertasView(generic.ListView):
+class ListarOfertas(generic.ListView):
     """
     Controlador que muestra una lista la oferta trimestral.
     """
     template_name = 'ofertas/listar.html'
     model = OfertaTrimestral
     context_object_name = "ofertas"
+
+class EliminarOferta(generic.DeleteView):
+    """
+    Controlador que maneja la lógica y el formulario para
+    eliminar una oferta trimestral dada.
+    """
+
+    template_name = 'ofertas/eliminar.html'
+    model = OfertaTrimestral
+    success_url = reverse_lazy('gestion:listar-ofertas')
+
+    def get_success_url(self):
+        """
+        Si la eliminación de la oferta trimestral es un éxito, muestra un mensaje de
+        éxito utilizando el framework de mensajes de Django y redirecciona a la URL
+        de éxito, que en este caso es la lista de ofertas trimestrales.
+        """
+
+        messages.success(self.request, 'La oferta trimestral ha sido eliminada satisfactoriamente.')
+        return super(EliminarOferta, self).get_success_url()
+
+    def form_invalid(self, form):
+        """
+        En caso de que el formulario para eliminar  se reciba inválido, muestra un mensaje de
+        error utilizando el framework de mensajes de Django y redirecciona a la URL
+        de éxito, que en este caso es la lista de ofertas trimestrales.
+        """
+
+        messages.warning(self.request, 'Ocurrió un error al eliminar la oferta trimestral.')
+        return redirect(self.success_url)
