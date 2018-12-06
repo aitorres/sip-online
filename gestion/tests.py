@@ -876,4 +876,24 @@ class ModelosBDTest(TestCase):
         except:
             pass
 
+    def test_cambio_dpto(self):
+        """
+        PRUEBA 11: Se probara que se agrega un dpto correcto y 
+        luego uno incorrecto a un profesor y el metodo funciona.
+        """ 
+        dpto_ci = Departamento.objects.get(codigo="CI")
+        dpto_mc = Departamento.objects.get(codigo="MC")
+        vicente=Profesor.objects.create(
+                nombre="Vicente",
+                apellido="Yriarte",
+                email="vy@usb.ve",
+                cedula="V-9.877.999",
+                departamento=dpto_ci
+            )
+        dpto_ci.jefe = vicente
+        dpto_ci.save()
+        self.assertTrue(vicente.es_jefe())
+        vicente.departamento = dpto_mc
+        vicente.save()
+        self.assertFalse(vicente.es_jefe())
 
