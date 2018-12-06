@@ -376,6 +376,19 @@ class OfertaTrimestral(models.Model):
 
         return asignaturas
 
+    def profesores_ofertados(self):
+        """
+        Retorna un queryset que incluye todos los profesores ofertados en un trimestre
+        según la asignación profesoral.
+        """
+
+        asignaciones = AsignacionProfesoral.objects.filter(oferta_trimestral=self)
+        profesores = set(
+            [asignacion.profesor for asignacion in asignaciones]
+        )
+
+        return profesores
+
     def __str__(self):
         """
         Retorna una representación como cadena de caracteres de la oferta trimestral.
@@ -405,6 +418,7 @@ class AsignacionProfesoral(models.Model):
     profesor = models.ForeignKey('Profesor')
     asignatura = models.ForeignKey('Asignatura')
     es_final = models.BooleanField(default=False)
+    es_preferida = models.BooleanField(default=False)
     tipo = models.CharField(
         max_length=3,
         choices=TIPO_CHOICES,

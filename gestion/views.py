@@ -3,10 +3,12 @@ from django.core.mail import send_mail
 from django.db import IntegrityError
 from django.urls import reverse_lazy
 from django.views import generic
-from django.shortcuts import redirect
+from django.shortcuts import render, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.template import loader
 from formtools.wizard.views import SessionWizardView
+from django.contrib.auth.decorators import login_required
+from django.utils.datastructures import MultiValueDictKeyError
 
 from gestion.models import (
     Profesor,
@@ -68,6 +70,12 @@ class ListarProfesores(LoginRequiredMixin, generic.ListView):
     template_name = 'profesores/listar.html'
     model = Profesor
     context_object_name = "profesores"
+
+    def get_queryset(self):
+        profesores = Profesor.objects.filter(
+            departamento = self.request.user.profesor.departamento
+        )
+        return profesores
 
 class VerProfesor(LoginRequiredMixin, generic.DetailView):
     """
@@ -221,6 +229,12 @@ class ListarAsignaturas(generic.ListView):
     model = Asignatura
     context_object_name = "asignaturas"
 
+    def get_queryset(self):
+        asignaturas = Asignatura.objects.filter(
+            departamento = self.request.user.profesor.departamento
+        )
+        return asignaturas
+
 class AgregarAsignatura(generic.CreateView):
     """
     Controlador que maneja la lógica de agregar una asignatura
@@ -328,6 +342,35 @@ class ListarOfertas(generic.ListView):
     template_name = 'ofertas/listar.html'
     model = OfertaTrimestral
     context_object_name = "ofertas"
+
+    def get_queryset(self):
+        ofertas = OfertaTrimestral.objects.filter(
+            departamento = self.request.user.profesor.departamento
+        )
+        return ofertas
+
+class ListarOfertasIncluyentes(generic.ListView):
+    """
+    Controlador que muestra una lista las ofertas trimestrales en las que
+    puedo marcar mi preferencia como profesor.
+    """
+
+    template_name = 'ofertas-asignacion/listar.html'
+    model = OfertaTrimestral
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        ofertas = OfertaTrimestral.objects.all()
+        ofertas = [o for o in ofertas if not o.es_final]
+        ofertas_importantes = []
+
+        for oferta in ofertas:
+            if self.request.user.profesor in oferta.profesores_ofertados():
+                ofertas_importantes.append(oferta)
+
+        context['ofertas'] = ofertas_importantes
+        return context
 
 class EliminarOferta(generic.DeleteView):
     """
@@ -474,3 +517,65 @@ class VerOferta(LoginRequiredMixin, generic.DetailView):
         context['asignaciones'] = asignaciones
 
         return context
+
+class VerOfertaIncluyente(LoginRequiredMixin, generic.DetailView):
+    """
+    Controlador que permite visualizar los datos en detalle de una oferta
+    trimestral en particular.
+    """
+
+    template_name = 'ofertas-asignacion/ver.html'
+    model = OfertaTrimestral
+    context_object_name = "oferta"
+
+    def get_context_data(self, **kwargs):
+        """
+        Permite agregar contenido adicional al diccionario genérico de
+        contexto para pasar al template y que se renderice posteriormente.
+        """
+
+        # Obtenemos el diccionario de contexto por defecto
+        context = super(VerOfertaIncluyente, self).get_context_data(**kwargs)
+
+        # Obtenemos las asignaciones profesorales asignadas a esta oferta
+        oferta = context['object']
+        asignaciones = AsignacionProfesoral.objects.filter(
+            oferta_trimestral=oferta,
+            profesor=self.request.user.profesor
+        )
+
+        context['asignaciones'] = asignaciones
+
+        return context
+
+@login_required
+def actualizar_preferencias(request, pk_oferta):
+    template_name = 'ofertas-asignacion/actualizar.html'
+
+    oferta = OfertaTrimestral.objects.get(pk=pk_oferta)
+    asignaciones = AsignacionProfesoral.objects.filter(
+        oferta_trimestral=oferta,
+        profesor=request.user.profesor
+    )
+
+    if request.method == 'POST':
+        for asignacion in asignaciones:
+            try:
+                marcado = request.POST['%s' % asignacion.id] == 'on'
+            except MultiValueDictKeyError:
+                marcado = False
+
+            asignacion.es_preferida = marcado
+            asignacion.save()
+
+        messages.success(request, 'Preferencias actualizadas satisfactoriamente.')
+        return redirect('gestion:listar-ofertas-asignacion')
+    else:
+        return render(
+            request,
+            template_name,
+            {
+                'asignaciones': asignaciones,
+                'oferta': oferta
+            }
+        )

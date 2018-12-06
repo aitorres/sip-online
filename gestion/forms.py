@@ -37,8 +37,14 @@ class AgregarOfertaTrimestralPaso2(forms.Form):
 
      def __init__(self, *args, **kwargs):
         super(AgregarOfertaTrimestralPaso2, self).__init__(*args, **kwargs)
-        cantidad = Asignatura.objects.all().count()
-        for i in range(cantidad):
+        asignaturas = Asignatura.objects.all()
+
+        ultimo_id = 1
+        for asig in asignaturas:
+            if asig.id > ultimo_id:
+                ultimo_id = asig.id
+
+        for i in range(ultimo_id):
             id_asignatura = i+1
             self.fields['profesores_%d' % id_asignatura] = forms.ModelMultipleChoiceField(
                 queryset=Profesor.objects.filter(asignaturas__id__contains=id_asignatura),
