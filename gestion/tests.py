@@ -839,7 +839,8 @@ class ModelosBDTest(TestCase):
         PRUEBA 9: Se probara que un profesor es jefe de su propio departamento
 
         PRIMERA CORRIDA: FALLA porq no existe el metodo.
-        
+        SEGUNDA CORRIDA: PASA
+
         """
         dpto_ci = Departamento.objects.get(codigo="CI")
         vicente=Profesor.objects.create(
@@ -852,4 +853,27 @@ class ModelosBDTest(TestCase):
         dpto_ci.jefe = vicente
         dpto_ci.save()
         self.assertTrue(vicente.es_jefe())
+
+    def test_eliminar_departamento_jefe(self):
+        """
+        PRUEBA 10: Se probara que al borrar un departamento, el metodo no funciona.
+
+        PRIMERA CORRIDA: PASA 
+        """
+        dpto_ci = Departamento.objects.get(codigo="CI")
+        vicente=Profesor.objects.create(
+                nombre="Vicente",
+                apellido="Yriarte",
+                email="vy@usb.ve",
+                cedula="V-9.877.999",
+                departamento=dpto_ci
+            )
+        dpto_ci.jefe = vicente
+        dpto_ci.save()
+        try:
+            Departamento.objects.get(codigo="CI").delete()
+            self.assertFalse(vicente.es_jefe())
+        except:
+            pass
+
 
