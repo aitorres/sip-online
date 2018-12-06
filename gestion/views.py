@@ -251,7 +251,7 @@ class EditarAsignatura(generic.UpdateView):
 
         messages.warning(self.request, 'Ocurrió un error al editar la asignatura.')
         return redirect(self.success_url)
-    
+
 class EliminarAsignatura(generic.DeleteView):
     """
     Controlador que maneja la lógica y el formulario para
