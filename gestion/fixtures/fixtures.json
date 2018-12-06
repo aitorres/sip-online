@@ -836,8 +836,17 @@
     }
   },
   {
+    "model": "gestion.Asignatura",
+    "pk": 5,
+    "fields": {
+      "nombre": "Sistemas de Información II",
+      "codigo_interno": "1116",
+      "departamento": 10
+    }
+  },
+  {
     "model": "auth.user",
-    "pk": 1,
+    "pk": 10,
     "fields": {
         "password": "pbkdf2_sha256$36000$kBPK8e4L97hc$L4znr9o7ppF1ZAP/7cWLWy8DMlXRM+Pz0TegC2kcWwQ=",
         "last_login": null,
@@ -852,5 +861,78 @@
         "groups": [],
         "user_permissions": []
     }
+  },
+  {
+    "model": "auth.user",
+    "pk": 20,
+    "fields": {
+        "password": "pbkdf2_sha256$36000$kBPK8e4L97hc$L4znr9o7ppF1ZAP/7cWLWy8DMlXRM+Pz0TegC2kcWwQ=",
+        "last_login": null,
+        "is_superuser": true,
+        "username": "admin2",
+        "first_name": "Admin2",
+        "last_name": "Super Usuario",
+        "email": "admin2@usb.ve",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2018-11-25T19:53:38.524Z",
+        "groups": [],
+        "user_permissions": []
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 30,
+    "fields": {
+        "password": "pbkdf2_sha256$36000$kBPK8e4L97hc$L4znr9o7ppF1ZAP/7cWLWy8DMlXRM+Pz0TegC2kcWwQ=",
+        "last_login": null,
+        "is_superuser": true,
+        "username": "admin3",
+        "first_name": "Admin3",
+        "last_name": "Super Usuario",
+        "email": "admin3@usb.ve",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2018-11-25T19:53:38.524Z",
+        "groups": [],
+        "user_permissions": []
+    }
+  },
+  {
+    "model": "gestion.Profesor",
+    "pk": 1,
+    "fields": {
+      "nombre": "Javier",
+      "apellido": "Medina",
+      "cedula": "22900616",
+      "departamento": 5,
+      "email": "javi393@gmail.com",
+      "usuario": 10
+    }
+  },
+  {
+    "model": "gestion.Profesor",
+    "pk": 2,
+    "fields": {
+      "nombre": "Andres",
+      "apellido": "Torres",
+      "cedula": "23900616",
+      "departamento": 5,
+      "email": "Andres@gmail.com",
+      "usuario": 20
+    }
+  },
+  {
+    "model": "gestion.Profesor",
+    "pk": 3,
+    "fields": {
+      "nombre": "Federico",
+      "apellido": "Flaviani",
+      "cedula": "10887432",
+      "departamento": 5,
+      "email": "federicof@gmail.com",
+      "usuario": 30
+    }
   }
+
 ]
