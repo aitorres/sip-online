@@ -1,10 +1,13 @@
 from django.contrib import messages
+from django.core.mail import send_mail
 from django.db import IntegrityError
 from django.urls import reverse_lazy
 from django.views import generic
 from django.shortcuts import redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.template import loader
 from formtools.wizard.views import SessionWizardView
+
 from gestion.models import (
     Profesor,
     Asignatura,
@@ -14,6 +17,30 @@ from gestion.models import (
     AsignacionProfesoral
 )
 
+def _enviar_correo(para, asunto, plantilla_mensaje, plantilla_html, contexto):
+    """
+    Función privada para enviar un correo electrónico a los profesores
+    según sea necesario.
+    """
+
+    mensaje = loader(
+        plantilla_mensaje,
+        contexto
+    )
+
+    mensaje_html = loader(
+        plantilla_html,
+        contexto
+    )
+
+    return send_mail(
+        asunto,
+        mensaje,
+        "SIP Online <no-reply@sip-online.com>",
+        [para],
+        fail_silently=False,
+        html_message=mensaje_html
+    )
 
 class Dashboard(LoginRequiredMixin, generic.TemplateView):
     """
