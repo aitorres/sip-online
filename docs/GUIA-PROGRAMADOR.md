@@ -15,9 +15,17 @@ Todas las clases tienen un método __str__ para definir su impresión.
 
 | Entidades     | Atributos                           | Métodos                             |
 | ------------- |:-----------------------------------:|-----------------------------------:|
-| Departamento  | nombre,código,jefe | Tiene jefe, jefe_coherente, __str__ |
-| Profesor      | nombre, apellido, cedula, disponibilidad,departamentos,email,asignaturas|   codigo_completo,__str__ |
-| Asignatura    | nombre,código,departamento          | __str__                             |
+| Departamento  | nombre,código,jefe | tiene_jefe, jefe_coherente, __str__ |
+| Profesor      | nombre, apellido, cedula, disponibilidad,departamentos,email,asignaturas,usuario| es_jefe  __str__ |
+| Asignatura    | nombre,código,departamento,horas_laboratorio,horas_teoria,horas_practica,unidad_creditos,requisitos         | codigo_completo, tiene_requisito, horas_l, horas_p, horas_t, credito,profesores __str__                             |
+| Oferta Trimestral | trimestre, departamento, es_final | nombre_completo,estado,asignaturas_ofertadas, __str__
+| AsignacionProfesoral | oferta_trimestral,profesor,asignatura,es_final,tipo |
+
+
+La base de  datos posee 2 triggers.
+El primero de ellos se encarga de crear un nuevo usuario automáticamente se crea un profesor en el sistema. Este usuario posee los datos de este profesor y es de tipo profesor.
+
+El segundo trigger funciona de manera parecida al anterior pero con la eliminacion. Al eliminar un profesor, se eliminara el usuario asociado a este.
 
 ## Ejecución de pruebas
 
@@ -87,7 +95,7 @@ En un terminal abierto, con la base de datos cargada y migrada, ejecutar:
 python manage.py loaddata gestion/fixtures/fixtures.json 
 ```
 
-Django cargará la data inicial de los bloques 1 a 12 para los días lunes a sábado, al igual que la data de los 27 departamentos existentes a la fecha (noviembre de 2018) en la estructura de la Universidad Simón Bolívar.
+Django cargará la data inicial de los bloques 1 a 12 para los días lunes a sábado, al igual que la data de los 27 departamentos existentes a la fecha (noviembre de 2018) en la estructura de la Universidad Simón Bolívar, tambien carga informacion de prueba de algunas asignaturas y profesores.
 
 #### Usuario administrador
 Si se carga la data inicial siguiendo el comando anterior, se creará un usuario administrador (superusuario) para acceder al Admin de Django y utilizar el sistema (aunque no asociado a un Departamento). **Se recomienda utilizar este usuario SÓLO para crear profesores o jefes de Departamento**, y utilizar el sistema con usuarios Jefes de Departamento (se incluye un comando para crearlos desde el terminal).
