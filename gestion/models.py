@@ -275,6 +275,55 @@ class Disponibilidad(models.Model):
 
         return self.get_dia_display() + ", bloque " + str(self.bloque)
 
+class OfertaTrimestral(models.Model):
+    """
+    Modelo que representa la oferta trimestral de un DEPARTAMENTO con los datos sobre:
+    El codigo de la forma XX00, donde la X representan la letra del trimestre por ejemplo EM
+    y los 00 representan el año, por ejemplo 18. Teniendo asi como trimestre EM18.
+    El campo es_final, de tipo booleano, indica si la oferta es final o no.
+    """
+
+    trimestre = models.CharField(max_length=4, unique=True)
+    es_final = models.BooleanField(default=False)
+
+    def nombre_completo(self):
+        """
+        Retorna el nombre completo de un trimestre reconstruyéndolo a partir
+        de su código.
+        """
+
+        NOMBRES = {
+            'EM': "Enero - Marzo",
+            'AJ': "Abril - Julio",
+            'JA': "Julio - Agosto",
+            'SD': "Septiembre - Diciembre"
+        }
+
+        # Obtenemos el trimestre a partir del código de período
+        codigo_periodo = self.trimestre[0:2]
+        nombre_trimestre = NOMBRES[codigo_periodo]
+
+        # Obtenemos el año, entre 2000 y 2099
+        ano = "20" + self.trimestre[2:]
+
+        nombre_completo = "%s %s" % (nombre_trimestre, ano)
+        return nombre_completo
+
+    def estado(self):
+        """
+        Retorna una representación en cadena de caracteres del estado
+        de la oferta trimestral.
+        """
+
+        estado = "final" if self.es_final else "preliminar"
+        return estado
+
+    def __str__(self):
+        """
+        Retorna una representación como cadena de caracteres de la oferta trimestral.
+        """
+
+        return self.nombre_completo()
 
 
 class AsignacionProfesoral(models.Model):
