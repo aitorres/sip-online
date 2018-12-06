@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.db import IntegrityError
 from django.urls import reverse_lazy
 from django.views import generic
 from django.shortcuts import redirect
@@ -160,7 +161,6 @@ class EditarProfesor(LoginRequiredMixin, generic.UpdateView):
 
         messages.warning(self.request, 'Ocurrió un error al editar el profesor.')
         return redirect(self.success_url)
-
 
 class EliminarProfesor(LoginRequiredMixin, generic.DeleteView):
     """
@@ -339,6 +339,11 @@ class EliminarOferta(generic.DeleteView):
         return redirect(self.success_url)
 
 class AgregarOferta(SessionWizardView):
+    """
+    Controlador que maneja la lógica y el formulario para agregar una nueva
+    oferta trimestral preliminar para un Departamento dado, en un formulario
+    de dos pasos para asignar profesores junto con materias.
+    """
 
     template_name = 'ofertas/agregar.html'
 
@@ -354,17 +359,21 @@ class AgregarOferta(SessionWizardView):
         codigo_oferta = trimestre + ano
         departamento = Departamento.objects.get(pk=departamento_id)
 
-        oferta = OfertaTrimestral.objects.create(
-            trimestre=codigo_oferta,
-            departamento=departamento
-        )
+        try:
+            oferta = OfertaTrimestral.objects.create(
+                trimestre=codigo_oferta,
+                departamento=departamento
+            )
+        except IntegrityError:
+            messages.warning(self.request, 'Ya existe una oferta trimestral para el trimestre y departamento escogidos.')
+            return redirect('gestion:listar-ofertas')
 
         asignaturas = paso1['asignaturas'].value()
 
         for asignatura_id in asignaturas:
             asignatura = Asignatura.objects.get(pk=asignatura_id)
 
-            profesores = paso2['profesores_%s' % asignatura_id]
+            profesores = paso2['profesores_%s' % asignatura_id].value()
             for profesor_id in profesores:
                 profesor = Profesor.objects.get(pk=profesor_id)
 
@@ -374,8 +383,8 @@ class AgregarOferta(SessionWizardView):
                     profesor=profesor
                 )
 
+        messages.success(self.request, 'La oferta trimestral ha sido agregada satisfactoriamente.')
         return redirect('gestion:listar-ofertas')
-
 
     def get_context_data(self, form, **kwargs):
         context = super(AgregarOferta, self).get_context_data(form=form, **kwargs)
@@ -400,4 +409,33 @@ class AgregarOferta(SessionWizardView):
                     'profesores_asignaturas': profesores_asignaturas
                 }
             )
+        return context
+
+class VerOferta(LoginRequiredMixin, generic.DetailView):
+    """
+    Controlador que permite visualizar los datos en detalle de una oferta
+    trimestral en particular.
+    """
+
+    template_name = 'ofertas/ver.html'
+    model = OfertaTrimestral
+    context_object_name = "oferta"
+
+    def get_context_data(self, **kwargs):
+        """
+        Permite agregar contenido adicional al diccionario genérico de
+        contexto para pasar al template y que se renderice posteriormente.
+        """
+
+        # Obtenemos el diccionario de contexto por defecto
+        context = super(VerOferta, self).get_context_data(**kwargs)
+
+        # Obtenemos las asignaciones profesorales asignadas a esta oferta
+        oferta = context['object']
+        asignaciones = AsignacionProfesoral.objects.filter(
+            oferta_trimestral=oferta
+        )
+
+        context['asignaciones'] = asignaciones
+
         return context

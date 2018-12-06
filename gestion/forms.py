@@ -40,7 +40,6 @@ class AgregarOfertaTrimestralPaso2(forms.Form):
         cantidad = Asignatura.objects.all().count()
         for i in range(cantidad):
             id_asignatura = i+1
-            asignatura = Asignatura.objects.get(pk=id_asignatura)
             self.fields['profesores_%d' % id_asignatura] = forms.ModelMultipleChoiceField(
                 queryset=Profesor.objects.filter(asignaturas__id__contains=id_asignatura),
                 required=False

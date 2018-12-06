@@ -25,7 +25,7 @@ urlpatterns = [
     url(r'^profesores/(?P<pk>[-\w]+)/$', views.VerProfesor.as_view(), name='ver-profesor'),
     url(r'^asignaturas/$', views.ListarAsignaturas.as_view(), name='listar-asignaturas'),
     url(r'^asignaturas/agregar/$', views.AgregarAsignatura.as_view(), name='agregar-asignatura'),
-    url(r'^asiganturas/editar/(?P<pk>[-\w]+)/$', views.EditarAsignatura.as_view() , name='editar-asignatura'),
+    url(r'^asignaturas/editar/(?P<pk>[-\w]+)/$', views.EditarAsignatura.as_view() , name='editar-asignatura'),
     url(r'^asignaturas/eliminar/(?P<pk>[-\w]+)/$', views.EliminarAsignatura.as_view() , name='eliminar-asignatura'),
     url(r'^asignaturas/(?P<pk>[-\w]+)/$', views.VerAsignatura.as_view(), name='ver-asignatura'),
     url(r'^ofertas/$', views.ListarOfertas.as_view(), name='listar-ofertas'),
@@ -34,4 +34,5 @@ urlpatterns = [
         forms.AgregarOfertaTrimestralPaso2
     ]), name='agregar-oferta'),
     url(r'^ofertas/eliminar/(?P<pk>[-\w]+)/$', views.EliminarOferta.as_view(), name='eliminar-oferta'),
+    url(r'^ofertas/(?P<pk>[-\w]+)/$', views.VerOferta.as_view(), name='ver-oferta'),
 ]
