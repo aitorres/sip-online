@@ -1,10 +1,17 @@
 from django.contrib import messages
+from django.core.mail import send_mail
 from django.db import IntegrityError
 from django.urls import reverse_lazy
 from django.views import generic
-from django.shortcuts import redirect
+from django.shortcuts import render, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.template import loader
 from formtools.wizard.views import SessionWizardView
+from django.contrib.auth.decorators import login_required
+from django.utils.datastructures import MultiValueDictKeyError
+
+from gestion.forms import AgregarOfertaTrimestralPaso1
+
 from gestion.models import (
     Profesor,
     Asignatura,
@@ -14,6 +21,24 @@ from gestion.models import (
     AsignacionProfesoral
 )
 
+def _enviar_correo(para, asunto, plantilla_mensaje, contexto):
+    """
+    Función privada para enviar un correo electrónico a los profesores
+    según sea necesario.
+    """
+
+    mensaje = loader.render_to_string(
+        plantilla_mensaje,
+        contexto
+    )
+
+    return send_mail(
+        asunto,
+        mensaje,
+        "SIP Online <no-reply@sip-online.com>",
+        [para],
+        fail_silently=False,
+    )
 
 class Dashboard(LoginRequiredMixin, generic.TemplateView):
     """
@@ -47,6 +72,12 @@ class ListarProfesores(LoginRequiredMixin, generic.ListView):
     template_name = 'profesores/listar.html'
     model = Profesor
     context_object_name = "profesores"
+
+    def get_queryset(self):
+        profesores = Profesor.objects.filter(
+            departamento = self.request.user.profesor.departamento
+        )
+        return profesores
 
 class VerProfesor(LoginRequiredMixin, generic.DetailView):
     """
@@ -124,6 +155,21 @@ class AgregarProfesor(LoginRequiredMixin, generic.CreateView):
         messages.warning(self.request, 'Ocurrió un error al intentar agregar el profesor.')
         return redirect(self.success_url)
 
+    def get_form(self):
+        """
+        Se modifica el método get_form para especificar restricciones en las opciones de algunos
+        campos desplegables.
+        """
+
+        form = super(AgregarProfesor, self).get_form()
+        form.fields['departamento'].queryset = Departamento.objects.filter(
+            id = self.request.user.profesor.departamento.id
+        )
+        form.fields['asignaturas'].queryset = Asignatura.objects.filter(
+            departamento = self.request.user.profesor.departamento
+        )
+        return form
+
 class EditarProfesor(LoginRequiredMixin, generic.UpdateView):
     """
     Controlador que maneja la lógica y el formulario para
@@ -161,6 +207,21 @@ class EditarProfesor(LoginRequiredMixin, generic.UpdateView):
 
         messages.warning(self.request, 'Ocurrió un error al editar el profesor.')
         return redirect(self.success_url)
+    
+    def get_form(self):
+        """
+        Se modifica el método get_form para especificar restricciones en las opciones de algunos
+        campos desplegables.
+        """
+
+        form = super(EditarProfesor, self).get_form()
+        form.fields['departamento'].queryset = Departamento.objects.filter(
+            id = self.request.user.profesor.departamento.id
+        )
+        form.fields['asignaturas'].queryset = Asignatura.objects.filter(
+            departamento = self.request.user.profesor.departamento
+        )
+        return form
 
 class EliminarProfesor(LoginRequiredMixin, generic.DeleteView):
     """
@@ -200,6 +261,12 @@ class ListarAsignaturas(generic.ListView):
     model = Asignatura
     context_object_name = "asignaturas"
 
+    def get_queryset(self):
+        asignaturas = Asignatura.objects.filter(
+            departamento = self.request.user.profesor.departamento
+        )
+        return asignaturas
+
 class AgregarAsignatura(generic.CreateView):
     """
     Controlador que maneja la lógica de agregar una asignatura
@@ -231,6 +298,18 @@ class AgregarAsignatura(generic.CreateView):
         messages.warning(self.request, 'Ocurrió un error al intentar agregar una asignatura.')
         return redirect(self.success_url)
 
+    def get_form(self):
+        """
+        Se modifica el método get_form para especificar restricciones en las opciones de algunos
+        campos desplegables.
+        """
+
+        form = super(AgregarAsignatura, self).get_form()
+        form.fields['departamento'].queryset = Departamento.objects.filter(
+            id = self.request.user.profesor.departamento.id
+        )
+        return form
+
 class EditarAsignatura(generic.UpdateView):
     """
     Controlador que maneja la lógica y el formulario para
@@ -260,6 +339,18 @@ class EditarAsignatura(generic.UpdateView):
 
         messages.warning(self.request, 'Ocurrió un error al editar la asignatura.')
         return redirect(self.success_url)
+    
+    def get_form(self):
+        """
+        Se modifica el método get_form para especificar restricciones en las opciones de algunos
+        campos desplegables.
+        """
+
+        form = super(EditarAsignatura, self).get_form()
+        form.fields['departamento'].queryset = Departamento.objects.filter(
+            id = self.request.user.profesor.departamento.id
+        )
+        return form
 
 class EliminarAsignatura(generic.DeleteView):
     """
@@ -300,6 +391,24 @@ class VerAsignatura(generic.DetailView):
     model = Asignatura
     context_object_name = "asignatura"
 
+    def get_context_data(self, **kwargs):
+        """
+        Permite agregar contenido adicional al diccionario genérico de
+        contexto para pasar al template y que se renderice posteriormente.
+        """
+
+        # Obtenemos el diccionario de contexto por defecto
+        context = super(VerAsignatura, self).get_context_data(**kwargs)
+
+        # Agregamos los identificadores al diccionario de contexto
+        context['lista_disponibilidades'] = context['object'].horarios()
+
+        # Agregamos un diccionario con una manera sencilla de iterar para crear
+        # la matriz de disponibilidades
+        context['matriz_bloques'] = Disponibilidad.matriz_bloques()
+
+        return context
+
 class ListarOfertas(generic.ListView):
     """
     Controlador que muestra una lista la oferta trimestral.
@@ -307,6 +416,35 @@ class ListarOfertas(generic.ListView):
     template_name = 'ofertas/listar.html'
     model = OfertaTrimestral
     context_object_name = "ofertas"
+
+    def get_queryset(self):
+        ofertas = OfertaTrimestral.objects.filter(
+            departamento = self.request.user.profesor.departamento
+        )
+        return ofertas
+
+class ListarOfertasIncluyentes(generic.ListView):
+    """
+    Controlador que muestra una lista las ofertas trimestrales en las que
+    puedo marcar mi preferencia como profesor.
+    """
+
+    template_name = 'ofertas-asignacion/listar.html'
+    model = OfertaTrimestral
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        ofertas = OfertaTrimestral.objects.all()
+        ofertas = [o for o in ofertas if not o.es_final]
+        ofertas_importantes = []
+
+        for oferta in ofertas:
+            if self.request.user.profesor in oferta.profesores_ofertados():
+                ofertas_importantes.append(oferta)
+
+        context['ofertas'] = ofertas_importantes
+        return context
 
 class EliminarOferta(generic.DeleteView):
     """
@@ -347,6 +485,17 @@ class AgregarOferta(SessionWizardView):
 
     template_name = 'ofertas/agregar.html'
 
+    def get_form(self, step=None, data=None, files=None):
+        form = super(AgregarOferta, self).get_form(step, data, files)
+        if type(form) == AgregarOfertaTrimestralPaso1:
+            form.fields['departamento'].queryset = Departamento.objects.filter(
+            id = self.request.user.profesor.departamento.id
+            )
+            form.fields['asignaturas'].queryset = Asignatura.objects.filter(
+                departamento = self.request.user.profesor.departamento
+            )
+        return form
+
     def done(self, form_list, **kwargs):
         forms = list(form_list)
         paso1 = forms[0]
@@ -370,6 +519,8 @@ class AgregarOferta(SessionWizardView):
 
         asignaturas = paso1['asignaturas'].value()
 
+        emails_profesores = set()
+
         for asignatura_id in asignaturas:
             asignatura = Asignatura.objects.get(pk=asignatura_id)
 
@@ -382,6 +533,18 @@ class AgregarOferta(SessionWizardView):
                     asignatura=asignatura,
                     profesor=profesor
                 )
+
+                emails_profesores.add(profesor.email)
+
+        for email in emails_profesores:
+            _enviar_correo(
+                email,
+                "[SIP ONLINE] Nueva oferta trimestral disponible",
+                'emails/oferta_disponible.html',
+                {
+                    'oferta': oferta,
+                }
+            )
 
         messages.success(self.request, 'La oferta trimestral ha sido agregada satisfactoriamente.')
         return redirect('gestion:listar-ofertas')
@@ -439,3 +602,65 @@ class VerOferta(LoginRequiredMixin, generic.DetailView):
         context['asignaciones'] = asignaciones
 
         return context
+
+class VerOfertaIncluyente(LoginRequiredMixin, generic.DetailView):
+    """
+    Controlador que permite visualizar los datos en detalle de una oferta
+    trimestral en particular.
+    """
+
+    template_name = 'ofertas-asignacion/ver.html'
+    model = OfertaTrimestral
+    context_object_name = "oferta"
+
+    def get_context_data(self, **kwargs):
+        """
+        Permite agregar contenido adicional al diccionario genérico de
+        contexto para pasar al template y que se renderice posteriormente.
+        """
+
+        # Obtenemos el diccionario de contexto por defecto
+        context = super(VerOfertaIncluyente, self).get_context_data(**kwargs)
+
+        # Obtenemos las asignaciones profesorales asignadas a esta oferta
+        oferta = context['object']
+        asignaciones = AsignacionProfesoral.objects.filter(
+            oferta_trimestral=oferta,
+            profesor=self.request.user.profesor
+        )
+
+        context['asignaciones'] = asignaciones
+
+        return context
+
+@login_required
+def actualizar_preferencias(request, pk_oferta):
+    template_name = 'ofertas-asignacion/actualizar.html'
+
+    oferta = OfertaTrimestral.objects.get(pk=pk_oferta)
+    asignaciones = AsignacionProfesoral.objects.filter(
+        oferta_trimestral=oferta,
+        profesor=request.user.profesor
+    )
+
+    if request.method == 'POST':
+        for asignacion in asignaciones:
+            try:
+                marcado = request.POST['%s' % asignacion.id] == 'on'
+            except MultiValueDictKeyError:
+                marcado = False
+
+            asignacion.es_preferida = marcado
+            asignacion.save()
+
+        messages.success(request, 'Preferencias actualizadas satisfactoriamente.')
+        return redirect('gestion:listar-ofertas-asignacion')
+    else:
+        return render(
+            request,
+            template_name,
+            {
+                'asignaciones': asignaciones,
+                'oferta': oferta
+            }
+        )
