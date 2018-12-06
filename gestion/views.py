@@ -17,19 +17,14 @@ from gestion.models import (
     AsignacionProfesoral
 )
 
-def _enviar_correo(para, asunto, plantilla_mensaje, plantilla_html, contexto):
+def _enviar_correo(para, asunto, plantilla_mensaje, contexto):
     """
     Función privada para enviar un correo electrónico a los profesores
     según sea necesario.
     """
 
-    mensaje = loader(
+    mensaje = loader.render_to_string(
         plantilla_mensaje,
-        contexto
-    )
-
-    mensaje_html = loader(
-        plantilla_html,
         contexto
     )
 
@@ -39,7 +34,6 @@ def _enviar_correo(para, asunto, plantilla_mensaje, plantilla_html, contexto):
         "SIP Online <no-reply@sip-online.com>",
         [para],
         fail_silently=False,
-        html_message=mensaje_html
     )
 
 class Dashboard(LoginRequiredMixin, generic.TemplateView):
@@ -397,6 +391,8 @@ class AgregarOferta(SessionWizardView):
 
         asignaturas = paso1['asignaturas'].value()
 
+        emails_profesores = set()
+
         for asignatura_id in asignaturas:
             asignatura = Asignatura.objects.get(pk=asignatura_id)
 
@@ -409,6 +405,18 @@ class AgregarOferta(SessionWizardView):
                     asignatura=asignatura,
                     profesor=profesor
                 )
+
+                emails_profesores.add(profesor.email)
+
+        for email in emails_profesores:
+            _enviar_correo(
+                email,
+                "[SIP ONLINE] Nueva oferta trimestral disponible",
+                'emails/oferta_disponible.html',
+                {
+                    'oferta': oferta,
+                }
+            )
 
         messages.success(self.request, 'La oferta trimestral ha sido agregada satisfactoriamente.')
         return redirect('gestion:listar-ofertas')
