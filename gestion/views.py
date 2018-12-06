@@ -300,6 +300,24 @@ class VerAsignatura(generic.DetailView):
     model = Asignatura
     context_object_name = "asignatura"
 
+    def get_context_data(self, **kwargs):
+        """
+        Permite agregar contenido adicional al diccionario genérico de
+        contexto para pasar al template y que se renderice posteriormente.
+        """
+
+        # Obtenemos el diccionario de contexto por defecto
+        context = super(VerAsignatura, self).get_context_data(**kwargs)
+
+        # Agregamos los identificadores al diccionario de contexto
+        context['lista_disponibilidades'] = context['object'].horarios()
+
+        # Agregamos un diccionario con una manera sencilla de iterar para crear
+        # la matriz de disponibilidades
+        context['matriz_bloques'] = Disponibilidad.matriz_bloques()
+
+        return context
+
 class ListarOfertas(generic.ListView):
     """
     Controlador que muestra una lista la oferta trimestral.

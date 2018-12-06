@@ -22,47 +22,57 @@
             {{ asignatura.departamento }}
         </div>
 		<div class="col-md-3 float-right">
-		    <b>Unidad de credito</b>
+		    <b>Unidades de Crédito (U.C.)</b>
 		</div>
 		<div class="col-md-9">
 		   {{ asignatura.unidad_creditos }}
     	</div>
     	<div class="col-md-3 float-right">
-		    <b>Horas teoria</b>
+		    <b>Horas de teoría</b>
 		</div>
 		<div class="col-md-9">
 		   {{ asignatura.horas_teoria }}
     	</div>
     	<div class="col-md-3 float-right">
-    		<b>Horas laboratorio</b>
+    		<b>Horas de laboratorio</b>
     	</div>
     	<div class="col-md-9">
     		{{ asignatura.horas_laboratorio }}
     	</div>
     	<div class="col-md-3 float-right">
-    	 	<b>Horas practica</b>
+    	 	<b>Horas de práctica</b>
     	</div>
     	<div class="col-md-9">
     	    {{ asignatura.horas_practica }}
-    	</div>
+        </div>
+    </div>
     <hr/>
 
-    <!--
-    Esta parte en teoria deberia decir los profesores que pueden dictar la asignatura
+    <div class="card text-center">
+        <div class="card-header">
+            <b>Requisitos (prelada por)</b>
+        </div>
+        <ul class="list-group list-group-flush">
+            {% for asignatura in asignatura.requisitos.all %}
+                <li class="list-group-item">{{ asignatura }}</li>
+            {% empty %}
+            <li class="list-group-item">Ninguna asignatura por el momento...</li>
+            {% endfor %}
+        </ul>
+    </div>
 
     <div class="card text-center">
         <div class="card-header">
             <b>Profesores disponibles para dictarla</b>
         </div>
         <ul class="list-group list-group-flush">
-            {% for asignatura in profesor.asignaturas.all %}
-                <li class="list-group-item">{{ asignatura }}</li>
+            {% for profesor in asignatura.profesores %}
+                <li class="list-group-item">{{ profesor.nombre }} {{ profesor.apellido }}</li>
             {% empty %}
-                Ninguna por el momento...
+            <li class="list-group-item">Ninguno por el momento...</li>
             {% endfor %}
         </ul>
     </div>
-    -->
 
     <!--
     Esta parte en teoria deberia mostrar todos los horarios de la semana disponibles para la asignatura
