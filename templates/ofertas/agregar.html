@@ -1,0 +1,88 @@
+<div class="modal-header">
+    <h5 class="modal-title" id="largeModalLabel">Agregar Oferta Trimestral (paso {{ wizard.steps.step1 }} de {{ wizard.steps.count }})</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body" id="prueba">
+    <form method="POST" class="post-form form-horizontal" action="{% url 'gestion:agregar-oferta' %}" id="f{{ wizard.steps.step1 }}">
+        {% csrf_token %}
+        {{ wizard.management_form }}
+        {% if wizard.form.forms %}
+            {{ wizard.form.management_form }}
+            {% for form in wizard.form.forms %}
+                {% for field in form %}
+                <div class="row form-group">
+                    <div class="col-md-3">
+                        <label class="form-control-label">{{ field.label_tag }}</label>
+                    </div>
+                    <div class="col-md-9">
+                        {{ field }}
+                    </div>
+                </div>
+                {% endfor %}
+            {% endfor %}
+        {% else %}
+            {% for field in wizard.form  %}
+                {% if wizard.steps.step1 == 1 or field.html_name|slice:"13:" in ids_asignaturas %}
+                <div class="row form-group">
+                    <div class="col-md-3">
+                        <label class="form-control-label">
+                            {% if wizard.steps.step1 == 1 %}
+                                {{ field.label_tag }}
+                            {% else %}
+                                {{ nombres_asignaturas|dict_key:field.html_name }}
+                            {% endif %}
+                        </label>
+                    </div>
+                    <div class="col-md-9">
+                        {{ field }}
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </form>
+</div>
+<div class="modal-footer">
+    {% if wizard.steps.prev %}
+        <button style="display:none; visibility: hidden;" name="wizard_goto_step" form="f{{ wizard.steps.step1 }}" class="btn btn-secondary" type="submit" value="{{ wizard.steps.prev }}">Regresar</button>
+    {% endif %}
+    {% if wizard.steps.step1 != 1 %}
+        <button type="submit" class="btn btn-primary" form="f{{ wizard.steps.step1 }}" value="Submit">Agregar</button>
+    {% else %}
+        <button type="submit" class="btn btn-primary" form="f{{ wizard.steps.step1 }}" value="Submit">Continuar</button>
+    {% endif %}
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+</div>
+
+{% if wizard.steps.step1 == 1 %}
+<script>
+    $('#modalCRUD').on('submit', '#f1' , function(e){
+        e.preventDefault();
+        var fd = new FormData($('#f1').get(0));
+        $.ajax({
+            url: "{% url 'gestion:agregar-oferta' %}",
+            data: fd,
+            type: "POST",
+            success: function(data){
+                    $('.modal-content').html(data);
+                },
+            processData: false,
+            contentType: false
+        });
+    });
+
+    $('#agregar-asignatura').click(function() {
+        $.ajax({
+            url: "{% url 'gestion:agregar-asignatura' %}",
+            type: "GET",
+            success: function(data){
+                    $('.modal-content').html(data);
+                },
+            processData: false,
+            contentType: false
+        });
+    });
+</script>
+{% endif %}

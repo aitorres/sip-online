@@ -10,7 +10,14 @@ asociadas.
 from django.test import TestCase, RequestFactory
 from django.contrib.auth.models import AnonymousUser
 from django.db import IntegrityError
-from gestion.models import Profesor, Departamento, Asignatura, Disponibilidad
+
+from gestion.models import (
+    Profesor,
+    Departamento,
+    Asignatura,
+    Disponibilidad,
+    OfertaTrimestral
+)
 from gestion.views import (
     Dashboard,
     AgregarProfesor,
@@ -255,10 +262,10 @@ class DepartamentoModelTest(TestCase):
         dpto_compu.jefe = jefe_compu
         dpto_compu.save()
 
-        dpto_qm = Departamento.objects.create(
+        Departamento.objects.create(
             nombre="Departamento de Química",
             codigo="QM",
-        )        
+        )
 
     def test_nombre_departamento(self):
         """
@@ -502,11 +509,11 @@ class AsignaturaModelTest(TestCase):
 
     def test_horas_positivas(self):
         """
-        PRUEBA 6: Se probara que los campos de horas en el modelo Asignatura 
+        PRUEBA 6: Se probara que los campos de horas en el modelo Asignatura
         sean mayor o igual a 0.
 
         PRIMERA CORRIDA: FALLA, los metodos no existen.
-        SEGUNDA CORRIDA: PASA. 
+        SEGUNDA CORRIDA: PASA.
         """
         asignatura = Asignatura.objects.get(codigo_interno="3715")
         self.assertGreaterEqual(asignatura.horas_l(),0)
@@ -537,7 +544,7 @@ class DisponibilidadModelTest(TestCase):
         Método para crear los valores de la base de datos por defecto
         antes de iniciar cada prueba.
         """
-        
+
         Disponibilidad.objects.create(dia=1, bloque=6)
         self.cantidad_bloques = 12
 
@@ -601,7 +608,6 @@ class DisponibilidadModelTest(TestCase):
             disponibilidad.identificador_unico(),
             self.cantidad_bloques * (disponibilidad.dia-1) + disponibilidad.bloque
         )
-
 
 class ModelosBDTest(TestCase):
     """
@@ -683,6 +689,7 @@ class ModelosBDTest(TestCase):
             cedula="V-18.555.555",
             departamento=dpto_compu
         )
+
         profesorMC = Profesor.objects.create(
             nombre="Luis",
             apellido="Plaza",
@@ -694,7 +701,7 @@ class ModelosBDTest(TestCase):
         profesorMC1 = Profesor.objects.create(
             nombre="Marcela",
             apellido="Fernandez",
-            email="12-10314@usb.ve",
+            email="12-10315@usb.ve",
             cedula="V-25.766.738",
             departamento=dpto_meca
         )
@@ -708,11 +715,11 @@ class ModelosBDTest(TestCase):
         profesorCI.asignaturas.add(asignaturaCI1)
         profesorCI.asignaturas.add(asignaturaCI2)
         profesorCI.asignaturas.add(asignaturaCI3)
-        
+
         profesorCI2.asignaturas.add(asignaturaCI2)
 
         asignaturaCI1.requisitos.add(asignaturaCI2)
-        
+
         profesorMC.asignaturas.add(asignaturaMC1)
         profesorMC.asignaturas.add(asignaturaMC2)
 
@@ -767,7 +774,7 @@ class ModelosBDTest(TestCase):
                 cedula="V-25.766.738",
                 departamento=dpto_mc
             )
-   
+
     def test_agregar_asig_cod_existente(self):
         """
         PRUEBA BD 3: se agrega una asignatura con codigo ya registrado en la base de datos.
@@ -804,15 +811,15 @@ class ModelosBDTest(TestCase):
 
         """
         PRUEBA BD 5: Se asigna un profesor como jefe de dos departamentos distintos.
-        
+
         PRIMERA CORRIDA: Falla. No se levanta IntegrityError porque el campo es de tipo 
         FOREINGKEY sin el atributo unique=True.
 
         SEGUNDA CORRIDA: Pasa. Se levanta la exc, dado que jefe es un campo de tipo
-        OneToOneField. 
+        OneToOneField.
         """
         profesorCI1 = Profesor.objects.get(cedula="V-22.252.023")
-        
+
         dpto_ci = Departamento.objects.get(codigo="CI")
         dpto_mc = Departamento.objects.get(codigo="MC")
         with self.assertRaises(IntegrityError):
@@ -820,7 +827,6 @@ class ModelosBDTest(TestCase):
             dpto_mc.jefe = profesorCI1
             dpto_ci.save()
             dpto_mc.save()
-
 
     def test_eliminar_asignatura_requisito(self):
         """
@@ -830,6 +836,100 @@ class ModelosBDTest(TestCase):
         PRIMERA CORRIDA: FALLA porque el metodo no existe.
         SEGUNDA CORRIDA: PASA.
         """
-        asignatura = Asignatura.objects.get(codigo_interno="3661").delete()
+        Asignatura.objects.get(codigo_interno="3661").delete()
         asignatura2 = Asignatura.objects.get(codigo_interno="3715")
-        self.assertFalse(asignatura2.tiene_requisito()) 
+        self.assertFalse(asignatura2.tiene_requisito())
+
+    def test_es_jefe_mismo_dpto(self):
+        """
+        PRUEBA 9: Se probara que un profesor es jefe de su propio departamento
+
+        PRIMERA CORRIDA: FALLA porq no existe el metodo.
+        SEGUNDA CORRIDA: PASA
+
+        """
+        dpto_ci = Departamento.objects.get(codigo="CI")
+        vicente=Profesor.objects.create(
+                nombre="Vicente",
+                apellido="Yriarte",
+                email="vy@usb.ve",
+                cedula="V-9.877.999",
+                departamento=dpto_ci
+            )
+        dpto_ci.jefe = vicente
+        dpto_ci.save()
+        self.assertTrue(vicente.es_jefe())
+
+    def test_eliminar_departamento_jefe(self):
+        """
+        PRUEBA 10: Se probara que al borrar un departamento, el metodo no funciona.
+
+        PRIMERA CORRIDA: PASA 
+        """
+        dpto_ci = Departamento.objects.get(codigo="CI")
+        vicente=Profesor.objects.create(
+                nombre="Vicente",
+                apellido="Yriarte",
+                email="vy@usb.ve",
+                cedula="V-9.877.999",
+                departamento=dpto_ci
+            )
+        dpto_ci.jefe = vicente
+        dpto_ci.save()
+        try:
+            Departamento.objects.get(codigo="CI").delete()
+            self.assertFalse(vicente.es_jefe())
+        except:
+            pass
+
+    def test_cambio_dpto(self):
+        """
+        PRUEBA 11: Se probara que se agrega un dpto correcto y 
+        luego uno incorrecto a un profesor y el metodo funciona.
+        """ 
+        dpto_ci = Departamento.objects.get(codigo="CI")
+        dpto_mc = Departamento.objects.get(codigo="MC")
+        vicente=Profesor.objects.create(
+                nombre="Vicente",
+                apellido="Yriarte",
+                email="vy@usb.ve",
+                cedula="V-9.877.999",
+                departamento=dpto_ci
+            )
+        dpto_ci.jefe = vicente
+        dpto_ci.save()
+        self.assertTrue(vicente.es_jefe())
+        vicente.departamento = dpto_mc
+        vicente.save()
+        self.assertFalse(vicente.es_jefe())
+
+    def test_nombre_oferta(self):
+        """
+        PRUEBA 12: Se prueba el metodo que retorna eel nombre y el estado.
+        PRIMERA CORRIDA: FALLA
+        SEGUNDA CORRIDA: PASA
+        """
+
+        dpto_ci = Departamento.objects.get(codigo="CI")
+        oferta = OfertaTrimestral.objects.create(
+            trimestre="EM18",
+            departamento=dpto_ci,
+            es_final=False
+            )
+        self.assertEqual(oferta.nombre_completo(), "Enero - Marzo 2018")
+
+    def test_estado_oferta(self):
+        """
+        PRUEBA 13: Se prueba el campo booleano estado.
+        PRIMERA CORRIDA: PASA
+        """
+
+        dpto_ci = Departamento.objects.get(codigo="CI")
+
+        oferta = OfertaTrimestral.objects.create(
+            trimestre="EM18",
+            departamento=dpto_ci,
+            es_final=False
+            )
+
+        self.assertEqual(oferta.estado(), "preliminar")
