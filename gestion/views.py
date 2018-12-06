@@ -10,6 +10,8 @@ from formtools.wizard.views import SessionWizardView
 from django.contrib.auth.decorators import login_required
 from django.utils.datastructures import MultiValueDictKeyError
 
+from gestion.forms import AgregarOfertaTrimestralPaso1
+
 from gestion.models import (
     Profesor,
     Asignatura,
@@ -153,6 +155,21 @@ class AgregarProfesor(LoginRequiredMixin, generic.CreateView):
         messages.warning(self.request, 'Ocurrió un error al intentar agregar el profesor.')
         return redirect(self.success_url)
 
+    def get_form(self):
+        """
+        Se modifica el método get_form para especificar restricciones en las opciones de algunos
+        campos desplegables.
+        """
+
+        form = super(AgregarProfesor, self).get_form()
+        form.fields['departamento'].queryset = Departamento.objects.filter(
+            id = self.request.user.profesor.departamento.id
+        )
+        form.fields['asignaturas'].queryset = Asignatura.objects.filter(
+            departamento = self.request.user.profesor.departamento
+        )
+        return form
+
 class EditarProfesor(LoginRequiredMixin, generic.UpdateView):
     """
     Controlador que maneja la lógica y el formulario para
@@ -190,6 +207,21 @@ class EditarProfesor(LoginRequiredMixin, generic.UpdateView):
 
         messages.warning(self.request, 'Ocurrió un error al editar el profesor.')
         return redirect(self.success_url)
+    
+    def get_form(self):
+        """
+        Se modifica el método get_form para especificar restricciones en las opciones de algunos
+        campos desplegables.
+        """
+
+        form = super(EditarProfesor, self).get_form()
+        form.fields['departamento'].queryset = Departamento.objects.filter(
+            id = self.request.user.profesor.departamento.id
+        )
+        form.fields['asignaturas'].queryset = Asignatura.objects.filter(
+            departamento = self.request.user.profesor.departamento
+        )
+        return form
 
 class EliminarProfesor(LoginRequiredMixin, generic.DeleteView):
     """
@@ -266,6 +298,18 @@ class AgregarAsignatura(generic.CreateView):
         messages.warning(self.request, 'Ocurrió un error al intentar agregar una asignatura.')
         return redirect(self.success_url)
 
+    def get_form(self):
+        """
+        Se modifica el método get_form para especificar restricciones en las opciones de algunos
+        campos desplegables.
+        """
+
+        form = super(AgregarAsignatura, self).get_form()
+        form.fields['departamento'].queryset = Departamento.objects.filter(
+            id = self.request.user.profesor.departamento.id
+        )
+        return form
+
 class EditarAsignatura(generic.UpdateView):
     """
     Controlador que maneja la lógica y el formulario para
@@ -295,6 +339,18 @@ class EditarAsignatura(generic.UpdateView):
 
         messages.warning(self.request, 'Ocurrió un error al editar la asignatura.')
         return redirect(self.success_url)
+    
+    def get_form(self):
+        """
+        Se modifica el método get_form para especificar restricciones en las opciones de algunos
+        campos desplegables.
+        """
+
+        form = super(EditarAsignatura, self).get_form()
+        form.fields['departamento'].queryset = Departamento.objects.filter(
+            id = self.request.user.profesor.departamento.id
+        )
+        return form
 
 class EliminarAsignatura(generic.DeleteView):
     """
@@ -428,6 +484,17 @@ class AgregarOferta(SessionWizardView):
     """
 
     template_name = 'ofertas/agregar.html'
+
+    def get_form(self, step=None, data=None, files=None):
+        form = super(AgregarOferta, self).get_form(step, data, files)
+        if type(form) == AgregarOfertaTrimestralPaso1:
+            form.fields['departamento'].queryset = Departamento.objects.filter(
+            id = self.request.user.profesor.departamento.id
+            )
+            form.fields['asignaturas'].queryset = Asignatura.objects.filter(
+                departamento = self.request.user.profesor.departamento
+            )
+        return form
 
     def done(self, form_list, **kwargs):
         forms = list(form_list)

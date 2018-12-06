@@ -37,11 +37,13 @@
                                     Usuario
                                 {% endif %}
                             </h2>
-                            {% if request.user.profesor.es_jefe %}
-                                <h4 style="color: white;">
+                            <h4 style="color: white;">
+                                {% if request.user.profesor.es_jefe %}
                                     Jefe de Departamento
-                                </h4>
-                            {% endif %}
+                                    {% else %}
+                                    Profesor
+                                {% endif %}
+                            </h4>
                             <p>
                                 {{ request.user.profesor.departamento }}
                             </p>
