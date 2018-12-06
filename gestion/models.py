@@ -137,6 +137,7 @@ class Asignatura(models.Model):
         # Ordenamiento por defecto: según el departamento, luego según su
         # código inerno
         ordering = ["departamento", "codigo_interno"]
+
     def tiene_requisito(self):
         """
         Determina si una asignatura tiene un requisito.
@@ -151,7 +152,7 @@ class Asignatura(models.Model):
         asignatura.
         """
         return self.departamento.codigo + self.codigo_interno
-    
+
     def horas_l(self):
     	"""
     	Devuelve la cantidad de horas de laboratorio de
@@ -179,6 +180,18 @@ class Asignatura(models.Model):
     	"""
     	return self.unidad_creditos
 
+    def profesores(self):
+        """
+        Devuelve un conjunto de los profesores que dictan esta asignatura.
+        """
+
+        lista_profesores = set()
+        profes = Profesor.objects.all()
+        for prof in profes:
+            if self in prof.asignaturas.all():
+                lista_profesores.add(prof)
+
+        return lista_profesores
 
     def __str__(self):
         """
@@ -290,6 +303,13 @@ class OfertaTrimestral(models.Model):
     )
     es_final = models.BooleanField(default=False)
 
+    class Meta:
+        """
+        Determina algunas opciones base para el modelo Oferta Trimestral.
+        """
+
+        unique_together = ('trimestre', 'departamento',)
+
     def nombre_completo(self):
         """
         Retorna el nombre completo de un trimestre reconstruyéndolo a partir
@@ -297,7 +317,7 @@ class OfertaTrimestral(models.Model):
         """
 
         NOMBRES = {
-            'EM': "Enero  Marzo",
+            'EM': "Enero - Marzo",
             'AJ': "Abril - Julio",
             'JA': "Julio - Agosto",
             'SD': "Septiembre - Diciembre"
@@ -367,6 +387,7 @@ class AsignacionProfesoral(models.Model):
     tipo = models.CharField(
         max_length=3,
         choices=TIPO_CHOICES,
+        default=TEORIA
     )
 
 @receiver(post_save, sender=Profesor)
