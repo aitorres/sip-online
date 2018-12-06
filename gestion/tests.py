@@ -10,7 +10,14 @@ asociadas.
 from django.test import TestCase, RequestFactory
 from django.contrib.auth.models import AnonymousUser
 from django.db import IntegrityError
-from gestion.models import Profesor, Departamento, Asignatura, Disponibilidad
+
+from gestion.models import (
+    Profesor,
+    Departamento,
+    Asignatura,
+    Disponibilidad,
+    OfertaTrimestral
+)
 from gestion.views import (
     Dashboard,
     AgregarProfesor,
@@ -602,7 +609,6 @@ class DisponibilidadModelTest(TestCase):
             self.cantidad_bloques * (disponibilidad.dia-1) + disponibilidad.bloque
         )
 
-
 class ModelosBDTest(TestCase):
     """
     Suite de pruebas para probar el comportamiento de los modelos como una unidad.
@@ -822,7 +828,6 @@ class ModelosBDTest(TestCase):
             dpto_ci.save()
             dpto_mc.save()
 
-
     def test_eliminar_asignatura_requisito(self):
         """
         PRUEBA 8: Se probara que si una materia es eliminada
@@ -834,3 +839,97 @@ class ModelosBDTest(TestCase):
         Asignatura.objects.get(codigo_interno="3661").delete()
         asignatura2 = Asignatura.objects.get(codigo_interno="3715")
         self.assertFalse(asignatura2.tiene_requisito())
+
+    def test_es_jefe_mismo_dpto(self):
+        """
+        PRUEBA 9: Se probara que un profesor es jefe de su propio departamento
+
+        PRIMERA CORRIDA: FALLA porq no existe el metodo.
+        SEGUNDA CORRIDA: PASA
+
+        """
+        dpto_ci = Departamento.objects.get(codigo="CI")
+        vicente=Profesor.objects.create(
+                nombre="Vicente",
+                apellido="Yriarte",
+                email="vy@usb.ve",
+                cedula="V-9.877.999",
+                departamento=dpto_ci
+            )
+        dpto_ci.jefe = vicente
+        dpto_ci.save()
+        self.assertTrue(vicente.es_jefe())
+
+    def test_eliminar_departamento_jefe(self):
+        """
+        PRUEBA 10: Se probara que al borrar un departamento, el metodo no funciona.
+
+        PRIMERA CORRIDA: PASA 
+        """
+        dpto_ci = Departamento.objects.get(codigo="CI")
+        vicente=Profesor.objects.create(
+                nombre="Vicente",
+                apellido="Yriarte",
+                email="vy@usb.ve",
+                cedula="V-9.877.999",
+                departamento=dpto_ci
+            )
+        dpto_ci.jefe = vicente
+        dpto_ci.save()
+        try:
+            Departamento.objects.get(codigo="CI").delete()
+            self.assertFalse(vicente.es_jefe())
+        except:
+            pass
+
+    def test_cambio_dpto(self):
+        """
+        PRUEBA 11: Se probara que se agrega un dpto correcto y 
+        luego uno incorrecto a un profesor y el metodo funciona.
+        """ 
+        dpto_ci = Departamento.objects.get(codigo="CI")
+        dpto_mc = Departamento.objects.get(codigo="MC")
+        vicente=Profesor.objects.create(
+                nombre="Vicente",
+                apellido="Yriarte",
+                email="vy@usb.ve",
+                cedula="V-9.877.999",
+                departamento=dpto_ci
+            )
+        dpto_ci.jefe = vicente
+        dpto_ci.save()
+        self.assertTrue(vicente.es_jefe())
+        vicente.departamento = dpto_mc
+        vicente.save()
+        self.assertFalse(vicente.es_jefe())
+
+    def test_nombre_oferta(self):
+        """
+        PRUEBA 12: Se prueba el metodo que retorna eel nombre y el estado.
+        PRIMERA CORRIDA: FALLA
+        SEGUNDA CORRIDA: PASA
+        """
+
+        dpto_ci = Departamento.objects.get(codigo="CI")
+        oferta = OfertaTrimestral.objects.create(
+            trimestre="EM18",
+            departamento=dpto_ci,
+            es_final=False
+            )
+        self.assertEqual(oferta.nombre_completo(), "Enero - Marzo 2018")
+
+    def test_estado_oferta(self):
+        """
+        PRUEBA 13: Se prueba el campo booleano estado.
+        PRIMERA CORRIDA: PASA
+        """
+
+        dpto_ci = Departamento.objects.get(codigo="CI")
+
+        oferta = OfertaTrimestral.objects.create(
+            trimestre="EM18",
+            departamento=dpto_ci,
+            es_final=False
+            )
+
+        self.assertEqual(oferta.estado(), "preliminar")

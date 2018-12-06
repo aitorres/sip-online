@@ -86,7 +86,7 @@ class Profesor(models.Model):
     cedula = models.CharField(max_length=12, unique=True)
     disponibilidad = models.ManyToManyField('Disponibilidad', blank=True)
     departamento = models.ForeignKey('Departamento')
-    email = models.EmailField(max_length=200)
+    email = models.EmailField(max_length=200, unique=True)
     asignaturas = models.ManyToManyField('Asignatura', blank=True)
     usuario = models.OneToOneField(User, blank=True, default=None, null=True)
 
@@ -137,6 +137,7 @@ class Asignatura(models.Model):
         # Ordenamiento por defecto: según el departamento, luego según su
         # código inerno
         ordering = ["departamento", "codigo_interno"]
+
     def tiene_requisito(self):
         """
         Determina si una asignatura tiene un requisito.
@@ -151,7 +152,7 @@ class Asignatura(models.Model):
         asignatura.
         """
         return self.departamento.codigo + self.codigo_interno
-    
+
     def horas_l(self):
     	"""
     	Devuelve la cantidad de horas de laboratorio de
@@ -179,6 +180,18 @@ class Asignatura(models.Model):
     	"""
     	return self.unidad_creditos
 
+    def profesores(self):
+        """
+        Devuelve un conjunto de los profesores que dictan esta asignatura.
+        """
+
+        lista_profesores = set()
+        profes = Profesor.objects.all()
+        for prof in profes:
+            if self in prof.asignaturas.all():
+                lista_profesores.add(prof)
+
+        return lista_profesores
 
     def __str__(self):
         """
@@ -275,6 +288,108 @@ class Disponibilidad(models.Model):
 
         return self.get_dia_display() + ", bloque " + str(self.bloque)
 
+class OfertaTrimestral(models.Model):
+    """
+    Modelo que representa la oferta trimestral de un DEPARTAMENTO con los datos sobre:
+    El codigo de la forma XX00, donde la X representan la letra del trimestre por ejemplo EM
+    y los 00 representan el año, por ejemplo 18. Teniendo asi como trimestre EM18.
+    El campo es_final, de tipo booleano, indica si la oferta es final o no.
+    """
+
+    trimestre = models.CharField(max_length=4)
+    departamento = models.ForeignKey(
+        "Departamento",
+        on_delete=models.CASCADE
+    )
+    es_final = models.BooleanField(default=False)
+
+    class Meta:
+        """
+        Determina algunas opciones base para el modelo Oferta Trimestral.
+        """
+
+        unique_together = ('trimestre', 'departamento',)
+
+    def nombre_completo(self):
+        """
+        Retorna el nombre completo de un trimestre reconstruyéndolo a partir
+        de su código.
+        """
+
+        NOMBRES = {
+            'EM': "Enero - Marzo",
+            'AJ': "Abril - Julio",
+            'JA': "Julio - Agosto",
+            'SD': "Septiembre - Diciembre"
+        }
+
+        # Obtenemos el trimestre a partir del código de período
+        codigo_periodo = self.trimestre[0:2]
+        nombre_trimestre = NOMBRES[codigo_periodo]
+
+        # Obtenemos el año, entre 2000 y 2099
+        ano = "20" + self.trimestre[2:]
+
+        nombre_completo = "%s %s" % (nombre_trimestre, ano)
+        return nombre_completo
+
+    def estado(self):
+        """
+        Retorna una representación en cadena de caracteres del estado
+        de la oferta trimestral.
+        """
+
+        estado = "final" if self.es_final else "preliminar"
+        return estado
+
+    def asignaturas_ofertadas(self):
+        """
+        Retorna un queryset que incluye todas las asignaturas ofertadas en un trimestre
+        según la asignación profesoral.
+        """
+
+        asignaciones = AsignacionProfesoral.objects.filter(oferta_trimestral=self)
+        asignaturas = set(
+            [asignacion.asignatura for asignacion in asignaciones]
+        )
+
+        return asignaturas
+
+    def __str__(self):
+        """
+        Retorna una representación como cadena de caracteres de la oferta trimestral.
+        """
+
+        return self.nombre_completo()
+
+
+class AsignacionProfesoral(models.Model):
+    """
+    Modelo que representa una asignación de una asignatura en un trimestre a un profesor de la USB.
+    Incluye la oferta trimestral, el profesor asociado, la asignatura asociada, un campo booleano que indica si la
+    asignacion es final y el campo tipo que indica la modalidad de la materia
+    """
+
+    TEORIA = 'TEO'
+    PRACTICA = 'PRA'
+    OTRO ='OTR'
+
+    TIPO_CHOICES = (
+        (TEORIA, 'Teoría'),
+        (PRACTICA, 'Práctica'),
+        (OTRO,'Otro'),
+    )
+
+    oferta_trimestral = models.ForeignKey('OfertaTrimestral')
+    profesor = models.ForeignKey('Profesor')
+    asignatura = models.ForeignKey('Asignatura')
+    es_final = models.BooleanField(default=False)
+    tipo = models.CharField(
+        max_length=3,
+        choices=TIPO_CHOICES,
+        default=TEORIA
+    )
+
 @receiver(post_save, sender=Profesor)
 def trigger_actualizar_profesor(sender, instance, created, **kwargs):
     """
@@ -337,3 +452,4 @@ def trigger_eliminar_profesor(sender, instance, **kwargs):
     # Eliminamos el usuario y terminamos la ejecución
     usuario.delete()
     return
+
