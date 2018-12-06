@@ -318,6 +318,19 @@ class OfertaTrimestral(models.Model):
         estado = "final" if self.es_final else "preliminar"
         return estado
 
+    def asignaturas_ofertadas(self):
+        """
+        Retorna un queryset que incluye todas las asignaturas ofertadas en un trimestre
+        según la asignación profesoral.
+        """
+
+        asignaciones = AsignacionProfesoral.objects.filter(oferta_trimestral=self)
+        asignaturas = set(
+            [asignacion.asignatura for asignacion in asignaciones]
+        )
+
+        return asignaturas
+
     def __str__(self):
         """
         Retorna una representación como cadena de caracteres de la oferta trimestral.
