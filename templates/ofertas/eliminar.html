@@ -6,10 +6,10 @@
 </div>
 <div class="modal-body">
     <p>
-        ¿Esta seguro de querer eliminar la oferta trimestral de {{ oferta.nombre_completo }}?
+        ¿Esta seguro de querer eliminar la oferta trimestral de {{ ofertatrimestral.nombre_completo }} ofertada por el {{ ofertatrimestral.departamento }}?
         Por favor, confirme la acción con los botones inferiores.
         </p>
-        <form method="post" action="{% url 'gestion:eliminar-oferta' oferta.pk %}" id="f1">
+        <form method="post" action="{% url 'gestion:eliminar-oferta' ofertatrimestral.pk %}" id="f1">
             {% csrf_token %}
         </form>
 </div>

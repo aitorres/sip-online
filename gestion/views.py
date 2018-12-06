@@ -2,8 +2,17 @@ from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views import generic
 from django.shortcuts import redirect
-from django.contrib.auth.mixins import LoginRequiredMixin 
-from gestion.models import Profesor, Asignatura, Departamento, Disponibilidad, OfertaTrimestral
+from django.contrib.auth.mixins import LoginRequiredMixin
+from formtools.wizard.views import SessionWizardView
+from gestion.models import (
+    Profesor,
+    Asignatura,
+    Departamento,
+    Disponibilidad,
+    OfertaTrimestral,
+    AsignacionProfesoral
+)
+
 
 class Dashboard(LoginRequiredMixin, generic.TemplateView):
     """
@@ -328,3 +337,67 @@ class EliminarOferta(generic.DeleteView):
 
         messages.warning(self.request, 'Ocurrió un error al eliminar la oferta trimestral.')
         return redirect(self.success_url)
+
+class AgregarOferta(SessionWizardView):
+
+    template_name = 'ofertas/agregar.html'
+
+    def done(self, form_list, **kwargs):
+        forms = list(form_list)
+        paso1 = forms[0]
+        paso2 = forms[1]
+
+        trimestre = paso1['trimestre'].value()
+        ano = paso1['ano'].value()[2:]
+        departamento_id = paso1['departamento'].value()
+
+        codigo_oferta = trimestre + ano
+        departamento = Departamento.objects.get(pk=departamento_id)
+
+        oferta = OfertaTrimestral.objects.create(
+            trimestre=codigo_oferta,
+            departamento=departamento
+        )
+
+        asignaturas = paso1['asignaturas'].value()
+
+        for asignatura_id in asignaturas:
+            asignatura = Asignatura.objects.get(pk=asignatura_id)
+
+            profesores = paso2['profesores_%s' % asignatura_id]
+            for profesor_id in profesores:
+                profesor = Profesor.objects.get(pk=profesor_id)
+
+                AsignacionProfesoral.objects.create(
+                    oferta_trimestral=oferta,
+                    asignatura=asignatura,
+                    profesor=profesor
+                )
+
+        return redirect('gestion:listar-ofertas')
+
+
+    def get_context_data(self, form, **kwargs):
+        context = super(AgregarOferta, self).get_context_data(form=form, **kwargs)
+
+        if self.steps.current == '1':
+            ids_asignaturas = set()
+            for i in self.request.POST.getlist('0-asignaturas'):
+                ids_asignaturas.add(i)
+            nombres_asignaturas = dict()
+            profesores_asignaturas = dict()
+            for i in ids_asignaturas:
+                asignatura = Asignatura.objects.get(pk=int(i))
+                nombre = str(asignatura)
+                nombres_asignaturas['1-profesores_%s' % i] = nombre
+                profesores = asignatura.profesores()
+                profesores_asignaturas['1-profesores_%s' % i] = profesores
+
+            context.update(
+                {
+                    'ids_asignaturas': ids_asignaturas,
+                    'nombres_asignaturas': nombres_asignaturas,
+                    'profesores_asignaturas': profesores_asignaturas
+                }
+            )
+        return context
