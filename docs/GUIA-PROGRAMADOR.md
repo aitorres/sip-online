@@ -111,3 +111,21 @@ En un terminal abierto desde la carpeta del proyecto, con la base de datos cread
 ```bash
 python manage.py runserver
 ```
+
+### Crear jefe de departamento
+En un terminal abierto desde la carpeta del proyecto, con la base de datos creada y migrada y desde el entorno virtual habiendo instalado previamente los
+requerimientos, hacer:
+```bash
+python manage.py crear_jefe
+```
+Al ser ejecutado el comando, se solicitará al usuario el código del departamento al cuál será asignado un jefe, luego, solicitará dirección correo electrónico,
+nombre, apellido y finalmente cédula de identidad. Al finalizar la asignación de dicha persona como jefe, será enviado un correo a la dirección de correo electrónico proporcionada indicando cuál es la clave de acceso al sistema.
+
+### Asignar jefe de departamento
+En un terminal abierto desde la carpeta del proyecto, con la base de datos creada y migrada y desde el entorno virtual habiendo instalado previamente los
+requerimientos, hacer:
+```bash
+python manage.py asignar_jefe
+```
+Al ser ejecutado el comando, se solicitará el código del departamento al cuál será asignado un nuevo jefe, luego, solicitará una dirección de correo electrónico
+ya registrada en el sistema para ser actualizado el cargo de jefe a ese dirección de correo proporcionada.
