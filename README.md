@@ -8,6 +8,9 @@ El Sistema de Inscripción de Postgrado Online es un sistema de gestión de prof
 
 Actualmente, el SIP Online permite:
 - Gestionar los profesores de postgrado de un departamento (listar, ver detalles, agregar, modificar, eliminar)
+- Gestionar las asignaturas de postgrado de un departamento (listar, ver detalles, agregar, modificar, eliminar)
+- Realizar, como Jefe de Departamento, la asignacion profesoral de la oferta.
+- Seleccionar, como Profesor, las preferencias sobre las asignaturas a ser ofertadas.
 
 ### Desarrollo
 
