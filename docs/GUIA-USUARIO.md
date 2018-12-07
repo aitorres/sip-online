@@ -131,4 +131,59 @@ Al hacer clic al ícono de editar una asignatura (*lápiz*), se puede visualizar
 
 ![Eliminar_asignatura](imagenes/eliminar_asignatura.png "Vista de Eliminar Asignatura")
 
-Al hacer clic al ícono de eliminar una asignatura (*papelera*), se puede visualizar la ventana de confirmación de eliminación y hacer *confirmación* de la misma. Si se hace clic en el botón rojo, el profesor quedará eliminado del sistema. Si se hace clic en Cerrar o fuera de la ventana modal, se cerrará esta y no ocurrirá ningún cambio en la información.
+Al hacer clic al ícono de eliminar una asignatura (*papelera*), se puede visualizar la ventana de confirmación de eliminación y hacer *confirmación* de la misma. Si se hace clic en el botón rojo, la asignatura quedará eliminada del sistema. Si se hace clic en Cerrar o fuera de la ventana modal, se cerrará esta y no ocurrirá ningún cambio en la información.
+
+## Gestión Oferta
+
+
+El apartado de Gestión de ofertas, al que se puede acceder con la barra de navegación lateral, permite realizar operaciones sobre los datos de ofertas, como:
+
+- Agregar una oferta trimestral nueva con sus datos respectivos (paso 1)
+- Agregar una oferta trimestral nueva con sus datos respectivos (paso 2)
+- Eliminar una oferta existente
+- Listar todas las ofertas cargadas en sistema
+- Realizar búsquedas por trimestrey nombre
+- Ver los detalles de asignaturas, profesores y preferencias de la oferta trimestral
+
+Todas las operaciones están concentradas en la misma vista
+
+
+
+### Listar ofertas
+
+![Listar_ofertas](imagenes/listar_ofertas.png "Vista de Listar Ofertas Trimestrales")
+
+El apartado de listar ofertas es la vista que aparece al momento de seleccionar "Gestionar ofertas" en la barra lateral. Las ofertas se distribuyen en la tabla mostrando su codigo, nombre y departamento al que pertenece. La tabla, en su parte inferior, cuenta con opciones de paginación para ver entre 10 y 100 ofertas por página y avanzar entre ellas. En su parte superior, cuenta con un campo de búsqueda dinámico que puede filtrar por todos los campos mostrados con solo empezar a escribir. 
+
+Las acciones posibles en cuanto a gestión de la información son:
+- Agregar una oferta, haciendo clic en el botón azul que se encuentra encima de la tabla
+- Ver detalles de una oferta, haciendo clic en el ícono de *ojo* en la celda de acciones de esa oferta trimestral
+- Eliminar una oferta, haciendo clic en el ícono de *papelera* en la celda de acciones de esa oferta trimestral
+
+Esta vista incluye validaciones y mensajes de error o éxito en función del resultado de las acciones de gestión de la información.
+
+
+### Agregar una oferta (parte 1 )
+
+![Agregar_oferta1](imagenes/agregar_oferta1.png "Vista de Agregar Oferta trimestral parte 1")
+
+Al hacer clic al botón de agregar una oferta, se puede llenar el formulario de inclusión de los datos de la oferta y hacer *Continuar* del mismo. El campo *Asignaturas* es una lista desplegables con todas las asignaturas de un departamento existentes dentro del sistema. Los campos de *trimestre* y *año* permiten formar el nombre UNICO de la oferta trimestral, trimestre permite elegir entre cuatro opciones las cuales representan los periodos de clases anuales y año es un numero entero para elegir el año donde se dicta la oferta trimestral.
+
+### Agregar una oferta (parte 2 )
+
+![Agregar_oferta2](imagenes/agregar_oferta2.png "Vista de Agregar Oferta trimestral parte 2")
+
+Al hacer clic al botón de Continuar, se desplegara una pantalla en donde aparecen las asignaturas seleccionadas en la pantalla anterior y al lado de cada una, una lista con los profesores en capacidad de dictar la materia, se seleccionan los candidatos y se procede a darle agregar para crear la oferta. A los profesores seleccionados les llegara un correo anunciando su seleccion.
+
+### Visualizar detalles de oferta
+
+![Ver detalles_oferta](imagenes/detalles_oferta.png "Ver detalles de Oferta trimestral")
+
+Al hacer clic al ícono de ver una oferta (*ojo*), se puede visualizar la información almacenada de esa oferta en dos secciones. La primera, muestra los datos de nombre, codigo, departamento y estauts. La segunda muestra una tabla con las posibles asignaturas, profesores y sus preferencias.
+
+
+### Eliminar una oferta
+
+![Eliminar_oferta](imagenes/eliminar_oferta.png "Vista de Eliminar Oferta trimestral")
+
+Al hacer clic al ícono de eliminar una oferta (*papelera*), se puede visualizar la ventana de confirmación de eliminación y hacer *confirmación* de la misma. Si se hace clic en el botón rojo, la oferta quedará eliminada del sistema. Si se hace clic en Cerrar o fuera de la ventana modal, se cerrará esta y no ocurrirá ningún cambio en la información.
