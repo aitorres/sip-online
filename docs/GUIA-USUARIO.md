@@ -187,3 +187,42 @@ Al hacer clic al ícono de ver una oferta (*ojo*), se puede visualizar la inform
 ![Eliminar_oferta](imagenes/eliminar_oferta.png "Vista de Eliminar Oferta trimestral")
 
 Al hacer clic al ícono de eliminar una oferta (*papelera*), se puede visualizar la ventana de confirmación de eliminación y hacer *confirmación* de la misma. Si se hace clic en el botón rojo, la oferta quedará eliminada del sistema. Si se hace clic en Cerrar o fuera de la ventana modal, se cerrará esta y no ocurrirá ningún cambio en la información.
+
+## Gestión Preferencias
+
+
+El apartado de Gestión de preferencias, al que se puede acceder con la barra de navegación lateral, permite realizar operaciones sobre los datos de ofertas personales para cada profesor, como:
+
+- Ver las prefrencias personales de asignaturas a dictar en una oferta trimestral
+- Listar todas las ofertas cargadas en sistema que involucran a un profesor
+- Realizar búsquedas por trimestre y nombre
+- Ver los detalles de asignaturas y preferencias de la oferta trimestral
+
+Todas las operaciones están concentradas en la misma vista
+
+
+
+### Listar ofertas
+
+![Listar_preferencia](imagenes/listar_preferencia.png "Vista de Listar Ofertas Trimestrales")
+
+El apartado de listar ofertas es la vista que aparece al momento de seleccionar "Gestionar preferencias" en la barra lateral. Las ofertas se distribuyen en la tabla mostrando su codigo, nombre, departamento al que pertenece y su estado. La tabla, en su parte inferior, cuenta con opciones de paginación para ver entre 10 y 100 ofertas por página y avanzar entre ellas. En su parte superior, cuenta con un campo de búsqueda dinámico que puede filtrar por todos los campos mostrados con solo empezar a escribir. 
+
+Las acciones posibles en cuanto a gestión de la información son:
+- Ver detalles de una oferta, haciendo clic en el ícono de *ojo* en la celda de acciones de esa oferta trimestral (Nota: esta vista es unica para cada profesor)
+- Actualizar preferencias, haciendo clic en el ícono de *engranaje* en la celda de acciones de esa oferta trimestral
+
+Esta vista incluye validaciones y mensajes de error o éxito en función del resultado de las acciones de gestión de la información.
+
+### Visualizar detalles de oferta
+
+![Ver detalles_preferencia](imagenes/detalles_preferencia.png "Ver detalles de Oferta trimestral")
+
+Al hacer clic al ícono de ver una oferta (*ojo*), se puede visualizar la información almacenada de esa oferta en dos secciones. La primera, muestra los datos de nombre, codigo, departamento y estauts. La segunda muestra una tabla con las asignaturas asignadas a un profesor,el nombre del profesor y sus preferencias.
+
+
+### Actualizar Preferencias
+
+![Actualizar_preferencia](imagenes/actualizar_preferencia.png "Vista de Actualizar preferencias de una Oferta trimestral")
+
+Al hacer clic al ícono de actualizar preferencias (*engranaje*), se puede visualizar la ventana de Actualizar preferencias, aparecera una lista con las asignaturas posibles y un cuadrado que al hacer click se actualiza la preferencia, para confirmar se presiona el boton *Actualizar*, para cancelar se presiona el boton *cancelar* o se hace click fuera del recuadro
