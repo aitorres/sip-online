@@ -680,7 +680,7 @@ def cambiar_contrasena(request):
     una instancia nueva del formulario para que el usuario cambie su contraseña.
     """
 
-    template_name = 'templates/sesiones/cambiar_contrasena.html'
+    template_name = 'sesiones/cambiar_contrasena.html'
 
     # Petición POST significa que el usuario ha llenado el formulario
     if request.method == 'POST':
@@ -697,7 +697,7 @@ def cambiar_contrasena(request):
         else:
             messages.error(request, 'Ha ocurrido un error cambiando la contraseña.')
 
-        # Creamos una instancia nueva del formulario asociada al usuario logueado
-        form = PasswordChangeForm(request.user)
+    # Creamos una instancia nueva del formulario asociada al usuario logueado
+    form = PasswordChangeForm(request.user)
 
     return render(request, template_name, {'form': form})
