@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Cambiar contraseña{% endblock %}
+
+{% block content %}
+<div class="col-md-12">
+
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %} alert-dismissible fade show">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Cerrar">
+            <span aria-hidden="true">×</span>
+        </button>
+      </div>
+    {% endfor %}
+  {% endif %}
+
+    <div class="card">
+        <div class="card-header">
+            <h4>Cambiar contraseña</h4>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                {{ form }}
+                <button class="btn btn-primary" type="submit">Cambiar contraseña</button>
+              </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
