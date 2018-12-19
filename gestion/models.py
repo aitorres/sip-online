@@ -104,7 +104,7 @@ class Coordinacion(models.Model):
 
     nombre = models.CharField(max_length=200, unique=True)
     asignaturas = models.ManyToManyField('Asignatura', blank=True)
-    coordinador = models.OneToOneField('Profesor', related_name="coordinador_de", null=True, on_delete=models.SET_NULL) 
+    coordinador = models.ForeignKey('Profesor', null=True, on_delete=models.SET_NULL) 
 
     class Meta:
         """
