@@ -695,9 +695,10 @@ def cambiar_contrasena(request):
 
             messages.success(request, 'Contraseña cambiada satisfactoriamente.')
         else:
-            messages.error(request, 'Ha ocurrido un error cambiando la contraseña.')
+            messages.warning(request, 'Ha ocurrido un error cambiando la contraseña. Revise la información introducida. ')
+    else:
+        # Creamos una instancia nueva del formulario asociada al usuario logueado
+        form = PasswordChangeForm(request.user)
 
-    # Creamos una instancia nueva del formulario asociada al usuario logueado
-    form = PasswordChangeForm(request.user)
 
     return render(request, template_name, {'form': form})
