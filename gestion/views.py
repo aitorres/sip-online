@@ -1,4 +1,6 @@
 from django.contrib import messages
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
 from django.core.mail import send_mail
 from django.db import IntegrityError
 from django.urls import reverse_lazy
@@ -664,3 +666,38 @@ def actualizar_preferencias(request, pk_oferta):
                 'oferta': oferta
             }
         )
+
+@login_required
+def cambiar_contrasena(request):
+    """
+    Controlador que maneja la lógica del cambio de contraseña para un usuario
+    que ha iniciado sesión.
+
+    Si recibe un formulario por POST, lo interpreta y, en caso
+    de ser válido, actualiza la contraseña y datos de sesión del usuario.
+
+    Si recibe una solicitud GET, o un formulario inválido por POST, retorna
+    una instancia nueva del formulario para que el usuario cambie su contraseña.
+    """
+
+    template_name = 'templates/sesiones/cambiar_contrasena.html'
+
+    # Petición POST significa que el usuario ha llenado el formulario
+    if request.method == 'POST':
+        # Instanciamos los datos del formulario
+        form = PasswordChangeForm(request.user, request.POST)
+
+        # Si el formulario es válido, lo procesamos, actualizamos los datos
+        # y mostramos un mensaje de acierto
+        if form.is_valid():
+            usuario = form.save()
+            update_session_auth_hash(request, usuario)
+
+            messages.success(request, 'Contraseña cambiada satisfactoriamente.')
+        else:
+            messages.error(request, 'Ha ocurrido un error cambiando la contraseña.')
+
+        # Creamos una instancia nueva del formulario asociada al usuario logueado
+        form = PasswordChangeForm(request.user)
+
+    return render(request, template_name, {'form': form})
