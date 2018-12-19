@@ -95,6 +95,41 @@ class Departamento(models.Model):
 
         return self.jefe.departamento == self
 
+class Coordinacion(models.Model):
+    """
+    Modelo que representa una Coordinacion dada, incluyendo su
+    nombre, sus asignaturas asociadas y el profesor que lo dirige
+    como coordinador.
+    """
+
+    nombre = models.CharField(max_length=200, unique=True)
+    asignaturas = models.ManyToManyField('Asignatura', blank=True)
+    coordinador = models.OneToOneField('Profesor', related_name="coordinador_de", null=True, on_delete=models.SET_NULL) 
+
+    class Meta:
+        """
+        Provee algunas configuraciones básicas con respecto a las
+        operaciones del modelo.
+        """
+
+        # Ordenamiento por defecto: según su nombre
+        ordering = ["nombre"]
+
+    def __str__(self):
+        """
+        Muestra la instancia de Coordinacion como
+        nombre 
+        """
+
+        return self.nombre 
+
+    def tiene_coordinador(self):
+        """
+        Determina si una Coordinacion  tiene un coordinador asociado.
+        """
+
+        return bool(self.coordinador)
+
 class Profesor(models.Model):
     """
     Modelo que representa un profesor de la USB
