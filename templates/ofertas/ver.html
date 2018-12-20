@@ -36,7 +36,11 @@
     <div class="card text-center">
            {% if oferta.estado == "preliminar"%}
             <div class="card-header">
+                {% if request.user == oferta.departamento.jefe %}
                 <b>Para completar la oferta, seleccione los profesores que desee asignar a cada asignatura.</b>
+                {% else %}
+                <b>Asignaturas ofertadas</b>
+                {% endif %}
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -48,7 +52,7 @@
                             <th>Asignatura</th>
                             <th>Profesor</th>
                             <th>Preferencia</th>
-                            <th>Marcar como Final</th>
+                            {% if request.user == oferta.departamento.jefe %}<th>Marcar como Final</th>{% endif %}
                         </thead>
                         <tbody>
                             {% for asignacion in asignaciones %}
@@ -62,7 +66,9 @@
                                         </span>
                                         {% endif %}
                                     </td>
+                                    {% if request.user == oferta.departamento.jefe %}
                                     <td><input type="checkbox" name="botonElegir_{{ asignacion.id }}"/></td>
+                                    {% endif %}
                                 </tr>
                             {% endfor %}
                         </tbody>
@@ -82,7 +88,7 @@
                     <tbody>
    						<tr>
    						{% for asignacion in asignaciones %}
-                           {% if asignacion.es_preferida %}
+                           {% if asignacion.es_final %}
                            	<td>{{ asignacion.asignatura }}</td>
                            	<td>{{ asignacion.profesor }}</td>
                            {% endif %}
@@ -97,7 +103,7 @@
  </div>
 
 <div class="modal-footer">
-{% if oferta.estado == "preliminar"%}
+{% if oferta.estado == "preliminar" and request.user == oferta.departamento.jefe %}
     <button type="submit" form="f1" value="Submit" class="btn btn-primary">Completar oferta</button>
 {% endif %}
     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>

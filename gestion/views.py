@@ -709,6 +709,7 @@ def actualizar_preferencias(request, pk_oferta):
             }
         )
 
+@login_required
 def buscar_oferta(request, periodo=None, ano=None):
     """
     Permite filtrar y buscar ofertas finales por año o por trimestre,
@@ -717,14 +718,20 @@ def buscar_oferta(request, periodo=None, ano=None):
 
     template_name = 'ofertas/buscar.html'
 
-    if periodo == None or ano == None:
-        # Por defecto, solo se muestra la vista
-        return render(
-            request,
-            template_name
-        )
+    filtrar_dpto = False
+    if request.method == 'POST':
+        periodo = request.POST.get('periodo', None)
+        ano = request.POST.get('ano', None)
+        filtrar_dpto = request.POST.get('filtrar_dpto', False)
 
-    if periodo != None:
+        if filtrar_dpto == "No":
+            filtrar_dpto = False
+        elif filtrar_dpto == "Sí":
+            filtrar_dpto = True
+
+    context = {}
+
+    if periodo != "-":
         # Si se escogió un periodo, se filtra este periodo
         context = dict()
         ofertas = OfertaTrimestral.objects.all()
@@ -736,26 +743,42 @@ def buscar_oferta(request, periodo=None, ano=None):
 
         context['ofertas'] = ofertas_periodo
 
-        return render(
-            request,
-            template_name,
-            context
-        )
+    elif periodo == '-' and ano != None:
 
-    if periodo == '-' and ano != None:
         # Si se escogió un año
+        context = dict()
+        ofertas = OfertaTrimestral.objects.all()
+
+        ofertas_ano = set()
+        for oferta in ofertas:
+            if oferta.trimestre[2:] == str(ano)[2:]:
+                ofertas_ano.add(oferta)
+
+        context['ofertas'] = ofertas_ano
+        print(ofertas)
+
+    elif periodo is not None and periodo != "-" and ano != None:
+        # Si se escogen ambos filtros
         context = dict()
         ofertas = OfertaTrimestral.objects.all()
 
         ofertas_periodo = set()
         for oferta in ofertas:
-            if oferta.trimestre[2:] == periodo:
+            if oferta.trimestre[2:] == periodo and oferta.trimestre[:2] == str(ano)[2:]:
                 ofertas_periodo.add(oferta)
 
-        context['ofertas'] = ofertas
+        context['ofertas'] = ofertas_periodo
 
-        return render(
-            request,
-            template_name,
-            context
-        )
+    # Filtramos por Departamento, si se requiere
+    if filtrar_dpto:
+        ofertas_filtradas = set()
+        for oferta in context['ofertas']:
+            if oferta.departamento == request.user.profesor.departamento:
+                ofertas_filtradas.add(oferta)
+        context['ofertas'] = ofertas_filtradas
+
+    return render(
+        request,
+        template_name,
+        context
+    )
