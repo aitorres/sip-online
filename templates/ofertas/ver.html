@@ -34,8 +34,9 @@
     <hr/>
 
     <div class="card text-center">
+    	   {% if oferta.estado == "preliminar"%}
             <div class="card-header">
-                <b>Asignación de profesores ({{ oferta.estado }})</b>
+                <b>Para completar la oferta, seleccione los profesores que desee asignar a cada asignatura.</b>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -50,19 +51,37 @@
                             <tr>
                                 <td>{{ asignacion.asignatura }}</td>
                                 <td>{{ asignacion.profesor }}</td>
-                                <td>
-                                    {% if asignacion.es_preferida %}
-                                    <span class="badge badge-success">
-                                        PREFERIDA
-                                    </span>
-                                    {% endif %}
-                                </td>
+                                <td><input type="radio" name="botonElegir"/></td>
                             </tr>
                         {% endfor %}
                     </tbody>
                   </table>
+                  <input type="submit" value="Completar oferta">
                 </div>
             </div>
+            {% endif %}
+            {% if oferta.estado == "final"%}
+            <div class="card-body">
+                <div class="table-responsive">
+            		<table class="table">
+            		<thead>
+                        <th>Asignatura</th>
+                        <th>Profesor</th>
+                    </thead>
+                    <tbody>
+   						<tr>
+   						{% for asignacion in asignaciones %}
+                           {% if asignacion.es_preferida %}
+                           	<td>{{ asignacion.asignatura }}</td>
+                           	<td>{{ asignacion.profesor }}</td>
+                           {% endif %}
+                       	</tr>
+                       	{% endfor %}
+                    </tbody>
+                   </table>
+                   </div>
+                  </div>
+             {% endif %}
         </div>
 
 </div>
