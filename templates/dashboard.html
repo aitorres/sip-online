@@ -47,6 +47,12 @@
                             <p>
                                 {{ request.user.profesor.departamento }}
                             </p>
+                            {% if request.user.profesor.es_coordinador %}
+                            <h4 style="color: white;">Coordinador</h4>
+                            <p>
+                                {{ request.user.profesor.coordinacion }}
+                            </p>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -57,7 +63,7 @@
 
 <div class="row">
     <!-- Widget de Departamentos -->
-    <div class="col-lg-4">
+    <div class="col-lg-6">
         <div class="card">
             <div class="card-body">
                 <div class="stat-widget-one">
@@ -71,9 +77,24 @@
         </div>
     </div>
 
+    <!-- Widget de Coordinaciones -->
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <div class="stat-widget-one">
+                    <div class="stat-icon dib"><i class="ti-file text-danger border-danger"></i></div>
+                    <div class="stat-content dib">
+                        <div class="stat-text">Coordinaciones agregadas</div>
+                        <div class="stat-digit">{{ coordinaciones }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <!-- Widget de Profesores -->
-    <div class="col-lg-4">
+    <div class="col-lg-6">
         <div class="card">
             <div class="card-body">
                 <div class="stat-widget-one">
@@ -88,7 +109,7 @@
     </div>
 
     <!-- Widget de Asignaturas -->
-    <div class="col-lg-4">
+    <div class="col-lg-6">
         <div class="card">
             <div class="card-body">
                 <div class="stat-widget-one">

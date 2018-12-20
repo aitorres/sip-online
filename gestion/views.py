@@ -20,7 +20,8 @@ from gestion.models import (
     Departamento,
     Disponibilidad,
     OfertaTrimestral,
-    AsignacionProfesoral
+    AsignacionProfesoral,
+    Coordinacion
 )
 
 def _enviar_correo(para, asunto, plantilla_mensaje, contexto):
@@ -63,6 +64,7 @@ class Dashboard(LoginRequiredMixin, generic.TemplateView):
         context['profesores'] = Profesor.objects.all().count()
         context['asignaturas'] = Asignatura.objects.all().count()
         context['departamentos'] = Departamento.objects.all().count()
+        context['coordinaciones'] = Coordinacion.objects.all().count()
 
         return context
 
