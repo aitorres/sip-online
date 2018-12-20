@@ -665,33 +665,53 @@ def actualizar_preferencias(request, pk_oferta):
             }
         )
 
-def buscar_oferta(request,periodo=None,ano=None):
-    template_name = templates/ofertas/buscar.html
+def buscar_oferta(request, periodo=None, ano=None):
+    """
+    Permite filtrar y buscar ofertas finales por año o por trimestre,
+    de acuerdo a lo que se requiera.
+    """
+
+    template_name = 'ofertas/buscar.html'
+
     if periodo == None or ano == None:
+        # Por defecto, solo se muestra la vista
         return render(
             request,
             template_name
         )
-    if periodo!=None:
+
+    if periodo != None:
+        # Si se escogió un periodo, se filtra este periodo
         context = dict()
-        ofertas = OfertaTrimestral.objects.filter(trimestre[:2]== periodo[:2])
-        context['ofertas'] = ofertas
+        ofertas = OfertaTrimestral.objects.all()
+
+        ofertas_periodo = set()
+        for oferta in ofertas:
+            if oferta.trimestre[:2] == periodo:
+                ofertas_periodo.add(oferta)
+
+        context['ofertas'] = ofertas_periodo
+
         return render(
             request,
             template_name,
             context
         )
-        
-    if periodo =='-' and ano!=None:
+
+    if periodo == '-' and ano != None:
+        # Si se escogió un año
         context = dict()
-        ofertas = OfertaTrimestral.objects.filter(trimestre[:1]=='-')
+        ofertas = OfertaTrimestral.objects.all()
+
+        ofertas_periodo = set()
+        for oferta in ofertas:
+            if oferta.trimestre[2:] == periodo:
+                ofertas_periodo.add(oferta)
+
         context['ofertas'] = ofertas
+
         return render(
             request,
             template_name,
             context
         )
-        
-        
-        
-        
