@@ -617,6 +617,9 @@ class VerOferta(LoginRequiredMixin, generic.DetailView):
             oferta.es_final = True
             oferta.save()
 
+            # PENDIENTE: Mandar correos a Coordinaciones
+            # TODO: Mandar correos a Coordinaciones
+
             # Mostramos un mensaje de éxito
             messages.success(
                 self.request,
