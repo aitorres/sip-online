@@ -1047,13 +1047,13 @@ class CoordinacionModelTest(TestCase):
         corresponda a dicha coordinacion. Se verifica el nombre de la coordinacion al corroborar las
         asignaturas pertenecientes.
 
-        RESULTADO ESPERADO : Falla 
-        RESULTADO OBTENIDO : Falla porque el nombre de la coordinacion no corresponde a la coordinada por la 
+        RESULTADO ESPERADO : Aprueba 
+        RESULTADO OBTENIDO : Aprueba. El nombre de la coordinacion no corresponde a la coordinada por la 
         profesora Marlene Goncalves
         """        
 
         coord_comp = Coordinacion.objects.get(nombre="Coordinación de Ingeniería de Computación")
-        self.assertEqual(
+        self.assertNotEqual(
             coord_comp.nombre,
             "Coordinación de Ingeniería de Geofísica"
         ) 
@@ -1117,8 +1117,8 @@ class CoordinacionModelTest(TestCase):
         las materias de la coordinacion.
 
         Prueba de tipo malicia.
-        RESULTADO ESPERADO: Falla
-        RESULTADO OBTENIDO: Falla. Debido a que la Asignatura Matematicas V no pertenece a las asignaturas de la coordinacion de Ingenieria de computacion
+        RESULTADO ESPERADO:  Aprueba
+        RESULTADO OBTENIDO: Aprueba .La Asignatura Matematicas V no pertenece a las asignaturas de la coordinacion de Ingenieria de computacion
         """
 
         coord_comp = Coordinacion.objects.get(nombre="Coordinación de Ingeniería de Computación")
@@ -1126,9 +1126,10 @@ class CoordinacionModelTest(TestCase):
         Asig2 = Asignatura.objects.get(codigo_interno="2511")
         Asig3 = Asignatura.objects.get(codigo_interno="3715")        
         Asig4 = Asignatura.objects.get(codigo_interno="2115")
-        self.assertEqual(
+
+        self.assertNotEqual(
             list(coord_comp.asignaturas.all()),
-            [Asig2,Asig1,Asig3,Asig4])  
+            [Asig2,Asig1,Asig3,Asig4])             
 
 
     def test_coordinacion_sin_coordinador(self):
