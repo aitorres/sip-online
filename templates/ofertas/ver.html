@@ -1,3 +1,4 @@
+{% load static %}
 {% load dict_key %}
 <div class="modal-header">
     <h5 class="modal-title" id="largeModalLabel">Detalles de la oferta trimestral</h5>
@@ -76,12 +77,12 @@
                     </form>
                 </div>
             </div>
-            {% endif %}
-            {% if oferta.estado == "final"%}
+            {% elif oferta.estado == "final"%}
             <div class="card-body">
                 <div class="table-responsive">
-            		<table class="table">
+            		<table class="table tablafinal">
             		<thead>
+                        <th>Código</th>
                         <th>Asignatura</th>
                         <th>Profesor</th>
                     </thead>
@@ -89,7 +90,8 @@
    						<tr>
    						{% for asignacion in asignaciones %}
                            {% if asignacion.es_final %}
-                           	<td>{{ asignacion.asignatura }}</td>
+                            <td>{{ asignacion.asignatura.codigo_completo }}</td>
+                           	<td>{{ asignacion.asignatura.nombre }}</td>
                            	<td>{{ asignacion.profesor }}</td>
                            {% endif %}
                        	</tr>

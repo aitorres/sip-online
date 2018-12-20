@@ -112,6 +112,7 @@
 
 {% block js %}
 <script type="text/javascript">
+  window.alert = function() {};
   $('.trigger').on('click', function(e) {
     const $this = $(this)
     // Seleccionamos tamaño del modal de acuerdo al botón
@@ -129,16 +130,16 @@
       url: $this.data('url'),
       method: 'GET',
       success: function(data) {
-          $('#modalCRUD .modal-content').html(data);
-          $('input').addClass( "form-control" );
-          $('select').not('select[name=bootstrap-data-table_length]').addClass( "form-control chosen" );
-          $('select').not('select[name=bootstrap-data-table_length]').attr('data-placeholder', 'Selecciona una o varias opciones...');
-          $(".chosen").chosen({ width: '100%', no_results_text: "No hay resultados para: "});
-          var regExpMask = new IMask(
-          document.getElementById('cedula'), // aquí el valor debería ser 'id_cedula'
-          {
-            mask: /$^/ // aquí debería ir un regex
-          });
+        $('#modalCRUD .modal-content').html(data);
+        $('input').addClass( "form-control" );
+        $('select').not('select[name=bootstrap-data-table_length]').addClass( "form-control chosen" );
+        $('select').not('select[name=bootstrap-data-table_length]').attr('data-placeholder', 'Selecciona una o varias opciones...');
+        $(".chosen").chosen({ width: '100%', no_results_text: "No hay resultados para: "});
+        $('.tablafinal').DataTable({
+          "language": {
+              "url": "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+          }
+        });
       }
     })
   })
