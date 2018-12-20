@@ -103,6 +103,7 @@ class Coordinacion(models.Model):
     """
 
     nombre = models.CharField(max_length=200, unique=True)
+    codigo = models.CharField(max_length=3, unique=True)
     asignaturas = models.ManyToManyField('Asignatura', blank=True)
     coordinador = models.ForeignKey('Profesor', null=True, on_delete=models.SET_NULL)
 
