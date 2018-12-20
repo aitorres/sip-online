@@ -1088,4 +1088,22 @@ class CoordinacionModelTest(TestCase):
 
         coord_comp = Coordinacion.objects.get(nombre="Coordinación de Ingeniería de Computación")
         self.assertEqual(str(coord_comp),"Coordinación de Ingeniería de Computación")
-     
+ 
+
+    def test_asignaturas_validas_coordinacion(self):
+        """
+        PRUEBA 5 COORDINACION. Se verifica que se asocien las asignaturas correspondientes
+        en la base de datos como asignaturas de dicha coordinacion y que en efecto sean
+        las asignaturas pertenecientes la coordinacion. 
+
+        RESULTADO ESPERADO: Aprueba
+        RESULTADO OBTENIDO: Aprueba 
+        """
+
+        coord_comp = Coordinacion.objects.get(nombre="Coordinación de Ingeniería de Computación")
+        Asig1 = Asignatura.objects.get(codigo_interno="2525")
+        Asig2 = Asignatura.objects.get(codigo_interno="2511")
+        Asig3 = Asignatura.objects.get(codigo_interno="3715")
+        self.assertEqual(
+            list(coord_comp.asignaturas.all()),
+            [Asig2,Asig1,Asig3])     
