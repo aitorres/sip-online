@@ -598,9 +598,15 @@ class VerOferta(LoginRequiredMixin, generic.DetailView):
         asignaciones = AsignacionProfesoral.objects.filter(
             oferta_trimestral=oferta
         )
-
+        dict = {}
+        for asignacion in asignaciones:
+            if asignacion.asignatura.nombre in dict:
+                dict[asignacion.asignatura.nombre].append(asignacion)
+            else:
+                dict[asignacion.asignatura.nombre] = [asignacion]
+            
         context['asignaciones'] = asignaciones
-
+        context['dict'] = dict
         return context
 
 class VerOfertaIncluyente(LoginRequiredMixin, generic.DetailView):
