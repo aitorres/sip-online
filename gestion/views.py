@@ -684,7 +684,7 @@ def buscar_oferta(request,periodo=None,ano=None):
         
     if periodo =='-' and ano!=None:
         context = dict()
-        ofertas = OfertaTrimestral.objects.filter(trimestre[:2]== periodo[:2])
+        ofertas = OfertaTrimestral.objects.filter(trimestre[:1]=='-')
         context['ofertas'] = ofertas
         return render(
             request,
