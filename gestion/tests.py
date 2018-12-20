@@ -1064,8 +1064,8 @@ class CoordinacionModelTest(TestCase):
         en la base de datos como coordinador y que sea
         el usuario que se quiso almacenar para dicha coordinacion.
 
-        PRIMERA CORRIDA: Falla porque el metodo tiene_jefe no está creado.
-
+        PRIMERA EJECUCION: Falla porque el metodo tiene_jefe no está creado.
+        SIGUIENTE EJECUCION: La prueba se ejecuta correctamente con el metodo.
         """
 
         coord_comp = Coordinacion.objects.get(nombre="Coordinación de Ingeniería de Computación")
