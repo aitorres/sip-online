@@ -1039,5 +1039,21 @@ class CoordinacionModelTest(TestCase):
             "Coordinación de Ingeniería de Computación"
         )
 
+    def test_nombre_invalido_coordinacion(self):
+        """
+        PRUEBA 2 COORDINACION. Se verifica que el nombre de la Coordinacion se guarde
+        correctamente en la entidad, y que luego el nombre guardado
+        corresponda a dicha coordinacion. Se verifica el nombre de la coordinacion al corroborar las
+        asignaturas pertenecientes.
 
+        RESULTADO ESPERADO : Aprueba 
+        RESULTADO OBTENIDO : Aprueba. El nombre de la coordinacion no corresponde a la coordinada por la 
+        profesora Marlene Goncalves
+        """        
+
+        coord_comp = Coordinacion.objects.get(nombre="Coordinación de Ingeniería de Computación")
+        self.assertNotEqual(
+            coord_comp.nombre,
+            "Coordinación de Ingeniería de Geofísica"
+        ) 
  
