@@ -146,8 +146,8 @@ STATICFILES_DIRS = [
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 
-EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 465
-EMAIL_HOST_USER = 'apikey'
-EMAIL_HOST_PASSWORD = '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'
+EMAIL_HOST_USER = 'siponline.usb@gmail.com'
+EMAIL_HOST_PASSWORD = 's1ps1p123'
 EMAIL_USE_SSL = True
