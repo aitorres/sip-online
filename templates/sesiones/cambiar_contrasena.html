@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}Cambiar contraseña{% endblock %}
+
+{% block content %}
+<div class="col-md-12">
+
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %} alert-dismissible fade show">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Cerrar">
+            <span aria-hidden="true">×</span>
+        </button>
+      </div>
+    {% endfor %}
+  {% endif %}
+
+    <div class="card">
+        <div class="card-header">
+            <h4>Cambiar contraseña</h4>
+        </div>
+        <div class="card-body">
+            <form method="post" class="form post-form form-horizontal">
+                {% csrf_token %}
+                {% for field in form %}
+                <div class="row form-group">
+                    {% if field.errors %}
+                    <div class="col-md-6">
+                        <div class="alert alert-warning alert-dismissible fade show">
+                            {{ field.errors }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Cerrar">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-6"></div>
+                    {% endif %}
+                    <div class="col-md-3">
+                        <label class=" form-control-label">{{ field.label_tag }}</label>
+                    </div>
+                    <div class="col-md-9">
+                        {{ field }}
+                    </div>
+                </div>
+                {% endfor %}
+                <button class="btn btn-primary" type="submit">Cambiar contraseña</button>
+              </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $("input").addClass('form-control');
+</script>
+{% endblock %}
