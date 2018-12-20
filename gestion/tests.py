@@ -1144,3 +1144,17 @@ class CoordinacionModelTest(TestCase):
         Profesor.objects.get(cedula="V-13.241.234").delete()
         coordinacion_comp = Coordinacion.objects.get(nombre="Coordinación de Ingeniería de Computación")
         self.assertFalse(coordinacion_comp.tiene_coordinador())        
+
+
+    def test_coordinacion_nueva_sin_coordinador(self):
+        """
+        PRUEBA 8 COORDINACION : se crea una nueva coordinacion sin asignar coordinador, y se pide que se muestre su coordinador.
+        Prueba de tipo maliciosa.
+
+        Resultado de la prueba: Exitoso. Coordinacion sin coordinador
+        """
+        coord_geo = Coordinacion.objects.create(
+            nombre="Coordinación de Ingeniería Geofísica"
+        )
+
+        self.assertFalse(coord_geo.tiene_coordinador())        
