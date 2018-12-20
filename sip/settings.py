@@ -146,8 +146,8 @@ STATICFILES_DIRS = [
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 
-EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_PORT = 465
-EMAIL_HOST_USER = 'apikey'
-EMAIL_HOST_PASSWORD = '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'
+EMAIL_HOST = 'smtp-relay.sendinblue.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'andresitorresm@outlook.com'
+EMAIL_HOST_PASSWORD = 'OEIJUzCnd2Sf7RAM'
 EMAIL_USE_SSL = True
