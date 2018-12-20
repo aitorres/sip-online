@@ -584,6 +584,47 @@ class VerOferta(LoginRequiredMixin, generic.DetailView):
     model = OfertaTrimestral
     context_object_name = "oferta"
 
+    def post(self, request, *args, **kwargs):
+        """
+        Procesa la petición de definir una oferta de asignaturas como final.
+        """
+
+        # Iteramos por las asignaciones marcadas para seleccionarlas como preferidas
+        c = 0
+        for k, v in self.request.POST.items():
+            # Accedemos a los checkboxes
+            if k[0:12] == "botonElegir_":
+                clave = int(k[12:])
+
+                # Filtramos los checkboxes marcados
+                if v == "on":
+                    # Guardamos la información en la asignación
+                    asignacion = AsignacionProfesoral.objects.get(pk=clave)
+                    asignacion.es_final = True
+                    asignacion.save()
+                    c += 1
+
+        # Arrojamos error si no se guardó ninguna asignación
+        if c < 1:
+            messages.info(
+                self.request,
+                "No se pudo guardar la oferta como final. Debe escoger al menos una asignatura y profesor."
+            )
+        else:
+            # Marcamos la oferta como final
+            oferta_id = int(self.request.POST['oferta_id'])
+            oferta = OfertaTrimestral.objects.get(pk=oferta_id)
+            oferta.es_final = True
+            oferta.save()
+
+            # Mostramos un mensaje de éxito
+            messages.success(
+                self.request,
+                "La oferta de asignaturas ha sido marcada como final satisfactoriamente."
+            )
+
+        return redirect('gestion:listar-ofertas')
+
     def get_context_data(self, **kwargs):
         """
         Permite agregar contenido adicional al diccionario genérico de
