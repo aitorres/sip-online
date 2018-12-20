@@ -46,17 +46,20 @@
                         <th>Preferencia</th>
                     </thead>
                     <tbody>
-                        {% for asignacion in asignaciones %}
+                        {% for nombre, asig in dict.items %}
                             <tr>
-                                <td>{{ asignacion.asignatura }}</td>
-                                <td>{{ asignacion.profesor }}</td>
-                                <td>
-                                    {% if asignacion.es_preferida %}
-                                    <span class="badge badge-success">
-                                        PREFERIDA
-                                    </span>
-                                    {% endif %}
-                                </td>
+                                <td>{{ nombre }}</td>
+                                {% for asignacion in asig %}
+                                    <td>{{ asignacion.profesor }}</td>
+                                        <td>
+                                            {% if asignacion.es_preferida %}
+                                            <span class="badge badge-success">
+                                                PREFERIDA
+                                            </span>
+                                            {% endif %}
+                                        </td>
+                                    <tr></tr><td></td>
+                                {% endfor %}
                             </tr>
                         {% endfor %}
                     </tbody>
