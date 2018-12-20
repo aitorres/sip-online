@@ -104,7 +104,7 @@ class Coordinacion(models.Model):
 
     nombre = models.CharField(max_length=200, unique=True)
     asignaturas = models.ManyToManyField('Asignatura', blank=True)
-    coordinador = models.ForeignKey('Profesor', null=True, on_delete=models.SET_NULL) 
+    coordinador = models.ForeignKey('Profesor', null=True, on_delete=models.SET_NULL)
 
     class Meta:
         """
@@ -138,19 +138,26 @@ class Coordinacion(models.Model):
 
         # Obtenemos todas las ofertas finales, y las asignaturas de
         # interés para la Coordinación
-        ofertas_finales = OfertaTrimestral.objects.filter(estado="final")
+        ofertas_finales = OfertaTrimestral.objects.filter(es_final=True)
         asignaturas_de_interes = self.asignaturas.all()
 
         # Iteramos por cada oferta final disponible
         ofertas_disponibles = set()
+
         for oferta in ofertas_finales:
             # Obtenemos la intersección entre las asignaturas
             asignaturas_ofertadas = oferta.asignaturas_ofertadas()
-            interseccion_asignaturas = asignaturas_de_interes & asignaturas_ofertadas
 
-            # Si al menos una asignatura de interés se oferta, la oferta se incluye
-            if len(interseccion_asignaturas) > 0:
-                ofertas_disponibles.add(oferta)
+            for asignatura in asignaturas_ofertadas:
+                asignaciones_finales = AsignacionProfesoral.objects.filter(
+                    es_final=True,
+                    oferta_trimestral=oferta,
+                    asignatura=asignatura
+                )
+
+                if asignatura in asignaturas_de_interes and len(asignaciones_finales) > 1:
+                    ofertas_disponibles.add(oferta)
+                    break
 
         return ofertas_disponibles
 
@@ -185,6 +192,26 @@ class Profesor(models.Model):
         """
 
         return self.departamento.jefe == self
+
+    def es_coordinador(self):
+        """
+        Determina si un profesor es coordinador de alguna Coordinación.
+        """
+
+        coordinaciones = Coordinacion.objects.filter(coordinador=self)
+
+        return len(coordinaciones) != 0
+
+    def coordinacion(self):
+        """
+        Retorna la coordinación a la que está asociado el coordinador
+        """
+
+        coordinaciones = Coordinacion.objects.filter(coordinador=self)
+
+        if len(coordinaciones) == 1:
+            return coordinaciones.first()
+        return None
 
     def __str__(self):
         """
