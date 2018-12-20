@@ -636,6 +636,50 @@ class VerOferta(LoginRequiredMixin, generic.DetailView):
     model = OfertaTrimestral
     context_object_name = "oferta"
 
+    def post(self, request, *args, **kwargs):
+        """
+        Procesa la petición de definir una oferta de asignaturas como final.
+        """
+
+        # Iteramos por las asignaciones marcadas para seleccionarlas como preferidas
+        c = 0
+        for k, v in self.request.POST.items():
+            # Accedemos a los checkboxes
+            if k[0:12] == "botonElegir_":
+                clave = int(k[12:])
+
+                # Filtramos los checkboxes marcados
+                if v == "on":
+                    # Guardamos la información en la asignación
+                    asignacion = AsignacionProfesoral.objects.get(pk=clave)
+                    asignacion.es_final = True
+                    asignacion.save()
+                    c += 1
+
+        # Arrojamos error si no se guardó ninguna asignación
+        if c < 1:
+            messages.info(
+                self.request,
+                "No se pudo guardar la oferta como final. Debe escoger al menos una asignatura y profesor."
+            )
+        else:
+            # Marcamos la oferta como final
+            oferta_id = int(self.request.POST['oferta_id'])
+            oferta = OfertaTrimestral.objects.get(pk=oferta_id)
+            oferta.es_final = True
+            oferta.save()
+
+            # PENDIENTE: Mandar correos a Coordinaciones
+            # TODO: Mandar correos a Coordinaciones
+
+            # Mostramos un mensaje de éxito
+            messages.success(
+                self.request,
+                "La oferta de asignaturas ha sido marcada como final satisfactoriamente."
+            )
+
+        return redirect('gestion:listar-ofertas')
+
     def get_context_data(self, **kwargs):
         """
         Permite agregar contenido adicional al diccionario genérico de
@@ -644,6 +688,94 @@ class VerOferta(LoginRequiredMixin, generic.DetailView):
 
         # Obtenemos el diccionario de contexto por defecto
         context = super(VerOferta, self).get_context_data(**kwargs)
+
+        # Obtenemos las asignaciones profesorales asignadas a esta oferta
+        oferta = context['object']
+        asignaciones = AsignacionProfesoral.objects.filter(
+            oferta_trimestral=oferta
+        )
+
+        context['asignaciones'] = asignaciones
+
+        return context
+
+class ModificarOferta(LoginRequiredMixin, generic.DetailView):
+    """
+    Controlador que permite modificar los datos en detalle de una oferta
+    trimestral en particular guardad como final.
+    """
+
+    template_name = 'ofertas/modificar.html'
+    model = OfertaTrimestral
+    context_object_name = "oferta"
+
+    def post(self, request, *args, **kwargs):
+        """
+        Procesa la petición de modificar las asignaturas en una oferta trimestral
+        final.
+        """
+
+        # Obtenemos datos de la oferta
+        oferta_id = int(self.request.POST['oferta_id'])
+        oferta = OfertaTrimestral.objects.get(pk=oferta_id)
+
+        # Iteramos por las asignaciones marcadas para seleccionarlas como preferidas
+        c = 0
+        asignaciones_finales = set()
+        for k, v in self.request.POST.items():
+            # Accedemos a los checkboxes
+            if k[0:12] == "botonElegir_":
+                clave = int(k[12:])
+
+                # Filtramos los checkboxes marcados
+                if v == "on":
+                    # Guardamos la información en la asignación
+                    asignacion = AsignacionProfesoral.objects.get(pk=clave)
+                    asignacion.es_final = True
+                    asignacion.save()
+                    asignaciones_finales.add(asignacion)
+                    c += 1
+
+        # Arrojamos error si no se guardó ninguna asignación
+        if c < 1:
+            messages.info(
+                self.request,
+                "No se pudo guardar la oferta como final. Debe escoger al menos una asignatura y profesor."
+            )
+        else:
+            # Desmarcamos el resto de asignaciones
+            asignaciones_oferta = AsignacionProfesoral.objects.filter(
+                oferta_trimestral=oferta
+            )
+
+            for asignacion in asignaciones_oferta:
+                if asignacion not in asignaciones_finales:
+                    asignacion.es_final = False
+                    asignacion.save()
+
+            # Marcamos la oferta como final
+            oferta.es_final = True
+            oferta.save()
+
+            # PENDIENTE: Mandar correos a Coordinaciones
+            # TODO: Mandar correos a Coordinaciones
+
+            # Mostramos un mensaje de éxito
+            messages.success(
+                self.request,
+                "La oferta de asignaturas ha sido modificada satisfactoriamente."
+            )
+
+        return redirect('gestion:listar-ofertas')
+
+    def get_context_data(self, **kwargs):
+        """
+        Permite agregar contenido adicional al diccionario genérico de
+        contexto para pasar al template y que se renderice posteriormente.
+        """
+
+        # Obtenemos el diccionario de contexto por defecto
+        context = super(ModificarOferta, self).get_context_data(**kwargs)
 
         # Obtenemos las asignaciones profesorales asignadas a esta oferta
         oferta = context['object']
@@ -705,7 +837,7 @@ def actualizar_preferencias(request, pk_oferta):
             asignacion.es_preferida = marcado
             asignacion.save()
 
-        messages.success(request, 'Preferencias actualizadas satisfactoriamente.')
+        messages.success(requedest, 'Preferencias actualizadas satisfactoriamente.')
         return redirect('gestion:listar-ofertas-asignacion')
     else:
         return render(
@@ -716,3 +848,77 @@ def actualizar_preferencias(request, pk_oferta):
                 'oferta': oferta
             }
         )
+
+@login_required
+def buscar_oferta(request, periodo=None, ano=None):
+    """
+    Permite filtrar y buscar ofertas finales por año o por trimestre,
+    de acuerdo a lo que se requiera.
+    """
+
+    template_name = 'ofertas/buscar.html'
+
+    filtrar_dpto = False
+    if request.method == 'POST':
+        periodo = request.POST.get('periodo', None)
+        ano = request.POST.get('ano', None)
+        filtrar_dpto = request.POST.get('filtrar_dpto', False)
+
+        if filtrar_dpto == "No":
+            filtrar_dpto = False
+        elif filtrar_dpto == "Sí":
+            filtrar_dpto = True
+
+    context = {}
+
+    if periodo != "-":
+        # Si se escogió un periodo, se filtra este periodo
+        context = dict()
+        ofertas = OfertaTrimestral.objects.all()
+
+        ofertas_periodo = set()
+        for oferta in ofertas:
+            if oferta.trimestre[:2] == periodo:
+                ofertas_periodo.add(oferta)
+
+        context['ofertas'] = ofertas_periodo
+
+    elif periodo == '-' and ano != None:
+
+        # Si se escogió un año
+        context = dict()
+        ofertas = OfertaTrimestral.objects.all()
+
+        ofertas_ano = set()
+        for oferta in ofertas:
+            if oferta.trimestre[2:] == str(ano)[2:]:
+                ofertas_ano.add(oferta)
+
+        context['ofertas'] = ofertas_ano
+        print(ofertas)
+
+    elif periodo is not None and periodo != "-" and ano != None:
+        # Si se escogen ambos filtros
+        context = dict()
+        ofertas = OfertaTrimestral.objects.all()
+
+        ofertas_periodo = set()
+        for oferta in ofertas:
+            if oferta.trimestre[2:] == periodo and oferta.trimestre[:2] == str(ano)[2:]:
+                ofertas_periodo.add(oferta)
+
+        context['ofertas'] = ofertas_periodo
+
+    # Filtramos por Departamento, si se requiere
+    if filtrar_dpto:
+        ofertas_filtradas = set()
+        for oferta in context['ofertas']:
+            if oferta.departamento == request.user.profesor.departamento:
+                ofertas_filtradas.add(oferta)
+        context['ofertas'] = ofertas_filtradas
+
+    return render(
+        request,
+        template_name,
+        context
+    )

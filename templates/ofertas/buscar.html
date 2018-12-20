@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+
+{% block title %}Buscar ofertas{% endblock %}
+
+{% block content %}
+<div class="col-md-12">
+
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %} alert-dismissible fade show">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Cerrar">
+            <span aria-hidden="true">×</span>
+        </button>
+      </div>
+    {% endfor %}
+  {% endif %}
+
+    <div class="card">
+        <div class="card-header">
+            <h4>Buscar Ofertas</h4>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <form class="form form-horizontal" style="width: 100%;" method="post" action="{% url 'gestion:buscar-ofertas' %}">
+                    {% csrf_token %}
+                    <div class="col-md-3">
+                        <div class="form-group row">
+                            <label class="form-group col-sm-4 col-form-label text-right"><b>Período</b></label>
+                            <select class="form-control col-sm-8" name="periodo" id="periodo">
+                                <option value="-">Seleccione una opción</option>
+                                <option value="EM">Enero-Marzo</option>
+                                <option value="AJ">Abril-Julio</option>
+                                <option value="JA">Julio-Agosto</option>
+                                <option value="SD">Septiembre-Diciembre</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group row">
+                            <label class="form-group col-sm-4 col-form-label text-right"><b>Año</b></label>
+                            <input class="form-control col-sm-8" type="number" name="ano" id="ano" min="1967" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group row">
+                            <label class="form-group col-sm-4 col-form-label text-right"><b>Solo ofertas de mi Dpto</b></label>
+                            <select class="form-control col-sm-8" name="filtrar_dpto" id="filtrar_dpto">
+                                <option value="No">No</option>
+                                <option value="Sí">Sí</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-primary">Buscar</button>
+                    </div>
+
+                </form>
+            </div>
+
+            <div id="resultados">
+                <div class="row">
+                    {% for oferta in ofertas %}
+                    <div class="col-md-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ oferta.nombre_completo }}</h5>
+                                <p class="card-text">{{ oferta.departamento }}</p>
+                                <a href="#" class="card-link trigger" data-toggle="modal" data-target="#modalCRUD" data-url="{% url 'gestion:ver-oferta' oferta.pk %}">Ver más detalles</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade show" id="modalCRUD" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+  $('.trigger').on('click', function(e) {
+    const $this = $(this)
+    // Seleccionamos tamaño del modal de acuerdo al botón
+    // que escogimos
+    if ($this.hasClass('fa-eye')) {
+      $('.modal-dialog').removeClass( "modal-md" );
+      $('.modal-dialog').addClass( "modal-lg" );
+    } else {
+      $('.modal-dialog').removeClass( "modal-lg" );
+      $('.modal-dialog').addClass( "modal-md" );
+    }
+    // Cargamos la información para el modal de acuerdo al botón al que
+    // hicimos click
+    $.ajax({
+      url: $this.data('url'),
+      method: 'GET',
+      success: function(data) {
+          $('#modalCRUD .modal-content').html(data);
+      }
+    });
+  });
+</script>
+{% endblock %}
+
+{% block css %}
+<style type="text/css">
+/* Aquí va codigo css personalziado dentro de etiquetas style */
+</style>
+{% endblock %}

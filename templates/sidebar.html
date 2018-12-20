@@ -13,12 +13,16 @@
         <li>
             <a href="{% url 'gestion:listar-asignaturas' %}"> <i class="menu-icon fa fa-bookmark"></i>Gestionar asignaturas</a>
         </li>
+        {% endif %}
+
 
         <h3 class="menu-title">Ofertas</h3><!-- /.menu-title -->
         <li>
-            <a href="{% url 'gestion:listar-ofertas' %}"> <i class="menu-icon fa fa-bookmark"></i>Gestionar ofertas</a>
+            {% if request.user.profesor.es_jefe %}
+                <a href="{% url 'gestion:listar-ofertas' %}"> <i class="menu-icon fa fa-bookmark"></i>Gestionar ofertas</a>
+            {% endif %}
+            <a href="{% url 'gestion:buscar-ofertas' %}"> <i class="menu-icon fa fa-search"></i>Buscar ofertas</a>
         </li>
-        {% endif %}
 
         {% if request.user.profesor.es_coordinador %}
         <h3 class="menu-title">Coordinación</h3><!-- /.menu-title -->
@@ -29,7 +33,7 @@
 
         <h3 class="menu-title">Preferencias del trimestre</h3><!-- /.menu-title -->
         <li>
-            <a href="{% url 'gestion:listar-ofertas-asignacion' %}"> <i class="menu-icon fa fa-bookmark"></i>Gestionar preferencias</a>
+            <a href="{% url 'gestion:listar-ofertas-asignacion' %}"> <i class="menu-icon fa fa-gear"></i>Gestionar preferencias</a>
         </li>
 
     </ul>
