@@ -1030,7 +1030,7 @@ class CoordinacionModelTest(TestCase):
         asignaturas pertenecientes.
 
         PRIMERA CORRIDA: Falla porque el modelo Coordinacion no está creado.
- 
+        SIGUIENTE CORRIDA: La prueba se ejecuta correctamente despues de haber sido creado el modelo.
         """
 
         coord_comp = Coordinacion.objects.get(nombre="Coordinación de Ingeniería de Computación")
