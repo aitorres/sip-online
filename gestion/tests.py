@@ -1074,5 +1074,17 @@ class CoordinacionModelTest(TestCase):
             coord_comp.coordinador,
             coordinador_comp
         )
-    
- 
+
+    def test_string_coordinacion(self):
+        """
+        PRUEBA 4 COORDINACION. Se verifica que la representación como cadena de caracteres
+        del modelo Coordinacion sea su nombre.
+
+        PRIMERA CORRIDA: Falla porque la representación por cadena de
+        caracteres (string) del modelo no ha sido implementada
+
+        """
+
+        coord_comp = Coordinacion.objects.get(nombre="Coordinación de Ingeniería de Computación")
+        self.assertEqual(str(coord_comp),"Coordinación de Ingeniería de Computación")
+     
