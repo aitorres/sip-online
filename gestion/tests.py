@@ -1082,7 +1082,8 @@ class CoordinacionModelTest(TestCase):
 
         PRIMERA CORRIDA: Falla porque la representación por cadena de
         caracteres (string) del modelo no ha sido implementada
-
+        SIGUIENTE CORRIDA: La prueba pasa porque se implementa el metodo y se genera la representación como
+        cadena de caracteres apropiada.        
         """
 
         coord_comp = Coordinacion.objects.get(nombre="Coordinación de Ingeniería de Computación")
