@@ -1,0 +1,11 @@
+{% autoescape off %}
+Estimado usuario,
+
+Para iniciar el proceso de recuperación de contraseña para su cuenta en SIP Online, haga click en el enlace a continuación.
+
+{{ protocol }}://{{ domain }}{% url 'password_reset_confirm' uidb64=uid token=token %}
+
+Si hacer click no funciona, por favor copie y pegue la dirección en la barra de navegación.
+
+SIP Online
+{% endautoescape %}

@@ -12,6 +12,7 @@ Class-based views
 
 from django.conf.urls import url, include
 from django.contrib import admin
+
 from gestion import views, forms
 
 app_name = "gestion"
@@ -38,6 +39,4 @@ urlpatterns = [
     url(r'^ofertas-asignacion/$', views.ListarOfertasIncluyentes.as_view(), name='listar-ofertas-asignacion'),
     url(r'^ofertas-asignacion/actualizar/(?P<pk_oferta>[-\w]+)/$', views.actualizar_preferencias, name='actualizar-preferencias'),
     url(r'^ofertas-asignacion/(?P<pk>[-\w]+)/$', views.VerOfertaIncluyente.as_view(), name='ver-oferta-asignacion'),
-    url(r'^cambiar-contrasena/', views.cambiar_contrasena, name='cambiar-contrasena'),
-
 ]
