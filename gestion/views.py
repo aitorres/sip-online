@@ -423,6 +423,58 @@ class ListarOfertas(generic.ListView):
         )
         return ofertas
 
+class ListarOfertasCoordinacion(generic.ListView):
+    """
+    Controlador que muestra una lista de las ofertas trimestral
+    para las coordinaciones.
+    """
+
+    template_name = 'coordinaciones/listar.html'
+    model = OfertaTrimestral
+    context_object_name = "ofertas"
+
+    def get_context_data(self, **kwargs):
+        """
+        Permite agregar contenido adicional al diccionario genérico de
+        contexto para pasar al template y que se renderice posteriormente.
+        """
+
+        # Obtenemos el diccionario de contexto por defecto
+        context = super(ListarOfertasCoordinacion, self).get_context_data(**kwargs)
+
+        # Agregamos la coordinacion al contexto
+        context['coordinacion'] = self.request.user.profesor.coordinacion()
+
+        return context
+
+class VerOfertaCoordinacion(LoginRequiredMixin, generic.DetailView):
+    """
+    Controlador que permite visualizar los datos en detalle de una oferta
+    trimestral en particular para las Coordinaciones.
+    """
+
+    template_name = 'coordinaciones/ver.html'
+    model = OfertaTrimestral
+    context_object_name = "oferta"
+
+    def get_context_data(self, **kwargs):
+        """
+        Permite agregar contenido adicional al diccionario genérico de
+        contexto para pasar al template y que se renderice posteriormente.
+        """
+
+        # Obtenemos el diccionario de contexto por defecto
+        context = super(VerOfertaCoordinacion, self).get_context_data(**kwargs)
+
+        # Obtenemos las asignaciones profesorales asignadas a esta oferta
+        oferta = context['object']
+        asignaciones = AsignacionProfesoral.objects.filter(
+            oferta_trimestral=oferta
+        )
+
+        context['asignaciones'] = asignaciones
+        return context
+
 class ListarOfertasIncluyentes(generic.ListView):
     """
     Controlador que muestra una lista las ofertas trimestrales en las que

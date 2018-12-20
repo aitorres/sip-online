@@ -1,0 +1,65 @@
+{% load dict_key %}
+<div class="modal-header">
+    <h5 class="modal-title" id="largeModalLabel">Detalles de la oferta trimestral</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <h1 class="text-center"> {{ oferta.nombre_completo }} </h1>
+    <hr />
+    <div class="row">
+        <div class="col-md-3 float-right">
+            <b>Código</b>
+        </div>
+        <div class="col-md-9">
+            {{ oferta.trimestre }}
+        </div>
+        <div class="col-md-3 float-right">
+            <b>Departamento</b>
+        </div>
+        <div class="col-md-9">
+            {{ oferta.departamento }}
+        </div>
+        <div class="col-md-3 float-right">
+            <b>Estatus</b>
+        </div>
+        <div class="col-md-9">
+                <span class="badge {% if oferta.estado == 'final' %} badge-success {% else %} badge-info {% endif %}">
+                    {{ oferta.estado }}
+                </span>
+        </div>
+    </div>
+
+    <hr/>
+
+    <div class="card text-center">
+            <div class="card-header">
+                <b>Asignación de profesores ({{ oferta.estado }})</b>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead>
+                        <th>Asignatura</th>
+                        <th>Profesor</th>
+                    </thead>
+                    <tbody>
+                        {% for asignacion in asignaciones %}
+                            {% if asignacion.es_final %}
+                                <tr>
+                                    <td>{{ asignacion.asignatura }}</td>
+                                    <td>{{ asignacion.profesor }}</td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+            </div>
+        </div>
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+</div>

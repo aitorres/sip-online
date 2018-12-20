@@ -95,6 +95,72 @@ class Departamento(models.Model):
 
         return self.jefe.departamento == self
 
+class Coordinacion(models.Model):
+    """
+    Modelo que representa una Coordinacion dada, incluyendo su
+    nombre, sus asignaturas asociadas y el profesor que lo dirige
+    como coordinador.
+    """
+
+    nombre = models.CharField(max_length=200, unique=True)
+    asignaturas = models.ManyToManyField('Asignatura', blank=True)
+    coordinador = models.ForeignKey('Profesor', null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        """
+        Provee algunas configuraciones básicas con respecto a las
+        operaciones del modelo.
+        """
+
+        # Ordenamiento por defecto: según su nombre
+        ordering = ["nombre"]
+
+    def __str__(self):
+        """
+        Muestra la instancia de Coordinacion como
+        nombre
+        """
+
+        return self.nombre
+
+    def tiene_coordinador(self):
+        """
+        Determina si una Coordinacion  tiene un coordinador asociado.
+        """
+
+        return bool(self.coordinador)
+
+    def ofertas_disponibles(self):
+        """
+        Devuelve las ofertas trimestrales finales a la que la Coordinación tiene
+        acceso.
+        """
+
+        # Obtenemos todas las ofertas finales, y las asignaturas de
+        # interés para la Coordinación
+        ofertas_finales = OfertaTrimestral.objects.filter(es_final=True)
+        asignaturas_de_interes = self.asignaturas.all()
+
+        # Iteramos por cada oferta final disponible
+        ofertas_disponibles = set()
+
+        for oferta in ofertas_finales:
+            # Obtenemos la intersección entre las asignaturas
+            asignaturas_ofertadas = oferta.asignaturas_ofertadas()
+
+            for asignatura in asignaturas_ofertadas:
+                asignaciones_finales = AsignacionProfesoral.objects.filter(
+                    es_final=True,
+                    oferta_trimestral=oferta,
+                    asignatura=asignatura
+                )
+
+                if asignatura in asignaturas_de_interes and len(asignaciones_finales) > 1:
+                    ofertas_disponibles.add(oferta)
+                    break
+
+        return ofertas_disponibles
+
 class Profesor(models.Model):
     """
     Modelo que representa un profesor de la USB
@@ -126,6 +192,26 @@ class Profesor(models.Model):
         """
 
         return self.departamento.jefe == self
+
+    def es_coordinador(self):
+        """
+        Determina si un profesor es coordinador de alguna Coordinación.
+        """
+
+        coordinaciones = Coordinacion.objects.filter(coordinador=self)
+
+        return len(coordinaciones) != 0
+
+    def coordinacion(self):
+        """
+        Retorna la coordinación a la que está asociado el coordinador
+        """
+
+        coordinaciones = Coordinacion.objects.filter(coordinador=self)
+
+        if len(coordinaciones) == 1:
+            return coordinaciones.first()
+        return None
 
     def __str__(self):
         """

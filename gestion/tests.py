@@ -6,7 +6,8 @@ que utiliza una versión de PyUnit adaptada al framework y
 ya incluida para realizar las pruebas de los modelos y funciones
 asociadas.
 """
-
+#from django.conf import settings
+#settings.configure()
 from django.test import TestCase, RequestFactory
 from django.contrib.auth.models import AnonymousUser
 from django.db import IntegrityError
@@ -16,7 +17,8 @@ from gestion.models import (
     Departamento,
     Asignatura,
     Disponibilidad,
-    OfertaTrimestral
+    OfertaTrimestral,
+    Coordinacion
 )
 from gestion.views import (
     Dashboard,
@@ -933,3 +935,277 @@ class ModelosBDTest(TestCase):
             )
 
         self.assertEqual(oferta.estado(), "preliminar")
+
+
+class CoordinacionModelTest(TestCase):
+    """
+    Suite de pruebas para el modelo Coordinacion, que incluye
+    pruebas de frontera, de esquina y de malicia para los atributos
+    de este modelo, y para sus métodos asociados en caso de
+    que se agreguen posteriormente.
+    """
+
+    def setUp(self):
+        """
+        Método para crear los valores de la base de datos por defecto
+        antes de iniciar cada prueba.
+        """
+
+
+        dpto_compu = Departamento.objects.create(
+            nombre="Departamento de Computación y Tecnología de la Información",
+            codigo="CI"
+        )
+
+
+        coordinacion_compu = Coordinacion.objects.create(
+            nombre="Coordinación de Ingeniería de Computación",
+        )
+
+        coordinador_compu = Profesor.objects.create(
+            nombre="Marlene",
+            apellido="Goncalves",
+            email="mgoncalves@usb.ve",
+            cedula="V-13.241.234",
+            departamento=dpto_compu
+        )
+
+ 
+        A1 = Asignatura.objects.create(
+            nombre="Estructuras Discretas I",
+            codigo_interno="2525",
+            departamento=dpto_compu,
+            horas_laboratorio=0,
+            horas_teoria=4,
+            horas_practica=2,
+            unidad_creditos = 4
+        )
+
+        A2= Asignatura.objects.create(
+            nombre="Lógica Simbólica",
+            codigo_interno="2511",
+            departamento=dpto_compu,
+            horas_laboratorio=0,
+            horas_teoria=4,
+            horas_practica=2,
+            unidad_creditos = 4,
+        )
+
+        A3= Asignatura.objects.create(
+            nombre="Ingeniería de Software I",
+            codigo_interno="3715",
+            departamento=dpto_compu,
+            horas_laboratorio=3,
+            horas_teoria=3,
+            horas_practica=1,
+            unidad_creditos = 5
+        )
+     
+
+        coordinacion_compu.coordinador = coordinador_compu
+        coordinacion_compu.asignaturas.add(A1,A2,A3)
+        coordinacion_compu.save()
+
+
+        dpto_mate = Departamento.objects.create(
+            nombre="Departamento de Matematicas Puras y Aplicadas",
+            codigo="MA"
+        )       
+
+        A4= Asignatura.objects.create(
+            nombre="Matematicas V",
+            codigo_interno="2115",
+            departamento=dpto_mate,
+            horas_laboratorio=0,
+            horas_teoria=4,
+            horas_practica=2,
+            unidad_creditos = 4
+        )        
+
+    def test_nombre_valido_coordinacion(self):
+        """
+        PRUEBA 1 COORDINACION. Se verifica que el nombre de la Coordinacion se guarde
+        correctamente en la entidad, y que luego el nombre guardado
+        corresponda a dicha coordinacion. Se verifica el nombre de la coordinacion al corroborar las
+        asignaturas pertenecientes.
+
+        PRIMERA CORRIDA: Falla porque el modelo Coordinacion no está creado.
+        SIGUIENTE CORRIDA: La prueba se ejecuta correctamente despues de haber sido creado el modelo.
+        """
+
+        coord_comp = Coordinacion.objects.get(nombre="Coordinación de Ingeniería de Computación")
+        self.assertEqual(
+            coord_comp.nombre,
+            "Coordinación de Ingeniería de Computación"
+        )
+
+    def test_nombre_invalido_coordinacion(self):
+        """
+        PRUEBA 2 COORDINACION. Se verifica que el nombre de la Coordinacion se guarde
+        correctamente en la entidad, y que luego el nombre guardado
+        corresponda a dicha coordinacion. Se verifica el nombre de la coordinacion al corroborar las
+        asignaturas pertenecientes.
+
+        RESULTADO ESPERADO : Aprueba 
+        RESULTADO OBTENIDO : Aprueba. El nombre de la coordinacion no corresponde a la coordinada por la 
+        profesora Marlene Goncalves
+        """        
+
+        coord_comp = Coordinacion.objects.get(nombre="Coordinación de Ingeniería de Computación")
+        self.assertNotEqual(
+            coord_comp.nombre,
+            "Coordinación de Ingeniería de Geofísica"
+        ) 
+
+
+    def test_tiene_coordinador_coordinacion(self):
+        """
+        PRUEBA 3 COORDINACION. Se verifica que se asocie la cuenta de un profesor
+        en la base de datos como coordinador y que sea
+        el usuario que se quiso almacenar para dicha coordinacion.
+
+        PRIMERA EJECUCION: Falla porque el metodo tiene_jefe no está creado.
+        SIGUIENTE EJECUCION: La prueba se ejecuta correctamente con el metodo.
+        """
+
+        coord_comp = Coordinacion.objects.get(nombre="Coordinación de Ingeniería de Computación")
+        coordinador_comp = Profesor.objects.get(email="mgoncalves@usb.ve")
+        self.assertEqual(
+            coord_comp.coordinador,
+            coordinador_comp
+        )
+
+    def test_string_coordinacion(self):
+        """
+        PRUEBA 4 COORDINACION. Se verifica que la representación como cadena de caracteres
+        del modelo Coordinacion sea su nombre.
+
+        PRIMERA CORRIDA: Falla porque la representación por cadena de
+        caracteres (string) del modelo no ha sido implementada
+        SIGUIENTE CORRIDA: La prueba pasa porque se implementa el metodo y se genera la representación como
+        cadena de caracteres apropiada.        
+        """
+
+        coord_comp = Coordinacion.objects.get(nombre="Coordinación de Ingeniería de Computación")
+        self.assertEqual(str(coord_comp),"Coordinación de Ingeniería de Computación")
+ 
+
+    def test_asignaturas_validas_coordinacion(self):
+        """
+        PRUEBA 5 COORDINACION. Se verifica que se asocien las asignaturas correspondientes
+        en la base de datos como asignaturas de dicha coordinacion y que en efecto sean
+        las asignaturas pertenecientes la coordinacion. 
+
+        RESULTADO ESPERADO: Aprueba
+        RESULTADO OBTENIDO: Aprueba 
+        """
+
+        coord_comp = Coordinacion.objects.get(nombre="Coordinación de Ingeniería de Computación")
+        Asig1 = Asignatura.objects.get(codigo_interno="2525")
+        Asig2 = Asignatura.objects.get(codigo_interno="2511")
+        Asig3 = Asignatura.objects.get(codigo_interno="3715")
+        self.assertEqual(
+            list(coord_comp.asignaturas.all()),
+            [Asig2,Asig1,Asig3])     
+ 
+    def test_asignaturas_invalidas_coordinacion(self):
+        """
+        PRUEBA 6 COORDINACION. Se verifica que se asocien las asignaturas correspondientes
+        en la base de datos como asignaturas de dicha coordinacion y que en efecto sean
+        las materias de la coordinacion.
+
+        Prueba de tipo malicia.
+        RESULTADO ESPERADO:  Aprueba
+        RESULTADO OBTENIDO: Aprueba .La Asignatura Matematicas V no pertenece a las asignaturas de la coordinacion de Ingenieria de computacion
+        """
+
+        coord_comp = Coordinacion.objects.get(nombre="Coordinación de Ingeniería de Computación")
+        Asig1 = Asignatura.objects.get(codigo_interno="2525")
+        Asig2 = Asignatura.objects.get(codigo_interno="2511")
+        Asig3 = Asignatura.objects.get(codigo_interno="3715")        
+        Asig4 = Asignatura.objects.get(codigo_interno="2115")
+
+        self.assertNotEqual(
+            list(coord_comp.asignaturas.all()),
+            [Asig2,Asig1,Asig3,Asig4])         
+
+    def test_coordinacion_sin_coordinador(self):
+        """
+        PRUEBA 7 COORDINACION : se asocia un profesor como coordinador y luego se elimina el profesor. Por
+        lo tanto la coordinacion se queda sin jefe asociado.  
+
+
+        Primer Resultado de la prueba: Fallo, no se modifica los datos de la coordinacion. Se arregla el codigo
+        Segundo Resultado de la prueba: Exitoso,el objeto se modifica cuando se elimina el profesor
+        coordinador.
+        
+        """
+
+        Profesor.objects.get(cedula="V-13.241.234").delete()
+        coordinacion_comp = Coordinacion.objects.get(nombre="Coordinación de Ingeniería de Computación")
+        self.assertFalse(coordinacion_comp.tiene_coordinador())        
+
+
+    def test_coordinacion_nueva_sin_coordinador(self):
+        """
+        PRUEBA 8 COORDINACION : se crea una nueva coordinacion sin asignar coordinador, y se pide que se muestre su coordinador.
+        Prueba de tipo maliciosa.
+
+        Resultado de la prueba: Exitoso. Coordinacion sin coordinador. Metodo tiene_coordinador es falso
+        """
+        coord_geo = Coordinacion.objects.create(
+            nombre="Coordinación de Ingeniería Geofísica"
+        )
+
+        self.assertFalse(coord_geo.tiene_coordinador())        
+
+    def test_eliminar_asignatura_coordinacion(self):
+        """
+        PRUEBA 9 COORDINACION : se elimina una asignatura asociada a una coordinacion del sistema; por lo tanto, ya no 
+        pertenecera al campo Asignaturas de dicha coordinacion. Se espera probar que al eliminar una asignatura asociada a una coordinacion,
+        esta se borre del campo del objeto satisfactoriamente.
+
+
+        Resultado de la prueba: Exitoso. La el objeto coordinacion ya no contiene la Asignatura Logica Simbolica que fue borrada de la base de datos
+        ahora solo contiene las Asignaturas Estructura Discretas I  e Ingenieria de Software I.
+
+        """
+
+        Asignatura.objects.get(codigo_interno="2511").delete()
+        coord_comp = Coordinacion.objects.get(nombre="Coordinación de Ingeniería de Computación")
+        Asig1 = Asignatura.objects.get(codigo_interno="2525")
+        Asig3 = Asignatura.objects.get(codigo_interno="3715")
+        self.assertEqual(
+            list(coord_comp.asignaturas.all()),
+            [Asig1,Asig3])
+
+    def test_agregar_asignatura_coordinacion(self):
+        """
+        PRUEBA  10 COORDINACION : Se agrega una asignatura a una coordinacion, por lo tanto pertenecera al campo Asignaturas de dicho objeto. Se espera comprobar que en efecto,
+        una asignatura puede ser agregada a una coordinacion saisfactoriamente
+
+        Resultado de la prueba: Exitoso, la nueva asignatura ahora esta asociada a la coordinacion.
+        """
+        dpto = Departamento.objects.get(codigo="MA")
+
+        coord_mec = Coordinacion.objects.create(
+            nombre="Coordinación de Ingeniería Mecánica"
+        )
+
+        Asig11 = Asignatura.objects.create(
+            nombre="Mecánica de Materiales",
+            codigo_interno="2142",
+            departamento=dpto,
+            horas_laboratorio=0,
+            horas_teoria=4,
+            horas_practica=2,
+            unidad_creditos = 4
+        ) 
+
+        coord_mec.asignaturas.add(Asig11)
+
+        self.assertEqual(
+            list(coord_mec.asignaturas.all()),
+            [Asig11])       
+
+                    
