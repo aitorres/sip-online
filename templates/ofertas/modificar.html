@@ -1,0 +1,82 @@
+{% load dict_key %}
+<div class="modal-header">
+    <h5 class="modal-title" id="largeModalLabel">Detalles de la oferta trimestral</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <h1 class="text-center"> {{ oferta.nombre_completo }} </h1>
+    <hr />
+    <div class="row">
+        <div class="col-md-3 float-right">
+            <b>Código</b>
+        </div>
+        <div class="col-md-9">
+            {{ oferta.trimestre }}
+        </div>
+        <div class="col-md-3 float-right">
+            <b>Departamento</b>
+        </div>
+        <div class="col-md-9">
+            {{ oferta.departamento }}
+        </div>
+        <div class="col-md-3 float-right">
+            <b>Estatus</b>
+        </div>
+        <div class="col-md-9">
+                <span class="badge {% if oferta.estado == 'final' %} badge-success {% else %} badge-info {% endif %}">
+                    {{ oferta.estado }}
+                </span>
+        </div>
+    </div>
+
+    <hr/>
+
+    <div class="card text-center">
+           {% if oferta.estado == "final"%}
+            <div class="card-header">
+                <b>Modificar oferta</b>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <form method="post" action="{% url 'gestion:modificar-oferta' oferta.pk %}" id="f1">
+                    {% csrf_token %}
+                    <input type="hidden" name="oferta_id" value="{{ oferta.pk }}" />
+                    <table class="table">
+                        <thead>
+                            <th>Asignatura</th>
+                            <th>Profesor</th>
+                            <th>Preferencia</th>
+                            <th>Marcar como Final</th>
+                        </thead>
+                        <tbody>
+                            {% for asignacion in asignaciones %}
+                                <tr>
+                                    <td>{{ asignacion.asignatura }}</td>
+                                    <td>{{ asignacion.profesor }}</td>
+                                    <td>
+                                        {% if asignacion.es_preferida %}
+                                        <span class="badge badge-success">
+                                            PREFERIDA
+                                        </span>
+                                        {% endif %}
+                                    </td>
+                                    <td><input type="checkbox" name="botonElegir_{{ asignacion.id }}"/></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    </form>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+ </div>
+
+<div class="modal-footer">
+{% if oferta.estado == "preliminar"%}
+    <button type="submit" form="f1" value="Submit" class="btn btn-primary">Modificar oferta</button>
+{% endif %}
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+</div>
