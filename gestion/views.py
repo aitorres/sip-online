@@ -653,7 +653,7 @@ def actualizar_preferencias(request, pk_oferta):
             asignacion.es_preferida = marcado
             asignacion.save()
 
-        messages.success(request, 'Preferencias actualizadas satisfactoriamente.')
+        messages.success(requedest, 'Preferencias actualizadas satisfactoriamente.')
         return redirect('gestion:listar-ofertas-asignacion')
     else:
         return render(
@@ -664,3 +664,24 @@ def actualizar_preferencias(request, pk_oferta):
                 'oferta': oferta
             }
         )
+
+def buscar_oferta(request,periodo=None,ano=None):
+    template_name = templates/ofertas/buscar.html
+    if periodo == None or ano == None:
+        return render(
+            request,
+            template_name
+        )
+    if periodo!=None:
+        context = dict()
+        ofertas = OfertaTrimestral.objects.filter(trimestre[:2]== "EM" or trimestre[:2]== "AJ" or trimestre[:2]== "JA" or trimestre[:2] == "SD" )
+        context['ofertas'] = ofertas
+        return render(
+            request,
+            template_name,
+            context
+        )
+        
+        
+        
+        
