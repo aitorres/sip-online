@@ -569,6 +569,22 @@ class AsignacionProfesoralModelTest(TestCase):
             departamento=dpto_compu
             )
 
+        prof_compu2 = Profesor.objects.create(
+            nombre="Eduardo",
+            apellido="Blanco",
+            email="eblanco@usb.ve",
+            cedula="V-14.232.321",
+            departamento=dpto_compu
+            )
+
+        prof_compu3 = Profesor.objects.create(
+            nombre="Federico",
+            apellido="Flaviani",
+            email="fflaviani@usb.ve",
+            cedula="V-10.132.321",
+            departamento=dpto_compu
+            )
+
         dpto_compu.jefe = jefe_compu
         dpto_compu.save()
 
@@ -600,12 +616,14 @@ class AsignacionProfesoralModelTest(TestCase):
 
         prof_compu.asignaturas.add(bases1)
         prof_compu.asignaturas.add(software1)
+        prof_compu2.asignaturas.add(bases1)
+        prof_compu3.asignaturas.add(software1)
         prof_compu.save()
 
     def test_oferta_correcta(self):
         """
         PRUEBA ASIGNACION PROFESORAL 14: Se probara que el codigo de la oferta trimestral sea el correcto
-        Primera corrida:
+        Primera corrida: PASO
         """
         bases = Asignatura.objects.get(codigo_interno="3311")
         oferta_em = OfertaTrimestral.objects.get(trimestre="EM18")
@@ -622,7 +640,7 @@ class AsignacionProfesoralModelTest(TestCase):
     def test_cambio_profesor(self):
         """
         PRUEBA ASIGNACION PROFESORAL 15: Se probara si se elimina el profe anterior, en efecto se modifica el profesor de la asignacion
-        Primera corrida:
+        Primera corrida: PASO
         """
         bases = Asignatura.objects.get(codigo_interno="3311")
         oferta_em = OfertaTrimestral.objects.get(trimestre="EM18")
@@ -634,7 +652,7 @@ class AsignacionProfesoralModelTest(TestCase):
             asignatura=bases,
             es_final=False,
             es_preferida=True,
-            )  
+            )
 
         prof_compu2 = Profesor.objects.create(
             nombre="Vicente",
@@ -653,7 +671,7 @@ class AsignacionProfesoralModelTest(TestCase):
     def test_asignatura_preferida(self):
         """
         PRUEBA ASIGNACION PROFESORAL 16: Se probara que el campo es_preferida sea true si la materia es dada por el profe.
-        Primera corrida:
+        Primera corrida: PASO
         """
         #asignaturas = prof_compu.asignatura.objects.all*
         bases = Asignatura.objects.get(codigo_interno="3311")
@@ -671,12 +689,12 @@ class AsignacionProfesoralModelTest(TestCase):
             es_final=False,
             es_preferida=pref,
             )
-        self.assertTrue(asig.es_preferida) 
+        self.assertTrue(asig.es_preferida)
 
     def test_cambio_asignatura(self):
         """
         PRUEBA ASIGNACION PROFESORAL 17: Se probara si se elimina la asignatura anterior, en efecto se modifica la asignatura de la asignacion
-        Primera corrida:
+        Primera corrida: PASO
         """
         bases = Asignatura.objects.get(codigo_interno="3311")
         oferta_em = OfertaTrimestral.objects.get(trimestre="EM18")
@@ -687,7 +705,7 @@ class AsignacionProfesoralModelTest(TestCase):
             asignatura=bases,
             es_final=False,
             es_preferida=True,
-            )  
+            )
 
         Asignatura.objects.get(codigo_interno="3311").delete()
         software = Asignatura.objects.get(codigo_interno="3715")
@@ -699,6 +717,21 @@ class AsignacionProfesoralModelTest(TestCase):
             "(CI3715) Ingeniería de Software I"
         )
 
+    def test_candidatos(self):
+      """
+      PRUEBA ASIGNACION PROFESORAL 18: Se probara si todos los profesores seleccionados como candidatos
+      en efecto estan capacitados para dar esa materia.
+      """
+      bases = Asignatura.objects.get(codigo_interno="3311")
+      candidatos = []
+      for profesor in Profesor.objects.all():
+        for asignatura in profesor.asignaturas.all():
+          if bases.codigo_interno == asignatura.codigo_interno:
+            candidatos.append(profesor)
+            pass
+
+      # Solo hemos creado 2 profesores que puedan dar la materia
+      self.assertEqual(2,len(candidatos))
 
 class DisponibilidadModelTest(TestCase):
     """
@@ -981,7 +1014,7 @@ class ModelosBDTest(TestCase):
         """
         PRUEBA BD 5: Se asigna un profesor como jefe de dos departamentos distintos.
 
-        PRIMERA CORRIDA: Falla. No se levanta IntegrityError porque el campo es de tipo 
+        PRIMERA CORRIDA: Falla. No se levanta IntegrityError porque el campo es de tipo
         FOREINGKEY sin el atributo unique=True.
 
         SEGUNDA CORRIDA: Pasa. Se levanta la exc, dado que jefe es un campo de tipo
@@ -1033,7 +1066,7 @@ class ModelosBDTest(TestCase):
         """
         PRUEBA 10: Se probara que al borrar un departamento, el metodo no funciona.
 
-        PRIMERA CORRIDA: PASA 
+        PRIMERA CORRIDA: PASA
         """
         dpto_ci = Departamento.objects.get(codigo="CI")
         vicente=Profesor.objects.create(
@@ -1053,9 +1086,9 @@ class ModelosBDTest(TestCase):
 
     def test_cambio_dpto(self):
         """
-        PRUEBA 11: Se probara que se agrega un dpto correcto y 
+        PRUEBA 11: Se probara que se agrega un dpto correcto y
         luego uno incorrecto a un profesor y el metodo funciona.
-        """ 
+        """
         dpto_ci = Departamento.objects.get(codigo="CI")
         dpto_mc = Departamento.objects.get(codigo="MC")
         vicente=Profesor.objects.create(
