@@ -38,4 +38,6 @@ urlpatterns = [
     url(r'^ofertas-asignacion/$', views.ListarOfertasIncluyentes.as_view(), name='listar-ofertas-asignacion'),
     url(r'^ofertas-asignacion/actualizar/(?P<pk_oferta>[-\w]+)/$', views.actualizar_preferencias, name='actualizar-preferencias'),
     url(r'^ofertas-asignacion/(?P<pk>[-\w]+)/$', views.VerOfertaIncluyente.as_view(), name='ver-oferta-asignacion'),
+    url(r'^ofertas-coordinacion/$', views.ListarOfertasCoordinacion.as_view(), name='listar-ofertas-coordinacion'),
+    url(r'^ofertas-coordinacion/(?P<pk>[-\w]+)/$', views.VerOfertaCoordinacion.as_view(), name='ver-oferta-coordinacion'),
 ]
