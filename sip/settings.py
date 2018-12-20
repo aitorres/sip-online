@@ -146,8 +146,8 @@ STATICFILES_DIRS = [
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 
-EMAIL_HOST = 'smtp-relay.sendinblue.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'andresitorresm@outlook.com'
-EMAIL_HOST_PASSWORD = 'OEIJUzCnd2Sf7RAM'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'siponline.usb@gmail.com'
+EMAIL_HOST_PASSWORD = 's1ps1p123'
 EMAIL_USE_SSL = True

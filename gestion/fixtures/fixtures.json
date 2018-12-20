@@ -612,8 +612,7 @@
     "pk": 5,
     "fields": {
       "nombre": "Departamento de Computación y Tecnología de la Información",
-      "codigo": "CI",
-      "jefe": 1
+      "codigo": "CI"
     }
   },
   {
@@ -844,96 +843,5 @@
       "codigo_interno": "1116",
       "departamento": 10
     }
-  },
-  {
-    "model": "auth.user",
-    "pk": 1,
-    "fields": {
-        "password": "pbkdf2_sha256$36000$kBPK8e4L97hc$L4znr9o7ppF1ZAP/7cWLWy8DMlXRM+Pz0TegC2kcWwQ=",
-        "last_login": null,
-        "is_superuser": true,
-        "username": "admin",
-        "first_name": "Javier",
-        "last_name": "Medina",
-        "email": "javi393@gmail.com",
-        "is_staff": true,
-        "is_active": true,
-        "date_joined": "2018-11-25T19:53:38.524Z",
-        "groups": [],
-        "user_permissions": []
-    }
-  },
-  {
-    "model": "auth.user",
-    "pk": 2,
-    "fields": {
-        "password": "pbkdf2_sha256$36000$kBPK8e4L97hc$L4znr9o7ppF1ZAP/7cWLWy8DMlXRM+Pz0TegC2kcWwQ=",
-        "last_login": null,
-        "is_superuser": true,
-        "username": "admin2",
-        "first_name": "Andrés",
-        "last_name": "Torres",
-        "email": "andres@gmail.com",
-        "is_staff": true,
-        "is_active": true,
-        "date_joined": "2018-11-25T19:53:38.524Z",
-        "groups": [],
-        "user_permissions": []
-    }
-  },
-  {
-    "model": "auth.user",
-    "pk": 3,
-    "fields": {
-        "password": "pbkdf2_sha256$36000$kBPK8e4L97hc$L4znr9o7ppF1ZAP/7cWLWy8DMlXRM+Pz0TegC2kcWwQ=",
-        "last_login": null,
-        "is_superuser": true,
-        "username": "admin3",
-        "first_name": "Federico",
-        "last_name": "Flaviani",
-        "email": "federicof@gmail.com",
-        "is_staff": true,
-        "is_active": true,
-        "date_joined": "2018-11-25T19:53:38.524Z",
-        "groups": [],
-        "user_permissions": []
-    }
-  },
-  {
-    "model": "gestion.Profesor",
-    "pk": 1,
-    "fields": {
-      "nombre": "Javier",
-      "apellido": "Medina",
-      "cedula": "V-22.900.616",
-      "departamento": 5,
-      "email": "javi393@gmail.com",
-      "usuario": 1
-    }
-  },
-  {
-    "model": "gestion.Profesor",
-    "pk": 2,
-    "fields": {
-      "nombre": "Andres",
-      "apellido": "Torres",
-      "cedula": "V-23.900.616",
-      "departamento": 5,
-      "email": "andres@gmail.com",
-      "usuario": 2
-    }
-  },
-  {
-    "model": "gestion.Profesor",
-    "pk": 3,
-    "fields": {
-      "nombre": "Federico",
-      "apellido": "Flaviani",
-      "cedula": "V-11.443.616",
-      "departamento": 5,
-      "email": "federicof@gmail.com",
-      "usuario": 3
-    }
   }
-
 ]
