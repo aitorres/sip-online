@@ -1056,4 +1056,23 @@ class CoordinacionModelTest(TestCase):
             coord_comp.nombre,
             "Coordinación de Ingeniería de Geofísica"
         ) 
+
+
+    def test_tiene_coordinador_coordinacion(self):
+        """
+        PRUEBA 3 COORDINACION. Se verifica que se asocie la cuenta de un profesor
+        en la base de datos como coordinador y que sea
+        el usuario que se quiso almacenar para dicha coordinacion.
+
+        PRIMERA CORRIDA: Falla porque el metodo tiene_jefe no está creado.
+
+        """
+
+        coord_comp = Coordinacion.objects.get(nombre="Coordinación de Ingeniería de Computación")
+        coordinador_comp = Profesor.objects.get(email="mgoncalves@usb.ve")
+        self.assertEqual(
+            coord_comp.coordinador,
+            coordinador_comp
+        )
+    
  
