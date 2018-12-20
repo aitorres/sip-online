@@ -8,7 +8,7 @@ asociadas.
 """
 
 from django.test import TestCase, RequestFactory
-from django.contrib.auth.models import AnonymousUser
+from django.contrib.auth.models import AnonymousUser, User
 from django.db import IntegrityError
 
 from gestion.models import (
@@ -58,9 +58,12 @@ class ControladoresTest(TestCase):
             departamento=dpto_compu
         )
 
+        dpto_compu.jefe = self.prof
+        dpto_compu.save()
+
         # Asociamos valores para los métodos de prueba
         self.factory = RequestFactory()
-        self.user = AnonymousUser
+        self.user = User.objects.get(email="14-11082@usb.ve")
 
     def test_dashboard(self):
         """
@@ -601,7 +604,7 @@ class AsignacionProfesoralModelTest(TestCase):
 
     def test_oferta_correcta(self):
         """
-        PRUEBA 14: Se probara que el codigo de la oferta trimestral sea el correcto
+        PRUEBA ASIGNACION PROFESORAL 14: Se probara que el codigo de la oferta trimestral sea el correcto
         Primera corrida:
         """
         bases = Asignatura.objects.get(codigo_interno="3311")
@@ -618,7 +621,7 @@ class AsignacionProfesoralModelTest(TestCase):
 
     def test_cambio_profesor(self):
         """
-        PRUEBA 15: Se probara si se elimina el profe anterior, en efecto se modifica el profesor de la asignacion
+        PRUEBA ASIGNACION PROFESORAL 15: Se probara si se elimina el profe anterior, en efecto se modifica el profesor de la asignacion
         Primera corrida:
         """
         bases = Asignatura.objects.get(codigo_interno="3311")
@@ -649,7 +652,7 @@ class AsignacionProfesoralModelTest(TestCase):
 
     def test_asignatura_preferida(self):
         """
-        PRUEBA 16: Se probara que el campo es_preferida sea true si la materia es dada por el profe.
+        PRUEBA ASIGNACION PROFESORAL 16: Se probara que el campo es_preferida sea true si la materia es dada por el profe.
         Primera corrida:
         """
         #asignaturas = prof_compu.asignatura.objects.all*
@@ -672,7 +675,7 @@ class AsignacionProfesoralModelTest(TestCase):
 
     def test_cambio_asignatura(self):
         """
-        PRUEBA 17: Se probara si se elimina la asignatura anterior, en efecto se modifica la asignatura de la asignacion
+        PRUEBA ASIGNACION PROFESORAL 17: Se probara si se elimina la asignatura anterior, en efecto se modifica la asignatura de la asignacion
         Primera corrida:
         """
         bases = Asignatura.objects.get(codigo_interno="3311")
@@ -695,8 +698,6 @@ class AsignacionProfesoralModelTest(TestCase):
             str(asig.asignatura),
             "(CI3715) Ingeniería de Software I"
         )
-
-
 
 
 class DisponibilidadModelTest(TestCase):
