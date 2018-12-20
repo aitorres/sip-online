@@ -899,7 +899,6 @@ def buscar_oferta(request, periodo=None, ano=None):
                 ofertas_ano.add(oferta)
 
         context['ofertas'] = ofertas_ano
-        print(ofertas)
 
     elif periodo is not None and periodo != "-" and ano != None:
         # Si se escogen ambos filtros
