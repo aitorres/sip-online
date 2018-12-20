@@ -843,5 +843,229 @@
       "codigo_interno": "1116",
       "departamento": 10
     }
+  },
+  {
+    "model": "gestion.Coordinacion",
+    "pk": 1,
+    "fields": {
+      "nombre": "Coordinación de Matemáticas",
+      "codigo": "MAT"
+    }
+  },
+  {
+    "model": "gestion.Coordinacion",
+    "pk": 2,
+    "fields": {
+      "nombre": "Coordinación de Física",
+      "codigo": "FIS"
+    }
+  },
+  {
+    "model": "gestion.Coordinacion",
+    "pk": 3,
+    "fields": {
+      "nombre": "Coordinación de Química",
+      "codigo": "QMC"
+    }
+  },
+  {
+    "model": "gestion.Coordinacion",
+    "pk": 4,
+    "fields": {
+      "nombre": "Coordinación de Ciencias Biológicas",
+      "codigo": "CBI"
+    }
+  },
+  {
+    "model": "gestion.Coordinacion",
+    "pk": 5,
+    "fields": {
+      "nombre": "Coordinación de Ciencias de los Alimentos y Nutrición",
+      "codigo": "CAN"
+    }
+  },
+  {
+    "model": "gestion.Coordinacion",
+    "pk": 6,
+    "fields": {
+      "nombre": "Coordinación de Estudios Interdisciplinarios",
+      "codigo": "EID"
+    }
+  },
+  {
+    "model": "gestion.Coordinacion",
+    "pk": 7,
+    "fields": {
+      "nombre": "Coordinación de Doctorado en Ingeniería",
+      "codigo": "ING"
+    }
+  },
+  {
+    "model": "gestion.Coordinacion",
+    "pk": 8,
+    "fields": {
+      "nombre": "Coordinación de Ingeniería Mećanica",
+      "codigo": "MEC"
+    }
+  },
+  {
+    "model": "gestion.Coordinacion",
+    "pk": 9,
+    "fields": {
+      "nombre": "Coordinación de Ingeniería Química",
+      "codigo": "IQM"
+    }
+  },
+  {
+    "model": "gestion.Coordinacion",
+    "pk": 10,
+    "fields": {
+      "nombre": "Coordinación de Ingeniería de Materiales",
+      "codigo": "MTR"
+    }
+  },
+  {
+    "model": "gestion.Coordinacion",
+    "pk": 11,
+    "fields": {
+      "nombre": "Coordinación de Ingeniería de Sistemas",
+      "codigo": "SIS"
+    }
+  },
+  {
+    "model": "gestion.Coordinacion",
+    "pk": 12,
+    "fields": {
+      "nombre": "Coordinación de Tecnología e Ingeniería Electrónica",
+      "codigo": "ELT"
+    }
+  },
+  {
+    "model": "gestion.Coordinacion",
+    "pk": 13,
+    "fields": {
+      "nombre": "Coordinación de Tecnología e Ingeniería Eléctrica",
+      "codigo": "ELE"
+    }
+  },
+  {
+    "model": "gestion.Coordinacion",
+    "pk": 14,
+    "fields": {
+      "nombre": "Coordinación de Ingeniería Geofísica",
+      "codigo": "GEO"
+    }
+  },
+  {
+    "model": "gestion.Coordinacion",
+    "pk": 15,
+    "fields": {
+      "nombre": "Coordinación de Estadística",
+      "codigo": "STA"
+    }
+  },
+  {
+    "model": "gestion.Coordinacion",
+    "pk": 16,
+    "fields": {
+      "nombre": "Coordinación de Literatura",
+      "codigo": "LIT"
+    }
+  },
+  {
+    "model": "gestion.Coordinacion",
+    "pk": 17,
+    "fields": {
+      "nombre": "Coordinación de Lingüística Aplicada",
+      "codigo": "LIA"
+    }
+  },
+  {
+    "model": "gestion.Coordinacion",
+    "pk": 18,
+    "fields": {
+      "nombre": "Coordinación de Filosofía",
+      "codigo": "FIL"
+    }
+  },
+  {
+    "model": "gestion.Coordinacion",
+    "pk": 19,
+    "fields": {
+      "nombre": "Coordinación de Ciencia Política",
+      "codigo": "POL"
+    }
+  },
+  {
+    "model": "gestion.Coordinacion",
+    "pk": 20,
+    "fields": {
+      "nombre": "Coordinación de Psicología",
+      "codigo": "PSI"
+    }
+  },
+  {
+    "model": "gestion.Coordinacion",
+    "pk": 21,
+    "fields": {
+      "nombre": "Coordinación de Música",
+      "codigo": "MUS"
+    }
+  },
+  {
+    "model": "gestion.Coordinacion",
+    "pk": 22,
+    "fields": {
+      "nombre": "Coordinación de Desarrollo y Ambiente",
+      "codigo": "DEA"
+    }
+  },
+  {
+    "model": "gestion.Coordinacion",
+    "pk": 23,
+    "fields": {
+      "nombre": "Coordinación de Educación",
+      "codigo": "EDU"
+    }
+  },
+  {
+    "model": "gestion.Coordinacion",
+    "pk": 24,
+    "fields": {
+      "nombre": "Coordinación de Estudios Urbanos",
+      "codigo": "URB"
+    }
+  },
+  {
+    "model": "gestion.Coordinacion",
+    "pk": 25,
+    "fields": {
+      "nombre": "Coordinación de Estudios Gerenciales y Económicos",
+      "codigo": "GER"
+    }
+  },
+  {
+    "model": "gestion.Coordinacion",
+    "pk": 26,
+    "fields": {
+      "nombre": "Coordinación de Comercio Exterior y Licenciatura en Comercio Inernacional",
+      "codigo": "COM"
+    }
+  },
+  {
+    "model": "gestion.Coordinacion",
+    "pk": 27,
+    "fields": {
+      "nombre": "Coordinación de Ingeniería en Telecomunicaciones",
+      "codigo": "TEL"
+    }
+  },
+  {
+    "model": "gestion.Coordinacion",
+    "pk": 28,
+    "fields": {
+      "nombre": "Coordinación de Ciencias de la Computación",
+      "codigo": "CMP"
+    }
   }
 ]
