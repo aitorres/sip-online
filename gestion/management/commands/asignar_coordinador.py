@@ -41,13 +41,6 @@ class Command(BaseCommand):
             help='E-mail del nuevo Coordinador'
         )
 
-        parser.add_argument(
-            '-c',
-            '--coord',
-            type=str,
-            help='Código de la Coordinación'
-        )
-
     def handle(self, *args, **kwargs):
         """
         Procedimiento que incorpora la lógica del comando de administración de Django
