@@ -1151,10 +1151,30 @@ class CoordinacionModelTest(TestCase):
         PRUEBA 8 COORDINACION : se crea una nueva coordinacion sin asignar coordinador, y se pide que se muestre su coordinador.
         Prueba de tipo maliciosa.
 
-        Resultado de la prueba: Exitoso. Coordinacion sin coordinador
+        Resultado de la prueba: Exitoso. Coordinacion sin coordinador. Metodo tiene_coordinador es falso
         """
         coord_geo = Coordinacion.objects.create(
             nombre="Coordinación de Ingeniería Geofísica"
         )
 
         self.assertFalse(coord_geo.tiene_coordinador())        
+
+    def test_eliminar_asignatura_coordinacion(self):
+        """
+        PRUEBA 9 COORDINACION : se elimina una asignatura asociada a una coordinacion del sistema; por lo tanto, ya no 
+        pertenecera al campo Asignaturas de dicha coordinacion. Se espera probar que al eliminar una asignatura asociada a una coordinacion,
+        esta se borre del campo del objeto satisfactoriamente.
+
+
+        Resultado de la prueba: Exitoso. La el objeto coordinacion ya no contiene la Asignatura Logica Simbolica que fue borrada de la base de datos
+        ahora solo contiene las Asignaturas Estructura Discretas I  e Ingenieria de Software I.
+
+        """
+
+        Asignatura.objects.get(codigo_interno="2511").delete()
+        coord_comp = Coordinacion.objects.get(nombre="Coordinación de Ingeniería de Computación")
+        Asig1 = Asignatura.objects.get(codigo_interno="2525")
+        Asig3 = Asignatura.objects.get(codigo_interno="3715")
+        self.assertEqual(
+            list(coord_comp.asignaturas.all()),
+            [Asig1,Asig3])        
