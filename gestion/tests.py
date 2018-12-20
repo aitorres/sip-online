@@ -1177,4 +1177,35 @@ class CoordinacionModelTest(TestCase):
         Asig3 = Asignatura.objects.get(codigo_interno="3715")
         self.assertEqual(
             list(coord_comp.asignaturas.all()),
-            [Asig1,Asig3])        
+            [Asig1,Asig3])
+
+    def test_agregar_asignatura_coordinacion(self):
+        """
+        PRUEBA  10 COORDINACION : Se agrega una asignatura a una coordinacion, por lo tanto pertenecera al campo Asignaturas de dicho objeto. Se espera comprobar que en efecto,
+        una asignatura puede ser agregada a una coordinacion saisfactoriamente
+
+        Resultado de la prueba: Exitoso, la nueva asignatura ahora esta asociada a la coordinacion.
+        """
+        dpto = Departamento.objects.get(codigo="MA")
+
+        coord_mec = Coordinacion.objects.create(
+            nombre="Coordinación de Ingeniería Mecánica"
+        )
+
+        Asig11 = Asignatura.objects.create(
+            nombre="Mecánica de Materiales",
+            codigo_interno="2142",
+            departamento=dpto,
+            horas_laboratorio=0,
+            horas_teoria=4,
+            horas_practica=2,
+            unidad_creditos = 4
+        ) 
+
+        coord_mec.asignaturas.add(Asig11)
+
+        self.assertEqual(
+            list(coord_mec.asignaturas.all()),
+            [Asig11])       
+
+                    
