@@ -1107,3 +1107,24 @@ class CoordinacionModelTest(TestCase):
         self.assertEqual(
             list(coord_comp.asignaturas.all()),
             [Asig2,Asig1,Asig3])     
+ 
+    def test_asignaturas_invalidas_coordinacion(self):
+        """
+        PRUEBA 6 COORDINACION. Se verifica que se asocien las asignaturas correspondientes
+        en la base de datos como asignaturas de dicha coordinacion y que en efecto sean
+        las materias de la coordinacion.
+
+        Prueba de tipo malicia.
+        RESULTADO ESPERADO:  Aprueba
+        RESULTADO OBTENIDO: Aprueba .La Asignatura Matematicas V no pertenece a las asignaturas de la coordinacion de Ingenieria de computacion
+        """
+
+        coord_comp = Coordinacion.objects.get(nombre="Coordinación de Ingeniería de Computación")
+        Asig1 = Asignatura.objects.get(codigo_interno="2525")
+        Asig2 = Asignatura.objects.get(codigo_interno="2511")
+        Asig3 = Asignatura.objects.get(codigo_interno="3715")        
+        Asig4 = Asignatura.objects.get(codigo_interno="2115")
+
+        self.assertNotEqual(
+            list(coord_comp.asignaturas.all()),
+            [Asig2,Asig1,Asig3,Asig4])         
