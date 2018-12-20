@@ -62,7 +62,7 @@
                                         </span>
                                         {% endif %}
                                     </td>
-                                    <td><input type="checkbox" name="botonElegir_{{ asignacion.id }}"/></td>
+                                    <td><input type="checkbox" name="botonElegir_{{ asignacion.id }}" {% if asignacion.es_final %} checked {% endif %} /></td>
                                 </tr>
                             {% endfor %}
                         </tbody>
@@ -75,7 +75,7 @@
  </div>
 
 <div class="modal-footer">
-{% if oferta.estado == "preliminar"%}
+{% if oferta.estado == "final"%}
     <button type="submit" form="f1" value="Submit" class="btn btn-primary">Modificar oferta</button>
 {% endif %}
     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
