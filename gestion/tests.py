@@ -9,7 +9,7 @@ asociadas.
 #from django.conf import settings
 #settings.configure()
 from django.test import TestCase, RequestFactory
-from django.contrib.auth.models import AnonymousUser
+from django.contrib.auth.models import AnonymousUser, User
 from django.db import IntegrityError
 
 from gestion.models import (
@@ -18,7 +18,8 @@ from gestion.models import (
     Asignatura,
     Disponibilidad,
     OfertaTrimestral,
-    Coordinacion
+    Coordinacion,
+    AsignacionProfesoral
 )
 from gestion.views import (
     Dashboard,
@@ -59,9 +60,12 @@ class ControladoresTest(TestCase):
             departamento=dpto_compu
         )
 
+        dpto_compu.jefe = self.prof
+        dpto_compu.save()
+
         # Asociamos valores para los métodos de prueba
         self.factory = RequestFactory()
-        self.user = AnonymousUser
+        self.user = User.objects.get(email="14-11082@usb.ve")
 
     def test_dashboard(self):
         """
@@ -532,6 +536,204 @@ class AsignaturaModelTest(TestCase):
         asignatura = Asignatura.objects.get(codigo_interno="3715")
         self.assertGreaterEqual(asignatura.creditos(),0)
 
+class AsignacionProfesoralModelTest(TestCase):
+    """
+    Suite de pruebas para el modelo AsignacionProfesoral, que incluye
+    pruebas de frontera, de esquina y de malicia para los atributos
+    de este modelo, y para sus métodos asociados en caso de
+    que se agreguen posteriormente.
+    """
+
+    def setUp(self):
+        """
+        Método para crear los valores de la base de datos por defecto
+        antes de iniciar cada prueba.
+        """
+
+        dpto_compu = Departamento.objects.create(
+            nombre="Departamento de Computación y Tecnología de la Información",
+            codigo="CI",
+        )
+
+        jefe_compu = Profesor.objects.create(
+            nombre="Ángela",
+            apellido="Di Serio",
+            email="adiserio@usb.ve",
+            cedula="V-14.241.234",
+            departamento=dpto_compu
+        )
+
+        prof_compu = Profesor.objects.create(
+            nombre="Marlene",
+            apellido="Goncalves",
+            email="mgoncalves@usb.ve",
+            cedula="V-14.241.321",
+            departamento=dpto_compu
+            )
+
+        prof_compu2 = Profesor.objects.create(
+            nombre="Eduardo",
+            apellido="Blanco",
+            email="eblanco@usb.ve",
+            cedula="V-14.232.321",
+            departamento=dpto_compu
+            )
+
+        prof_compu3 = Profesor.objects.create(
+            nombre="Federico",
+            apellido="Flaviani",
+            email="fflaviani@usb.ve",
+            cedula="V-10.132.321",
+            departamento=dpto_compu
+            )
+
+        dpto_compu.jefe = jefe_compu
+        dpto_compu.save()
+
+        OfertaTrimestral.objects.create(
+            trimestre="EM18",
+            departamento=dpto_compu,
+            es_final=False
+            )
+
+        bases1 = Asignatura.objects.create(
+            nombre="Sistema de bases de datos I",
+            codigo_interno="3311",
+            departamento=dpto_compu,
+            horas_laboratorio=0,
+            horas_teoria=4,
+            horas_practica=0,
+            unidad_creditos = 3
+        )
+
+        software1 = Asignatura.objects.create(
+            nombre="Ingeniería de Software I",
+            codigo_interno="3715",
+            departamento=dpto_compu,
+            horas_laboratorio=0,
+            horas_teoria=4,
+            horas_practica=3,
+            unidad_creditos = 5,
+        )
+
+        prof_compu.asignaturas.add(bases1)
+        prof_compu.asignaturas.add(software1)
+        prof_compu2.asignaturas.add(bases1)
+        prof_compu3.asignaturas.add(software1)
+        prof_compu.save()
+
+    def test_oferta_correcta(self):
+        """
+        PRUEBA ASIGNACION PROFESORAL 14: Se probara que el codigo de la oferta trimestral sea el correcto
+        Primera corrida: PASO
+        """
+        bases = Asignatura.objects.get(codigo_interno="3311")
+        oferta_em = OfertaTrimestral.objects.get(trimestre="EM18")
+        profe = Profesor.objects.get(nombre="Marlene")
+        asig = AsignacionProfesoral.objects.create(
+            oferta_trimestral=oferta_em,
+            profesor=profe,
+            asignatura=bases,
+            es_final=False,
+            es_preferida=True,
+            )
+        self.assertEqual(asig.oferta_trimestral.nombre_completo(), "Enero - Marzo 2018")
+
+    def test_cambio_profesor(self):
+        """
+        PRUEBA ASIGNACION PROFESORAL 15: Se probara si se elimina el profe anterior, en efecto se modifica el profesor de la asignacion
+        Primera corrida: PASO
+        """
+        bases = Asignatura.objects.get(codigo_interno="3311")
+        oferta_em = OfertaTrimestral.objects.get(trimestre="EM18")
+        profe = Profesor.objects.get(nombre="Marlene")
+        dpto_compu = Departamento.objects.get(codigo="CI")
+        asig = AsignacionProfesoral.objects.create(
+            oferta_trimestral=oferta_em,
+            profesor=profe,
+            asignatura=bases,
+            es_final=False,
+            es_preferida=True,
+            )
+
+        prof_compu2 = Profesor.objects.create(
+            nombre="Vicente",
+            apellido="Yriarte",
+            email="vyriarte@usb.ve",
+            cedula="V-11.241.321",
+            departamento=dpto_compu
+            )
+
+        Profesor.objects.get(nombre="Marlene").delete()
+        asig.profesor = prof_compu2
+        asig.save()
+
+        self.assertEqual(str(asig.profesor), "Vicente Yriarte")
+
+    def test_asignatura_preferida(self):
+        """
+        PRUEBA ASIGNACION PROFESORAL 16: Se probara que el campo es_preferida sea true si la materia es dada por el profe.
+        Primera corrida: PASO
+        """
+        #asignaturas = prof_compu.asignatura.objects.all*
+        bases = Asignatura.objects.get(codigo_interno="3311")
+        oferta_em = OfertaTrimestral.objects.get(trimestre="EM18")
+        profe = Profesor.objects.get(nombre="Marlene")
+        pref = False
+        for asignatura in profe.asignaturas.all():
+            if bases.codigo_interno == asignatura.codigo_interno:
+                pref = True
+
+        asig = AsignacionProfesoral.objects.create(
+            oferta_trimestral=oferta_em,
+            profesor=profe,
+            asignatura=bases,
+            es_final=False,
+            es_preferida=pref,
+            )
+        self.assertTrue(asig.es_preferida)
+
+    def test_cambio_asignatura(self):
+        """
+        PRUEBA ASIGNACION PROFESORAL 17: Se probara si se elimina la asignatura anterior, en efecto se modifica la asignatura de la asignacion
+        Primera corrida: PASO
+        """
+        bases = Asignatura.objects.get(codigo_interno="3311")
+        oferta_em = OfertaTrimestral.objects.get(trimestre="EM18")
+        profe = Profesor.objects.get(nombre="Marlene")
+        asig = AsignacionProfesoral.objects.create(
+            oferta_trimestral=oferta_em,
+            profesor=profe,
+            asignatura=bases,
+            es_final=False,
+            es_preferida=True,
+            )
+
+        Asignatura.objects.get(codigo_interno="3311").delete()
+        software = Asignatura.objects.get(codigo_interno="3715")
+        asig.asignatura = software
+        asig.save()
+
+        self.assertEqual(
+            str(asig.asignatura),
+            "(CI3715) Ingeniería de Software I"
+        )
+
+    def test_candidatos(self):
+      """
+      PRUEBA ASIGNACION PROFESORAL 18: Se probara si todos los profesores seleccionados como candidatos
+      en efecto estan capacitados para dar esa materia.
+      """
+      bases = Asignatura.objects.get(codigo_interno="3311")
+      candidatos = []
+      for profesor in Profesor.objects.all():
+        for asignatura in profesor.asignaturas.all():
+          if bases.codigo_interno == asignatura.codigo_interno:
+            candidatos.append(profesor)
+            pass
+
+      # Solo hemos creado 2 profesores que puedan dar la materia
+      self.assertEqual(2,len(candidatos))
 
 class DisponibilidadModelTest(TestCase):
     """
@@ -814,7 +1016,7 @@ class ModelosBDTest(TestCase):
         """
         PRUEBA BD 5: Se asigna un profesor como jefe de dos departamentos distintos.
 
-        PRIMERA CORRIDA: Falla. No se levanta IntegrityError porque el campo es de tipo 
+        PRIMERA CORRIDA: Falla. No se levanta IntegrityError porque el campo es de tipo
         FOREINGKEY sin el atributo unique=True.
 
         SEGUNDA CORRIDA: Pasa. Se levanta la exc, dado que jefe es un campo de tipo
@@ -866,7 +1068,7 @@ class ModelosBDTest(TestCase):
         """
         PRUEBA 10: Se probara que al borrar un departamento, el metodo no funciona.
 
-        PRIMERA CORRIDA: PASA 
+        PRIMERA CORRIDA: PASA
         """
         dpto_ci = Departamento.objects.get(codigo="CI")
         vicente=Profesor.objects.create(
@@ -886,9 +1088,9 @@ class ModelosBDTest(TestCase):
 
     def test_cambio_dpto(self):
         """
-        PRUEBA 11: Se probara que se agrega un dpto correcto y 
+        PRUEBA 11: Se probara que se agrega un dpto correcto y
         luego uno incorrecto a un profesor y el metodo funciona.
-        """ 
+        """
         dpto_ci = Departamento.objects.get(codigo="CI")
         dpto_mc = Departamento.objects.get(codigo="MC")
         vicente=Profesor.objects.create(
@@ -970,7 +1172,7 @@ class CoordinacionModelTest(TestCase):
             departamento=dpto_compu
         )
 
- 
+
         A1 = Asignatura.objects.create(
             nombre="Estructuras Discretas I",
             codigo_interno="2525",
@@ -1000,7 +1202,6 @@ class CoordinacionModelTest(TestCase):
             horas_practica=1,
             unidad_creditos = 5
         )
-     
 
         coordinacion_compu.coordinador = coordinador_compu
         coordinacion_compu.asignaturas.add(A1,A2,A3)
@@ -1010,7 +1211,7 @@ class CoordinacionModelTest(TestCase):
         dpto_mate = Departamento.objects.create(
             nombre="Departamento de Matematicas Puras y Aplicadas",
             codigo="MA"
-        )       
+        )
 
         A4= Asignatura.objects.create(
             nombre="Matematicas V",
@@ -1020,7 +1221,7 @@ class CoordinacionModelTest(TestCase):
             horas_teoria=4,
             horas_practica=2,
             unidad_creditos = 4
-        )        
+        )
 
     def test_nombre_valido_coordinacion(self):
         """
@@ -1046,17 +1247,16 @@ class CoordinacionModelTest(TestCase):
         corresponda a dicha coordinacion. Se verifica el nombre de la coordinacion al corroborar las
         asignaturas pertenecientes.
 
-        RESULTADO ESPERADO : Aprueba 
-        RESULTADO OBTENIDO : Aprueba. El nombre de la coordinacion no corresponde a la coordinada por la 
+        RESULTADO ESPERADO : Aprueba
+        RESULTADO OBTENIDO : Aprueba. El nombre de la coordinacion no corresponde a la coordinada por la
         profesora Marlene Goncalves
-        """        
+        """
 
         coord_comp = Coordinacion.objects.get(nombre="Coordinación de Ingeniería de Computación")
         self.assertNotEqual(
             coord_comp.nombre,
             "Coordinación de Ingeniería de Geofísica"
-        ) 
-
+        )
 
     def test_tiene_coordinador_coordinacion(self):
         """
@@ -1083,21 +1283,20 @@ class CoordinacionModelTest(TestCase):
         PRIMERA CORRIDA: Falla porque la representación por cadena de
         caracteres (string) del modelo no ha sido implementada
         SIGUIENTE CORRIDA: La prueba pasa porque se implementa el metodo y se genera la representación como
-        cadena de caracteres apropiada.        
+        cadena de caracteres apropiada.
         """
 
         coord_comp = Coordinacion.objects.get(nombre="Coordinación de Ingeniería de Computación")
         self.assertEqual(str(coord_comp),"Coordinación de Ingeniería de Computación")
- 
 
     def test_asignaturas_validas_coordinacion(self):
         """
         PRUEBA 5 COORDINACION. Se verifica que se asocien las asignaturas correspondientes
         en la base de datos como asignaturas de dicha coordinacion y que en efecto sean
-        las asignaturas pertenecientes la coordinacion. 
+        las asignaturas pertenecientes la coordinacion
 
         RESULTADO ESPERADO: Aprueba
-        RESULTADO OBTENIDO: Aprueba 
+        RESULTADO OBTENIDO: Aprueba
         """
 
         coord_comp = Coordinacion.objects.get(nombre="Coordinación de Ingeniería de Computación")
@@ -1106,8 +1305,8 @@ class CoordinacionModelTest(TestCase):
         Asig3 = Asignatura.objects.get(codigo_interno="3715")
         self.assertEqual(
             list(coord_comp.asignaturas.all()),
-            [Asig2,Asig1,Asig3])     
- 
+            [Asig2,Asig1,Asig3])
+
     def test_asignaturas_invalidas_coordinacion(self):
         """
         PRUEBA 6 COORDINACION. Se verifica que se asocien las asignaturas correspondientes
@@ -1116,34 +1315,34 @@ class CoordinacionModelTest(TestCase):
 
         Prueba de tipo malicia.
         RESULTADO ESPERADO:  Aprueba
-        RESULTADO OBTENIDO: Aprueba .La Asignatura Matematicas V no pertenece a las asignaturas de la coordinacion de Ingenieria de computacion
+        RESULTADO OBTENIDO: Aprueba .La Asignatura Matematicas V no pertenece a las asignaturas
+        de la coordinacion de Ingenieria de computacion
         """
 
         coord_comp = Coordinacion.objects.get(nombre="Coordinación de Ingeniería de Computación")
         Asig1 = Asignatura.objects.get(codigo_interno="2525")
         Asig2 = Asignatura.objects.get(codigo_interno="2511")
-        Asig3 = Asignatura.objects.get(codigo_interno="3715")        
+        Asig3 = Asignatura.objects.get(codigo_interno="3715")
         Asig4 = Asignatura.objects.get(codigo_interno="2115")
 
         self.assertNotEqual(
             list(coord_comp.asignaturas.all()),
-            [Asig2,Asig1,Asig3,Asig4])         
+            [Asig2,Asig1,Asig3,Asig4])
 
     def test_coordinacion_sin_coordinador(self):
         """
         PRUEBA 7 COORDINACION : se asocia un profesor como coordinador y luego se elimina el profesor. Por
-        lo tanto la coordinacion se queda sin jefe asociado.  
+        lo tanto la coordinacion se queda sin jefe asociado.
 
 
         Primer Resultado de la prueba: Fallo, no se modifica los datos de la coordinacion. Se arregla el codigo
         Segundo Resultado de la prueba: Exitoso,el objeto se modifica cuando se elimina el profesor
         coordinador.
-        
         """
 
         Profesor.objects.get(cedula="V-13.241.234").delete()
         coordinacion_comp = Coordinacion.objects.get(nombre="Coordinación de Ingeniería de Computación")
-        self.assertFalse(coordinacion_comp.tiene_coordinador())        
+        self.assertFalse(coordinacion_comp.tiene_coordinador())
 
 
     def test_coordinacion_nueva_sin_coordinador(self):
@@ -1157,12 +1356,13 @@ class CoordinacionModelTest(TestCase):
             nombre="Coordinación de Ingeniería Geofísica"
         )
 
-        self.assertFalse(coord_geo.tiene_coordinador())        
+        self.assertFalse(coord_geo.tiene_coordinador())
 
     def test_eliminar_asignatura_coordinacion(self):
         """
-        PRUEBA 9 COORDINACION : se elimina una asignatura asociada a una coordinacion del sistema; por lo tanto, ya no 
-        pertenecera al campo Asignaturas de dicha coordinacion. Se espera probar que al eliminar una asignatura asociada a una coordinacion,
+        PRUEBA 9 COORDINACION : se elimina una asignatura asociada a una coordinacion del sistema; por lo tanto, ya no
+        pertenecera al campo Asignaturas de dicha coordinacion. Se espera probar que al eliminar una asignatura
+        asociada a una coordinacion,
         esta se borre del campo del objeto satisfactoriamente.
 
 
@@ -1200,12 +1400,10 @@ class CoordinacionModelTest(TestCase):
             horas_teoria=4,
             horas_practica=2,
             unidad_creditos = 4
-        ) 
+        )
 
         coord_mec.asignaturas.add(Asig11)
 
         self.assertEqual(
             list(coord_mec.asignaturas.all()),
-            [Asig11])       
-
-                    
+            [Asig11])
