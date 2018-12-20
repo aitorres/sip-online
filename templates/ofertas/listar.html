@@ -18,8 +18,7 @@
 
     <div class="card">
         <div class="card-header">
-            <button type="button" data-toggle="modal" data-target="#modalCRUD" class="btn btn-primary float-right trigger" form="f1" data-url="{% url 'gestion:agregar-oferta' %}">Agregar</button>
-            <h4>Ofertas Trimestrales</h4>
+            <h4>Ofertas Finales</h4>
         </div>
         <div class="card-body">
 
@@ -34,23 +33,67 @@
                 </tr>
               </thead>
               <tbody>
-              	{% for oferta in ofertas %}
-              	<tr>
-                  <td>{{ oferta.trimestre }}</td>
-                  <td>{{ oferta.nombre_completo }}</td>
-                  <td>{{ oferta.departamento }}</td>
-              		<td>
-                      <span class="badge {% if oferta.estado == 'final' %} badge-success {% else %} badge-info {% endif %}">
-                        {{ oferta.estado }}
-                      </span>
-                  </td>
-              		<td class="acciones">
-                    <i class="fa fa-eye trigger" class="boton-ver" data-toggle="modal" data-target="#modalCRUD" data-url="{% url 'gestion:ver-oferta' oferta.pk %}" aria-hidden="true"></i>
-                    &nbsp;
-                    <i class="fa fa-trash-o trigger" class="boton-eliminar" data-toggle="modal" data-target="#modalCRUD" data-url="{% url 'gestion:eliminar-oferta' oferta.pk %}" aria-hidden="true"></i>
-                  </td>
-              	</tr>
+                {% for oferta in ofertas %}
+                  {% if oferta.estado == 'final' %}
+                  <tr>
+                    <td>{{ oferta.trimestre }}</td>
+                    <td>{{ oferta.nombre_completo }}</td>
+                    <td>{{ oferta.departamento }}</td>
+                    <td>
+                        <span class="badge {% if oferta.estado == 'final' %} badge-success {% else %} badge-info {% endif %}">
+                          {{ oferta.estado }}
+                        </span>
+                    </td>
+                    <td class="acciones">
+                      <i class="fa fa-eye trigger" class="boton-ver" data-toggle="modal" data-target="#modalCRUD" data-url="{% url 'gestion:ver-oferta' oferta.pk %}" aria-hidden="true"></i>
+                      &nbsp;
+                      <i class="fa fa-trash-o trigger" class="boton-eliminar" data-toggle="modal" data-target="#modalCRUD" data-url="{% url 'gestion:eliminar-oferta' oferta.pk %}" aria-hidden="true"></i>
+                    </td>
+                  </tr>
+                  {% endif %}
               	{% endfor %}
+              </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <button type="button" data-toggle="modal" data-target="#modalCRUD" class="btn btn-primary float-right trigger" form="f1" data-url="{% url 'gestion:agregar-oferta' %}">Agregar</button>
+            <h4>Ofertas Preliminares</h4>
+        </div>
+        <div class="card-body">
+
+            <table id="bootstrap-data-table" class="table table-striped table-bordered">
+              <thead>
+                <tr>
+                  <th>Código</th>
+                  <th>Nombre</th>
+                  <th>Departamento</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for oferta in ofertas %}
+                  {% if oferta.estado == 'preliminar' %}
+                  <tr>
+                    <td>{{ oferta.trimestre }}</td>
+                    <td>{{ oferta.nombre_completo }}</td>
+                    <td>{{ oferta.departamento }}</td>
+                    <td>
+                        <span class="badge {% if oferta.estado == 'final' %} badge-success {% else %} badge-info {% endif %}">
+                          {{ oferta.estado }}
+                        </span>
+                    </td>
+                    <td class="acciones">
+                      <i class="fa fa-eye trigger" class="boton-ver" data-toggle="modal" data-target="#modalCRUD" data-url="{% url 'gestion:ver-oferta' oferta.pk %}" aria-hidden="true"></i>
+                      &nbsp;
+                      <i class="fa fa-trash-o trigger" class="boton-eliminar" data-toggle="modal" data-target="#modalCRUD" data-url="{% url 'gestion:eliminar-oferta' oferta.pk %}" aria-hidden="true"></i>
+                    </td>
+                  </tr>
+                  {% endif %}
+                {% endfor %}
               </tbody>
             </table>
         </div>
