@@ -47,6 +47,8 @@
                     <td class="acciones">
                       <i class="fa fa-eye trigger" class="boton-ver" data-toggle="modal" data-target="#modalCRUD" data-url="{% url 'gestion:ver-oferta' oferta.pk %}" aria-hidden="true"></i>
                       &nbsp;
+                      <i class="fa fa-pencil trigger" class="boton-editar" data-toggle="modal" data-target="#modalCRUD" data-url="{% url 'gestion:modificar-oferta' oferta.pk %}" aria-hidden="true"></i>
+                      &nbsp;
                       <i class="fa fa-trash-o trigger" class="boton-eliminar" data-toggle="modal" data-target="#modalCRUD" data-url="{% url 'gestion:eliminar-oferta' oferta.pk %}" aria-hidden="true"></i>
                     </td>
                   </tr>
@@ -114,7 +116,7 @@
     const $this = $(this)
     // Seleccionamos tamaño del modal de acuerdo al botón
     // que escogimos
-    if ($this.hasClass('fa-eye')) {
+    if ($this.hasClass('fa-eye') || $this.hasClass('fa-pencil')) {
       $('.modal-dialog').removeClass( "modal-md" );
       $('.modal-dialog').addClass( "modal-lg" );
     } else {

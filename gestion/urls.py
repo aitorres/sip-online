@@ -34,6 +34,7 @@ urlpatterns = [
         forms.AgregarOfertaTrimestralPaso2
     ]), name='agregar-oferta'),
     url(r'^ofertas/eliminar/(?P<pk>[-\w]+)/$', views.EliminarOferta.as_view(), name='eliminar-oferta'),
+    url(r'^ofertas/modificar/(?P<pk>[-\w]+)/$', views.ModificarOferta.as_view(), name='modificar-oferta'),
     url(r'^ofertas/buscar/$', views.buscar_oferta, name='buscar-ofertas'),
     url(r'^ofertas/buscar/(?P<periodo>[-\w]+)/$', views.buscar_oferta, name='buscar-ofertas'),
     url(r'^ofertas/buscar/(?P<periodo>[-\w]+)/(?P<ano>[-\w]+)/$', views.buscar_oferta, name='buscar-ofertas'),

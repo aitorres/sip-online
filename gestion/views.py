@@ -647,6 +647,94 @@ class VerOferta(LoginRequiredMixin, generic.DetailView):
 
         return context
 
+class ModificarOferta(LoginRequiredMixin, generic.DetailView):
+    """
+    Controlador que permite modificar los datos en detalle de una oferta
+    trimestral en particular guardad como final.
+    """
+
+    template_name = 'ofertas/modificar.html'
+    model = OfertaTrimestral
+    context_object_name = "oferta"
+
+    def post(self, request, *args, **kwargs):
+        """
+        Procesa la petición de modificar las asignaturas en una oferta trimestral
+        final.
+        """
+
+        # Obtenemos datos de la oferta
+        oferta_id = int(self.request.POST['oferta_id'])
+        oferta = OfertaTrimestral.objects.get(pk=oferta_id)
+
+        # Iteramos por las asignaciones marcadas para seleccionarlas como preferidas
+        c = 0
+        asignaciones_finales = set()
+        for k, v in self.request.POST.items():
+            # Accedemos a los checkboxes
+            if k[0:12] == "botonElegir_":
+                clave = int(k[12:])
+
+                # Filtramos los checkboxes marcados
+                if v == "on":
+                    # Guardamos la información en la asignación
+                    asignacion = AsignacionProfesoral.objects.get(pk=clave)
+                    asignacion.es_final = True
+                    asignacion.save()
+                    asignaciones_finales.add(asignacion)
+                    c += 1
+
+        # Arrojamos error si no se guardó ninguna asignación
+        if c < 1:
+            messages.info(
+                self.request,
+                "No se pudo guardar la oferta como final. Debe escoger al menos una asignatura y profesor."
+            )
+        else:
+            # Desmarcamos el resto de asignaciones
+            asignaciones_oferta = AsignacionProfesoral.objects.filter(
+                oferta_trimestral=oferta
+            )
+
+            for asignacion in asignaciones_oferta:
+                if asignacion not in asignaciones_finales:
+                    asignacion.es_final = False
+                    asignacion.save()
+
+            # Marcamos la oferta como final
+            oferta.es_final = True
+            oferta.save()
+
+            # PENDIENTE: Mandar correos a Coordinaciones
+            # TODO: Mandar correos a Coordinaciones
+
+            # Mostramos un mensaje de éxito
+            messages.success(
+                self.request,
+                "La oferta de asignaturas ha sido modificada satisfactoriamente."
+            )
+
+        return redirect('gestion:listar-ofertas')
+
+    def get_context_data(self, **kwargs):
+        """
+        Permite agregar contenido adicional al diccionario genérico de
+        contexto para pasar al template y que se renderice posteriormente.
+        """
+
+        # Obtenemos el diccionario de contexto por defecto
+        context = super(ModificarOferta, self).get_context_data(**kwargs)
+
+        # Obtenemos las asignaciones profesorales asignadas a esta oferta
+        oferta = context['object']
+        asignaciones = AsignacionProfesoral.objects.filter(
+            oferta_trimestral=oferta
+        )
+
+        context['asignaciones'] = asignaciones
+
+        return context
+
 class VerOfertaIncluyente(LoginRequiredMixin, generic.DetailView):
     """
     Controlador que permite visualizar los datos en detalle de una oferta
