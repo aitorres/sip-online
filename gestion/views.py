@@ -857,7 +857,7 @@ def actualizar_preferencias(request, pk_oferta):
             asignacion.es_preferida = marcado
             asignacion.save()
 
-        messages.success(requedest, 'Preferencias actualizadas satisfactoriamente.')
+        messages.success(request, 'Preferencias actualizadas satisfactoriamente.')
         return redirect('gestion:listar-ofertas-asignacion')
     else:
         return render(
