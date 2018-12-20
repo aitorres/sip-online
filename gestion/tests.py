@@ -16,7 +16,8 @@ from gestion.models import (
     Departamento,
     Asignatura,
     Disponibilidad,
-    OfertaTrimestral
+    OfertaTrimestral,
+    AsignacionProfesoral
 )
 from gestion.views import (
     Dashboard,
@@ -529,6 +530,173 @@ class AsignaturaModelTest(TestCase):
         """
         asignatura = Asignatura.objects.get(codigo_interno="3715")
         self.assertGreaterEqual(asignatura.creditos(),0)
+
+class AsignacionProfesoralModelTest(TestCase):
+    """
+    Suite de pruebas para el modelo AsignacionProfesoral, que incluye
+    pruebas de frontera, de esquina y de malicia para los atributos
+    de este modelo, y para sus métodos asociados en caso de
+    que se agreguen posteriormente.
+    """
+
+    def setUp(self):
+        """
+        Método para crear los valores de la base de datos por defecto
+        antes de iniciar cada prueba.
+        """
+
+        dpto_compu = Departamento.objects.create(
+            nombre="Departamento de Computación y Tecnología de la Información",
+            codigo="CI",
+        )
+
+        jefe_compu = Profesor.objects.create(
+            nombre="Ángela",
+            apellido="Di Serio",
+            email="adiserio@usb.ve",
+            cedula="V-14.241.234",
+            departamento=dpto_compu
+        )
+
+        prof_compu = Profesor.objects.create(
+            nombre="Marlene",
+            apellido="Goncalves",
+            email="mgoncalves@usb.ve",
+            cedula="V-14.241.321",
+            departamento=dpto_compu
+            )
+
+        dpto_compu.jefe = jefe_compu
+        dpto_compu.save()
+
+        OfertaTrimestral.objects.create(
+            trimestre="EM18",
+            departamento=dpto_compu,
+            es_final=False
+            )
+
+        bases1 = Asignatura.objects.create(
+            nombre="Sistema de bases de datos I",
+            codigo_interno="3311",
+            departamento=dpto_compu,
+            horas_laboratorio=0,
+            horas_teoria=4,
+            horas_practica=0,
+            unidad_creditos = 3
+        )
+
+        software1 = Asignatura.objects.create(
+            nombre="Ingeniería de Software I",
+            codigo_interno="3715",
+            departamento=dpto_compu,
+            horas_laboratorio=0,
+            horas_teoria=4,
+            horas_practica=3,
+            unidad_creditos = 5,
+        )
+
+        prof_compu.asignaturas.add(bases1)
+        prof_compu.asignaturas.add(software1)
+        prof_compu.save()
+
+    def test_oferta_correcta(self):
+        """
+        PRUEBA 14: Se probara que el codigo de la oferta trimestral sea el correcto
+        Primera corrida:
+        """
+        bases = Asignatura.objects.get(codigo_interno="3311")
+        oferta_em = OfertaTrimestral.objects.get(trimestre="EM18")
+        profe = Profesor.objects.get(nombre="Marlene")
+        asig = AsignacionProfesoral.objects.create(
+            oferta_trimestral=oferta_em,
+            profesor=profe,
+            asignatura=bases,
+            es_final=False,
+            es_preferida=True,
+            )
+        self.assertEqual(asig.oferta_trimestral.nombre_completo(), "Enero - Marzo 2018")
+
+    def test_cambio_profesor(self):
+        """
+        PRUEBA 15: Se probara si se elimina el profe anterior, en efecto se modifica el profesor de la asignacion
+        Primera corrida:
+        """
+        bases = Asignatura.objects.get(codigo_interno="3311")
+        oferta_em = OfertaTrimestral.objects.get(trimestre="EM18")
+        profe = Profesor.objects.get(nombre="Marlene")
+        dpto_compu = Departamento.objects.get(codigo="CI")
+        asig = AsignacionProfesoral.objects.create(
+            oferta_trimestral=oferta_em,
+            profesor=profe,
+            asignatura=bases,
+            es_final=False,
+            es_preferida=True,
+            )  
+
+        prof_compu2 = Profesor.objects.create(
+            nombre="Vicente",
+            apellido="Yriarte",
+            email="vyriarte@usb.ve",
+            cedula="V-11.241.321",
+            departamento=dpto_compu
+            )
+
+        Profesor.objects.get(nombre="Marlene").delete()
+        asig.profesor = prof_compu2
+        asig.save()
+
+        self.assertEqual(str(asig.profesor), "Vicente Yriarte")
+
+    def test_asignatura_preferida(self):
+        """
+        PRUEBA 16: Se probara que el campo es_preferida sea true si la materia es dada por el profe.
+        Primera corrida:
+        """
+        #asignaturas = prof_compu.asignatura.objects.all*
+        bases = Asignatura.objects.get(codigo_interno="3311")
+        oferta_em = OfertaTrimestral.objects.get(trimestre="EM18")
+        profe = Profesor.objects.get(nombre="Marlene")
+        pref = False
+        for asignatura in profe.asignaturas.all():
+            if bases.codigo_interno == asignatura.codigo_interno:
+                pref = True
+
+        asig = AsignacionProfesoral.objects.create(
+            oferta_trimestral=oferta_em,
+            profesor=profe,
+            asignatura=bases,
+            es_final=False,
+            es_preferida=pref,
+            )
+        self.assertTrue(asig.es_preferida) 
+
+    def test_cambio_asignatura(self):
+        """
+        PRUEBA 17: Se probara si se elimina la asignatura anterior, en efecto se modifica la asignatura de la asignacion
+        Primera corrida:
+        """
+        bases = Asignatura.objects.get(codigo_interno="3311")
+        oferta_em = OfertaTrimestral.objects.get(trimestre="EM18")
+        profe = Profesor.objects.get(nombre="Marlene")
+        asig = AsignacionProfesoral.objects.create(
+            oferta_trimestral=oferta_em,
+            profesor=profe,
+            asignatura=bases,
+            es_final=False,
+            es_preferida=True,
+            )  
+
+        Asignatura.objects.get(codigo_interno="3311").delete()
+        software = Asignatura.objects.get(codigo_interno="3715")
+        asig.asignatura = software
+        asig.save()
+
+        self.assertEqual(
+            str(asig.asignatura),
+            "(CI3715) Ingeniería de Software I"
+        )
+
+
 
 
 class DisponibilidadModelTest(TestCase):
