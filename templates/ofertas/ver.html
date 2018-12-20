@@ -58,7 +58,9 @@
                                             </span>
                                             {% endif %}
                                         </td>
-                                    <tr></tr><td></td>
+                                    {% if not forloop.last %}
+                                        <tr></tr><td></td>
+                                    {% endif %}
                                 {% endfor %}
                             </tr>
                         {% endfor %}
