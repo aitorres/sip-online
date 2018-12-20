@@ -56,7 +56,6 @@
                         {% endfor %}
                     </tbody>
                   </table>
-                  <input type="submit" value="Completar oferta">
                 </div>
             </div>
             {% endif %}
@@ -83,8 +82,11 @@
                   </div>
              {% endif %}
         </div>
-
-</div>
+ </div>
+        
 <div class="modal-footer">
+{% if oferta.estado == "preliminar"%}
+    <button type="button" class="btn btn-secondary">Completar oferta</button>
+{% endif %}
     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
 </div>
