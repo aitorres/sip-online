@@ -1006,14 +1006,6 @@ class CoordinacionModelTest(TestCase):
         coordinacion_compu.asignaturas.add(A1,A2,A3)
         coordinacion_compu.save()
 
-        prof1 = Profesor.objects.create(
-            nombre="Angela",
-            apellido="Di Serio",
-            email="adiserio@usb.ve",
-            cedula="V-14.241.234",
-            departamento=dpto_compu
-        )
-
 
         dpto_mate = Departamento.objects.create(
             nombre="Departamento de Matematicas Puras y Aplicadas",
@@ -1124,6 +1116,7 @@ class CoordinacionModelTest(TestCase):
         en la base de datos como asignaturas de dicha coordinacion y que en efecto sean
         las materias de la coordinacion.
 
+        Prueba de tipo malicia.
         RESULTADO ESPERADO: Falla
         RESULTADO OBTENIDO: Falla. Debido a que la Asignatura Matematicas V no pertenece a las asignaturas de la coordinacion de Ingenieria de computacion
         """
@@ -1137,4 +1130,84 @@ class CoordinacionModelTest(TestCase):
             list(coord_comp.asignaturas.all()),
             [Asig2,Asig1,Asig3,Asig4])  
 
-       
+
+    def test_coordinacion_sin_coordinador(self):
+        """
+        PRUEBA 7 COORDINACION : se asocia un profesor como coordinador y luego se elimina el profesor. Por
+        lo tanto la coordinacion se queda sin jefe asociado.  
+
+        Prueba de tipo malicia.
+
+        Primer Resultado de la prueba: Fallo, no se modifica los datos de la coordinacion. Se arregla el codigo
+        Segund Resultado de la prueba: Exitoso,el objeto se modifica cuando se elimina el profesor
+        coordinador.
+        
+        """
+
+        Profesor.objects.get(cedula="V-13.241.234").delete()
+        coordinacion_comp = Coordinacion.objects.get(nombre="Coordinación de Ingeniería de Computación")
+        self.assertFalse(coordinacion_comp.tiene_coordinador())
+
+    def test_coordinacion_nueva_sin_coordinador(self):
+        """
+        PRUEBA 8 COORDINACION : se crea una nueva coordinacion sin asignar coordinador, y se pide que se muestre su coordinador.
+        Prueba de tipo maliciosa.
+
+        Resultado de la prueba: Exitoso. Coordinacion sin coordinador
+        """
+        coord_geo = Coordinacion.objects.create(
+            nombre="Coordinación de Ingeniería Geofísica"
+        )
+
+        self.assertFalse(coord_geo.tiene_coordinador())
+
+
+    def test_eliminar_asignatura_coordinacion(self):
+        """
+        PRUEBA 9 COORDINACION : se elimina una asignatura asociada a una coordinacion del sistema; por lo tanto, ya no 
+        pertenecera al campo Asignaturas de dicha coordinacion. Se espera probar que al eliminar una asignatura asociada a una coordinacion,
+        esta se borre del campo del objeto satisfactoriamente.
+
+        Prueba Tipo Malicia.
+
+        Resultado de la prueba: Exitoso. La el objeto coordinacion ya no contiene la Asignatura Logica Simbolica que fue borrada de la base de datos
+        ahora solo contiene las Asignaturas Estructura Discretas I  e Ingenieria de Software I.
+
+        """
+
+        Asignatura.objects.get(codigo_interno="2511").delete()
+        coord_comp = Coordinacion.objects.get(nombre="Coordinación de Ingeniería de Computación")
+        Asig1 = Asignatura.objects.get(codigo_interno="2525")
+        Asig3 = Asignatura.objects.get(codigo_interno="3715")
+        self.assertEqual(
+            list(coord_comp.asignaturas.all()),
+            [Asig1,Asig3])
+
+    def test_agregar_asignatura_coordinacion(self):
+        """
+        PRUEBA  10 COORDINACION : Se agrega una asignatura a una coordinacion, por lo tanto pertenecera al campo Asignaturas de dicho objeto. Se espera comprobar que en efecto,
+        una asignatura puede ser agregada a una coordinacion saisfactoriamente
+
+        Resultado de la prueba: Exitoso, la nueva asignatura ahora esta asociada a la coordinacion.
+        """
+        dpto = Departamento.objects.get(codigo="MA")
+
+        coord_mec = Coordinacion.objects.create(
+            nombre="Coordinación de Ingeniería Mecánica"
+        )
+
+        Asig11 = Asignatura.objects.create(
+            nombre="Mecánica de Materiales",
+            codigo_interno="2142",
+            departamento=dpto,
+            horas_laboratorio=0,
+            horas_teoria=4,
+            horas_practica=2,
+            unidad_creditos = 4
+        ) 
+
+        coord_mec.asignaturas.add(Asig11)
+
+        self.assertEqual(
+            list(coord_mec.asignaturas.all()),
+            [Asig11])       
