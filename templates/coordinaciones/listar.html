@@ -35,7 +35,7 @@
               </thead>
               <tbody>
                 {% for oferta in ofertas %}
-                    {% if oferta in coordinacion.ofertas_disponibles %}  
+                    {% if oferta in coordinacion.ofertas_disponibles %}
                         <tr>
                         <td>{{ oferta.trimestre }}</td>
                         <td>{{ oferta.nombre_completo }}</td>

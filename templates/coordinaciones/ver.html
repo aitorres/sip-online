@@ -46,10 +46,12 @@
                     </thead>
                     <tbody>
                         {% for asignacion in asignaciones %}
-                            <tr>
-                                <td>{{ asignacion.asignatura }}</td>
-                                <td>{{ asignacion.profesor }}</td>
-                            </tr>
+                            {% if asignacion.es_final %}
+                                <tr>
+                                    <td>{{ asignacion.asignatura }}</td>
+                                    <td>{{ asignacion.profesor }}</td>
+                                </tr>
+                            {% endif %}
                         {% endfor %}
                     </tbody>
                   </table>
