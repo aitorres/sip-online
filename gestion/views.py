@@ -673,8 +673,16 @@ class VerOferta(LoginRequiredMixin, generic.DetailView):
             oferta.es_final = True
             oferta.save()
 
-            # PENDIENTE: Mandar correos a Coordinaciones
-            # TODO: Mandar correos a Coordinaciones
+            # Enviamos correos a las Coordinaciones
+            coordinaciones = Coordinacion.objects.all()
+            for coordinacion in coordinaciones:
+                if oferta in coordinacion.ofertas_disponibles() and coordinacion.coordinador is not None:
+                    _enviar_correo(
+                        coordinacion.coordinador.email,
+                        "[SIP] Oferta disponible para la Coordinación",
+                        'emails/oferta_disponible_coordinacion.html',
+                        {'oferta': oferta}
+                    )
 
             # Mostramos un mensaje de éxito
             messages.success(
@@ -761,8 +769,16 @@ class ModificarOferta(LoginRequiredMixin, generic.DetailView):
             oferta.es_final = True
             oferta.save()
 
-            # PENDIENTE: Mandar correos a Coordinaciones
-            # TODO: Mandar correos a Coordinaciones
+            # Enviamos correos a las Coordinaciones
+            coordinaciones = Coordinacion.objects.all()
+            for coordinacion in coordinaciones:
+                if oferta in coordinacion.ofertas_disponibles() and coordinacion.coordinador is not None:
+                    _enviar_correo(
+                        coordinacion.coordinador.email,
+                        "[SIP] Oferta modificada para la Coordinación",
+                        'emails/oferta_modificada_coordinacion.html',
+                        {'oferta': oferta}
+                    )
 
             # Mostramos un mensaje de éxito
             messages.success(
