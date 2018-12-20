@@ -1128,3 +1128,19 @@ class CoordinacionModelTest(TestCase):
         self.assertNotEqual(
             list(coord_comp.asignaturas.all()),
             [Asig2,Asig1,Asig3,Asig4])         
+
+    def test_coordinacion_sin_coordinador(self):
+        """
+        PRUEBA 7 COORDINACION : se asocia un profesor como coordinador y luego se elimina el profesor. Por
+        lo tanto la coordinacion se queda sin jefe asociado.  
+
+
+        Primer Resultado de la prueba: Fallo, no se modifica los datos de la coordinacion. Se arregla el codigo
+        Segundo Resultado de la prueba: Exitoso,el objeto se modifica cuando se elimina el profesor
+        coordinador.
+        
+        """
+
+        Profesor.objects.get(cedula="V-13.241.234").delete()
+        coordinacion_comp = Coordinacion.objects.get(nombre="Coordinación de Ingeniería de Computación")
+        self.assertFalse(coordinacion_comp.tiene_coordinador())        
