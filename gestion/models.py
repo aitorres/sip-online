@@ -118,10 +118,10 @@ class Coordinacion(models.Model):
     def __str__(self):
         """
         Muestra la instancia de Coordinacion como
-        nombre 
+        nombre
         """
 
-        return self.nombre 
+        return self.nombre
 
     def tiene_coordinador(self):
         """
@@ -129,6 +129,30 @@ class Coordinacion(models.Model):
         """
 
         return bool(self.coordinador)
+
+    def ofertas_disponibles(self):
+        """
+        Devuelve las ofertas trimestrales finales a la que la Coordinación tiene
+        acceso.
+        """
+
+        # Obtenemos todas las ofertas finales, y las asignaturas de
+        # interés para la Coordinación
+        ofertas_finales = OfertaTrimestral.objects.filter(estado="final")
+        asignaturas_de_interes = self.asignaturas.all()
+
+        # Iteramos por cada oferta final disponible
+        ofertas_disponibles = set()
+        for oferta in ofertas_finales:
+            # Obtenemos la intersección entre las asignaturas
+            asignaturas_ofertadas = oferta.asignaturas_ofertadas()
+            interseccion_asignaturas = asignaturas_de_interes & asignaturas_ofertadas
+
+            # Si al menos una asignatura de interés se oferta, la oferta se incluye
+            if len(interseccion_asignaturas) > 0:
+                ofertas_disponibles.add(oferta)
+
+        return ofertas_disponibles
 
 class Profesor(models.Model):
     """
