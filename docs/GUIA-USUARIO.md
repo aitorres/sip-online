@@ -226,3 +226,16 @@ Al hacer clic al ícono de ver una oferta (*ojo*), se puede visualizar la inform
 ![Actualizar_preferencia](imagenes/actualizar_preferencia.png "Vista de Actualizar preferencias de una Oferta trimestral")
 
 Al hacer clic al ícono de actualizar preferencias (*engranaje*), se puede visualizar la ventana de Actualizar preferencias, aparecera una lista con las asignaturas posibles y un cuadrado que al hacer click se actualiza la preferencia, para confirmar se presiona el boton *Actualizar*, para cancelar se presiona el boton *cancelar* o se hace click fuera del recuadro
+
+
+## Buscar ofertas
+
+El apartado de Buscar ofertas, al que se puede acceder con la barra navegacional lateral, permita realizar búsquedas sobre las ofertas registradas, utilizando
+los filtros:
+
+- Período
+- Año
+- Solo ofertas de mi Dpto
+
+Al introducir los datos por los cuales se desea encontrar una oferta, se presiona el botón de Buscar y aparecerán los resultados que cumplen con las condiciones
+de búsqueda.
