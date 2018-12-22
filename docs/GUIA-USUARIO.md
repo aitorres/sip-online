@@ -239,3 +239,15 @@ los filtros:
 
 Al introducir los datos por los cuales se desea encontrar una oferta, se presiona el botón de Buscar y aparecerán los resultados que cumplen con las condiciones
 de búsqueda.
+### Gestión del coordinador.
+
+![Inicio_coordiancion](imagenes/Inicio_coordinacion.png "Pagina de inicio con un coordinador")
+
+El sistema permite ingresas con el rol de COORDINADOR. Este rol lo ejerce un profesor, que no puede ser jefe de departamento. Y se encarga de gestionar recibir la oferta del departamento y seleccionar las materias que necesite. Es importante resaltar, que al ser un profesor, tambien puede seleccionar sus preferencias sobre las materias que le sean asignadas por el departamento.
+
+### Ofertas Disponibles.
+
+![panel_coordinador](imagenes/panel_coordinador.png "Panel izquierdo del coordinador")
+
+El coordinador cuenta con la opcion de "Ofertas disponibles" y en esta puede gestionar, para su coordinacion, las ofertas hechas por el departamento. Tambien cuenta con el boton de "Gestionar prefrencias" ya que al ser un profesor, tiene permitida esta opcion. 
+
