@@ -25,8 +25,12 @@ SECRET_KEY = '&6wk!_(nl%dl51p7pca&un=oqcp!)6^!t=%r!+326y24bszb^#'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '0.0.0.0', '127.0.0.1']
-
+ALLOWED_HOSTS = [
+    'localhost',
+    '0.0.0.0',
+    '127.0.0.1',
+    'sip-online.herokuapp.com'
+]
 
 # Application definition
 
