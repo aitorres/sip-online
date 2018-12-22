@@ -51,3 +51,4 @@ class AgregarOfertaTrimestralPaso2(forms.Form):
                 queryset=Profesor.objects.filter(asignaturas__id__contains=id_asignatura).distinct(),
                 required=False
             )
+            self.fields['profesores_%d' % id_asignatura].widget.attrs['class'] = 'form-control'
