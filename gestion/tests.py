@@ -1162,6 +1162,7 @@ class CoordinacionModelTest(TestCase):
 
         coordinacion_compu = Coordinacion.objects.create(
             nombre="Coordinación de Ingeniería de Computación",
+            codigo="COM"
         )
 
         coordinador_compu = Profesor.objects.create(
@@ -1353,7 +1354,8 @@ class CoordinacionModelTest(TestCase):
         Resultado de la prueba: Exitoso. Coordinacion sin coordinador. Metodo tiene_coordinador es falso
         """
         coord_geo = Coordinacion.objects.create(
-            nombre="Coordinación de Ingeniería Geofísica"
+            nombre="Coordinación de Ingeniería Geofísica",
+            codigo="GEO"
         )
 
         self.assertFalse(coord_geo.tiene_coordinador())
@@ -1389,7 +1391,8 @@ class CoordinacionModelTest(TestCase):
         dpto = Departamento.objects.get(codigo="MA")
 
         coord_mec = Coordinacion.objects.create(
-            nombre="Coordinación de Ingeniería Mecánica"
+            nombre="Coordinación de Ingeniería Mecánica",
+            codigo="MEC"
         )
 
         Asig11 = Asignatura.objects.create(
