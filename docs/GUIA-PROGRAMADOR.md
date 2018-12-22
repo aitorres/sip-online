@@ -72,7 +72,7 @@ python manage.py migrate
 
 El script mencionado procederá a crear una base de datos en el gestor PostgreSQL con los datos asociados para poder ejecutar la aplicación.
 
-### Ejecución de miraciones 
+### Ejecución de migraciones
 **IMPORTANTE**. Realizar esto cada vez que se notifica al equipo de un cambio en los modelos de la base de datos. Si no estás seguro si el cambio ha ocurrido, puedes ejecutarlo e igual no hará nada negativo.
 
 En un terminal abierto desde la carpeta del proyecto, con la base de datos creada y ejecutando el entorno virtual con las dependencias instaladas, ejecutar:
@@ -110,4 +110,50 @@ password: 1234abcd
 En un terminal abierto desde la carpeta del proyecto, con la base de datos creada y migrada y desde el entorno virtual habiendo instalado previamente los requerimientos, hacer:
 ```bash
 python manage.py runserver
+```
+
+## Comandos de Administración
+
+Se han incorporado comandos de administración personalizados para el manejo inicial de algunos datos y carga de usuarios especiales, además de obtener cierta información. Se listan a continuación:
+
+### Listar Coordinaciones
+
+Para listar todas las Coordinaciones en sistema, incluyendo sus códigos únicos, ejecutar:
+```bash
+python manage.py listar_coordinaciones
+```
+
+### Listar Departamentos
+
+Para listar todos los Departamentos en sistema, incluyendo sus códigos únicos, ejecutar:
+```bash
+python manage.py listar_departamentos
+```
+
+### Crear coordinador (nuevo)
+
+Para crear un nuevo profesor y asignarlo como coordinador de una Coordinación existente, ejecutar lo siguiente y seguir los pasos en pantalla:
+```bash
+python manage.py crear_coordinador
+```
+
+### Crear jefe (nuevo)
+
+Para crear un nuevo profesor y asignarlo como jefe de un Departamento existente, ejecutar lo siguiente y seguir los pasos en pantalla:
+```bash
+python manage.py crear_coordinador
+```
+
+### Asignar coordinador (ya existente)
+
+Para asignar un profesor ya existente como coordinador de una Coordinación existente, ejecutar lo siguiente y seguir los pasos en pantalla:
+```bash
+python manage.py asignar_coordinador
+```
+
+### Asignar jefe (ya existente)
+
+Para asignar un profesor ya existente como jefe de un Departamento existente, ejecutar lo siguiente y seguir los pasos en pantalla:
+```bash
+python manage.py asignar_coordinador
 ```
