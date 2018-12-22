@@ -14,7 +14,7 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+CUR_DOMAIN = os.environ.get('CUR_DOMAIN', 'localhost')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
@@ -84,17 +84,26 @@ WSGI_APPLICATION = 'sip.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-DATABASES = {
-    'default': {
+DATABASES_LIST = {
+    'localhost': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'siponline_db',
         'USER': 'siponline',
         'PASSWORD': 's1p0nl1ne!',
         'HOST': 'localhost',
         'PORT': '',
-    }
+    },
+    'heroku': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.environ.get('DB_NAME', ''),
+        'USER': os.environ.get('DB_USER', ''),
+        'PASSWORD': os.environ.get('DB_PASS', ''),
+        'HOST': os.environ.get('DB_HOST', ''),
+        'PORT': '5432',
+    },
 }
 
+DATABASES = {'default': DATABASES_LIST[CUR_DOMAIN]}
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
