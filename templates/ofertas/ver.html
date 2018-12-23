@@ -105,6 +105,9 @@
  </div>
 
 <div class="modal-footer">
+{% if oferta.es_final and puede_ver_chat %}
+        <button type="button" class="btn btn-success" onclick="location.href = '{% url 'conversate:room' oferta.slug %}';">Negociar oferta (chat)</button>
+{% endif %}
 {% if oferta.estado == "preliminar" and request.user.profesor.departamento == oferta.departamento %}
     <button type="submit" form="f1" value="Submit" class="btn btn-primary">Completar oferta</button>
 {% endif %}

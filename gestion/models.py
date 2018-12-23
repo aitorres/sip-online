@@ -1,3 +1,5 @@
+from conversate.models import Room
+
 from django.db import models
 from django.core.mail import send_mail
 from django.core.validators import MaxValueValidator, MinValueValidator
@@ -451,6 +453,26 @@ class OfertaTrimestral(models.Model):
 
         nombre_completo = "%s %s" % (nombre_trimestre, ano)
         return nombre_completo
+
+    def slug(self):
+        """
+        Retorna un nombre especial a modo de slug correspondiente al trimestre,
+        como código único.
+        """
+
+        nombre = self.nombre_completo() + " " + self.departamento.codigo
+        return nombre.lower().replace(" ", "_")
+
+    def chat(self):
+        """
+        Retorna el salón de chat asociado a la oferta trimestral.
+        """
+
+        chat = Room.objects.get(
+            slug=self.slug()
+        )
+
+        return chat
 
     def estado(self):
         """

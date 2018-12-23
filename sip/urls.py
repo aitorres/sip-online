@@ -21,5 +21,6 @@ urlpatterns = [
     url(r'^login/$', auth_views.login, {'template_name': 'sesiones/login.html'}, name='login'),
     url(r'^logout/$', auth_views.logout, name='logout'),
     url(r'^admin/', admin.site.urls),
+    url(r'^chat/', include('conversate.urls', namespace='conversate')),
     url(r'', include('gestion.urls')),
 ]

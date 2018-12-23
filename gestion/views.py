@@ -1,3 +1,5 @@
+from conversate.models import Room, RoomUser
+
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
@@ -23,6 +25,19 @@ from gestion.models import (
     AsignacionProfesoral,
     Coordinacion
 )
+
+def _puede_ver_chat(oferta, profesor):
+    """
+    Función privada para determinar si un determinado profesor
+    puede acceder al chat de una oferta trimestral, sea porque es el
+    jefe de departamento o un coordinador interesado.
+    """
+
+    es_jefe = profesor == oferta.departamento.jefe
+    es_coordinador = profesor.coordinacion() is not None
+    es_coordinador = es_coordinador and oferta in profesor.coordinacion().ofertas_disponibles()
+
+    return es_jefe or es_coordinador
 
 def _enviar_correo(para, asunto, plantilla_mensaje, contexto):
     """
@@ -452,8 +467,6 @@ class ListarOfertasCoordinacion(generic.ListView):
 
         # Agregamos la coordinacion al contexto
         context['coordinacion'] = self.request.user.profesor.coordinacion()
-        # TODO: corregir oferta coordinación
-        print(self.request.user.profesor.coordinacion())
 
         return context
 
@@ -480,6 +493,12 @@ class VerOfertaCoordinacion(LoginRequiredMixin, generic.DetailView):
         oferta = context['object']
         asignaciones = AsignacionProfesoral.objects.filter(
             oferta_trimestral=oferta
+        )
+
+        # Obtiene los permisos del chat
+        context['puede_ver_chat'] = _puede_ver_chat(
+            oferta,
+            self.request.user.profesor
         )
 
         context['asignaciones'] = asignaciones
@@ -599,6 +618,11 @@ class AgregarOferta(SessionWizardView):
         return form
 
     def done(self, form_list, **kwargs):
+        """
+        Almacena la información pasada a través de los formularios
+        como nuevas ofertas trimestrales.
+        """
+
         forms = list(form_list)
         paso1 = forms[0]
         paso2 = forms[1]
@@ -719,10 +743,30 @@ class VerOferta(LoginRequiredMixin, generic.DetailView):
             oferta.es_final = True
             oferta.save()
 
+            # Creamos las salas de chat
+            chat = Room(
+                title=oferta.nombre_completo() + (" (%s)" % oferta.departamento.codigo),
+                slug=oferta.slug()
+            )
+            chat.save()
+
+            jefe = oferta.departamento.jefe
+            usuario_jefe = RoomUser(
+                room=chat,
+                user=jefe.usuario
+            )
+            usuario_jefe.save()
+
             # Enviamos correos a las Coordinaciones
             coordinaciones = Coordinacion.objects.all()
             for coordinacion in coordinaciones:
                 if oferta in coordinacion.ofertas_disponibles() and coordinacion.coordinador is not None:
+                    usuario_coordinador = RoomUser(
+                        room=chat,
+                        user=coordinacion.coordinador.usuario
+                    )
+                    usuario_coordinador.save()
+
                     _enviar_correo(
                         coordinacion.coordinador.email,
                         "[SIP] Oferta disponible para la Coordinación",
@@ -754,6 +798,12 @@ class VerOferta(LoginRequiredMixin, generic.DetailView):
         )
 
         context['asignaciones'] = asignaciones
+
+        # Obtiene los permisos del chat
+        context['puede_ver_chat'] = _puede_ver_chat(
+            oferta,
+            self.request.user.profesor
+        )
 
         return context
 
@@ -963,6 +1013,12 @@ class VerOfertaIncluyente(LoginRequiredMixin, generic.DetailView):
         asignaciones = AsignacionProfesoral.objects.filter(
             oferta_trimestral=oferta,
             profesor=self.request.user.profesor
+        )
+
+        # Obtiene los permisos del chat
+        context['puede_ver_chat'] = _puede_ver_chat(
+            oferta,
+            self.request.user.profesor
         )
 
         context['asignaciones'] = asignaciones

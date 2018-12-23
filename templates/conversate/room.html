@@ -1,0 +1,28 @@
+{% extends "conversate/base.html" %}
+{% load static %}
+
+{% block js %}
+{{ block.super }}
+<script src="{% static "conversate/js/room.js" %}"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#id_content").attr('placeholder', 'Mensaje');
+    });
+</script>
+{% endblock %}
+
+
+{% block conversate_content %}
+<section class="cnv_container">
+
+    <section class="cnv_content">
+        <article class="cnv_messages">
+            {% include "conversate/includes/room_messages.html" %}
+        </article>
+
+        <footer class="cnv_input">
+            {% include "conversate/includes/room_input.html" %}
+        </footer>
+    </section>
+</section>
+{% endblock %}
