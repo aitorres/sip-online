@@ -32,46 +32,78 @@
     </div>
 
     <hr/>
-
-    <div class="card text-center">
-           {% if oferta.estado == "final"%}
-            <div class="card-header">
-                <b>Modificar oferta</b>
+    {% if oferta.estado == "final"%}
+        <form method="post" action="{% url 'gestion:modificar-oferta' oferta.pk %}" id="f1">
+            {% csrf_token %}
+            <div class="card text-center">
+                <div class="card-header">
+                    <b>Modificar asignaciones existentes</b>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <input type="hidden" name="oferta_id" value="{{ oferta.pk }}" />
+                        <table class="table">
+                            <thead>
+                                <th>Asignatura</th>
+                                <th>Profesor</th>
+                                <th>Preferencia</th>
+                                <th>Marcar como Final</th>
+                            </thead>
+                            <tbody>
+                                {% for asignacion in asignaciones %}
+                                    <tr>
+                                        <td>{{ asignacion.asignatura }}</td>
+                                        <td>{{ asignacion.profesor }}</td>
+                                        <td>
+                                            {% if asignacion.es_preferida %}
+                                            <span class="badge badge-success">
+                                                PREFERIDA
+                                            </span>
+                                            {% endif %}
+                                        </td>
+                                        <td><input type="checkbox" name="botonElegir_{{ asignacion.id }}" {% if asignacion.es_final %} checked {% endif %} /></td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <br/>
+                        Para eliminar una asignación de la oferta, desmárquela como final.
+                    </div>
+                </div>
+                {% endif %}
             </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <form method="post" action="{% url 'gestion:modificar-oferta' oferta.pk %}" id="f1">
-                    {% csrf_token %}
-                    <input type="hidden" name="oferta_id" value="{{ oferta.pk }}" />
-                    <table class="table">
-                        <thead>
-                            <th>Asignatura</th>
-                            <th>Profesor</th>
-                            <th>Preferencia</th>
-                            <th>Marcar como Final</th>
-                        </thead>
-                        <tbody>
-                            {% for asignacion in asignaciones %}
-                                <tr>
-                                    <td>{{ asignacion.asignatura }}</td>
-                                    <td>{{ asignacion.profesor }}</td>
-                                    <td>
-                                        {% if asignacion.es_preferida %}
-                                        <span class="badge badge-success">
-                                            PREFERIDA
-                                        </span>
-                                        {% endif %}
-                                    </td>
-                                    <td><input type="checkbox" name="botonElegir_{{ asignacion.id }}" {% if asignacion.es_final %} checked {% endif %} /></td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                    </form>
+
+            <div class="card text-center">
+                {% if oferta.estado == "final"%}
+                <div class="card-header">
+                    <b>Agregar asignaciones nuevas</b>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <input type="hidden" name="oferta_id" value="{{ oferta.pk }}" />
+                        <table class="table tablafinal">
+                            <thead>
+                                <th>Asignatura</th>
+                                <th>Profesor</th>
+                                <th>Agregar</th>
+                            </thead>
+                            <tbody>
+                                {% for asignatura, profesores in asignaciones_nuevas.items %}
+                                {% for profesor in profesores %}
+                                    <tr>
+                                            <td>{{ asignatura }}</td>
+                                            <td>{{ profesor }}</td>
+                                            <td><input type="checkbox" name="botonAgregar_{{ asignatura.id }}_{{ profesor.id }}" /></td>
+                                        </tr>
+                                    {% endfor%}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-            {% endif %}
-        </div>
+        </form>
+    {% endif %}
  </div>
 
 <div class="modal-footer">

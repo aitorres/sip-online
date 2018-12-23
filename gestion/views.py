@@ -793,6 +793,27 @@ class ModificarOferta(LoginRequiredMixin, generic.DetailView):
                     asignacion.save()
                     asignaciones_finales.add(asignacion)
                     c += 1
+            elif k[0:13] == "botonAgregar_":
+                # Parseamos los datos
+                datos = k.split("_")
+                asignatura_id = int(datos[1])
+                profesor_id = int(datos[2])
+
+                # Filtramos los checkboxes marcados
+                if v == "on":
+                    profesor = Profesor.objects.get(pk=profesor_id)
+                    asignatura = Asignatura.objects.get(pk=asignatura_id)
+
+                    # Guardamos la información en la asignación nueva
+                    asignacion = AsignacionProfesoral(
+                        oferta_trimestral=oferta,
+                        profesor=profesor,
+                        asignatura=asignatura,
+                    )
+                    asignacion.es_final = True
+                    asignacion.save()
+                    print(asignacion)
+                    c += 1
 
         # Arrojamos error si no se guardó ninguna asignación
         if c < 1:
@@ -821,7 +842,7 @@ class ModificarOferta(LoginRequiredMixin, generic.DetailView):
                 if oferta in coordinacion.ofertas_disponibles() and coordinacion.coordinador is not None:
                     _enviar_correo(
                         coordinacion.coordinador.email,
-                        "[SIP] Oferta modificada para la Coordinación",
+                        "[SIP] Oferta modificada por el Departamento para la Coordinación",
                         'emails/oferta_modificada_coordinacion.html',
                         {'oferta': oferta}
                     )
@@ -850,6 +871,26 @@ class ModificarOferta(LoginRequiredMixin, generic.DetailView):
         )
 
         context['asignaciones'] = asignaciones
+
+        # Cargamos las nuevas asignaciones posibles
+        asignaturas = oferta.asignaturas_ofertadas()
+        context['asignaciones_nuevas'] = {}
+
+        for asignatura in asignaturas:
+            context['asignaciones_nuevas'][asignatura] = set()
+            profesores_disponibles = Profesor.objects.filter(
+                asignaturas__id__contains=asignatura.id
+            ).distinct()
+
+            for profesor in profesores_disponibles:
+                asignaciones_existentes = AsignacionProfesoral.objects.filter(
+                    oferta_trimestral=oferta,
+                    asignatura=asignatura,
+                    profesor=profesor
+                )
+
+                if len(asignaciones_existentes) == 0:
+                    context['asignaciones_nuevas'][asignatura].add(profesor)
 
         return context
 
