@@ -48,6 +48,7 @@ class AgregarOfertaTrimestralPaso2(forms.Form):
         for i in range(ultimo_id):
             id_asignatura = i+1
             self.fields['profesores_%d' % id_asignatura] = forms.ModelMultipleChoiceField(
-                queryset=Profesor.objects.filter(asignaturas__id__contains=id_asignatura),
+                queryset=Profesor.objects.filter(asignaturas__id__contains=id_asignatura).distinct(),
                 required=False
             )
+            self.fields['profesores_%d' % id_asignatura].widget.attrs['class'] = 'form-control'

@@ -169,6 +169,7 @@ class AgregarProfesor(LoginRequiredMixin, generic.CreateView):
         form.fields['departamento'].queryset = Departamento.objects.filter(
             id = self.request.user.profesor.departamento.id
         )
+        form.fields['departamento'].initial = self.request.user.profesor.departamento
         form.fields['asignaturas'].queryset = Asignatura.objects.filter(
             departamento = self.request.user.profesor.departamento
         )
@@ -211,7 +212,7 @@ class EditarProfesor(LoginRequiredMixin, generic.UpdateView):
 
         messages.warning(self.request, 'Ocurrió un error al editar el profesor.')
         return redirect(self.success_url)
-    
+
     def get_form(self):
         """
         Se modifica el método get_form para especificar restricciones en las opciones de algunos
@@ -222,6 +223,7 @@ class EditarProfesor(LoginRequiredMixin, generic.UpdateView):
         form.fields['departamento'].queryset = Departamento.objects.filter(
             id = self.request.user.profesor.departamento.id
         )
+        form.fields['departamento'].initial = self.request.user.profesor.departamento
         form.fields['asignaturas'].queryset = Asignatura.objects.filter(
             departamento = self.request.user.profesor.departamento
         )
@@ -312,6 +314,7 @@ class AgregarAsignatura(generic.CreateView):
         form.fields['departamento'].queryset = Departamento.objects.filter(
             id = self.request.user.profesor.departamento.id
         )
+        form.fields['departamento'].initial = self.request.user.profesor.departamento
         return form
 
 class EditarAsignatura(generic.UpdateView):
@@ -343,7 +346,7 @@ class EditarAsignatura(generic.UpdateView):
 
         messages.warning(self.request, 'Ocurrió un error al editar la asignatura.')
         return redirect(self.success_url)
-    
+
     def get_form(self):
         """
         Se modifica el método get_form para especificar restricciones en las opciones de algunos
@@ -354,6 +357,7 @@ class EditarAsignatura(generic.UpdateView):
         form.fields['departamento'].queryset = Departamento.objects.filter(
             id = self.request.user.profesor.departamento.id
         )
+        form.fields['departamento'].initial = self.request.user.profesor.departamento
         return form
 
 class EliminarAsignatura(generic.DeleteView):
@@ -448,6 +452,8 @@ class ListarOfertasCoordinacion(generic.ListView):
 
         # Agregamos la coordinacion al contexto
         context['coordinacion'] = self.request.user.profesor.coordinacion()
+        # TODO: corregir oferta coordinación
+        print(self.request.user.profesor.coordinacion())
 
         return context
 
@@ -541,15 +547,55 @@ class AgregarOferta(SessionWizardView):
 
     template_name = 'ofertas/agregar.html'
 
+    def dispatch(self, request, *args, **kwargs):
+        """
+        Se sobreescribe el dispatcher de la vista para poder tomar las asignaturas
+        de alguna oferta base.
+        """
+
+        oferta_base_id = kwargs.get('pk', None)
+
+        if oferta_base_id:
+            # Si existe una oferta base, tomamos sus asignaturas
+            oferta = OfertaTrimestral.objects.get(pk=oferta_base_id)
+            if oferta.departamento == self.request.user.profesor.departamento:
+                self.asignaturas_base = oferta.asignaturas_ofertadas()
+
+        return super().dispatch(request, *args, **kwargs)
+
     def get_form(self, step=None, data=None, files=None):
+        """
+        Retorna el formulario particular del paso en el que se esté
+        agregando la oferta, y se realizan operaciones adicionales sobre el
+        formulario en caso de que sean requeridas.
+        """
+
         form = super(AgregarOferta, self).get_form(step, data, files)
+
+        # Operaciones especiales para el primer paso del formulario
         if type(form) == AgregarOfertaTrimestralPaso1:
+            # Filtramos los departamentos disponibles
             form.fields['departamento'].queryset = Departamento.objects.filter(
             id = self.request.user.profesor.departamento.id
             )
+            form.fields['departamento'].initial = self.request.user.profesor.departamento
+
+            # Filtramos las asignaturas disponibles
             form.fields['asignaturas'].queryset = Asignatura.objects.filter(
                 departamento = self.request.user.profesor.departamento
             )
+
+            for _, field in form.fields.items():
+                field.widget.attrs['class'] = 'form-control'
+
+            # Cargamos las asignaturas iniciales en caso de que se esté usando otra
+            # oferta de base
+            try:
+                form.fields['asignaturas'].initial = self.asignaturas_base
+            except AttributeError:
+                pass
+
+
         return form
 
     def done(self, form_list, **kwargs):

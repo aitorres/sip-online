@@ -1,22 +1,28 @@
 # Sistema de Inscripción de Postgrado Online (SIP)
+
 Repositorio del Sistema de Inscripción de Postgrado Online, proyecto de desarrollo de la asignatura **Ingeniería de Software I (CI-3715)** durante el trimestre *Septiembre-Diciembre 2018* en la **Universidad Simón Bolívar**.
 
 ## Sobre el SIP Online
+
 El Sistema de Inscripción de Postgrado Online es un sistema de gestión de profesores, asignaturas y trámites de inscripción trimestral para los estudiantes de postgrado. Permite gestionar la información necesaria para realizar la planificación trimestral a nivel de Departamento, consignar las disponibilidades horarias de los profesores, y permitir a los estudiantes el acceso a los trámites de manera digital, fácil, rápida y eficiente.
 
 ### Funcionalidades
 
 Actualmente, el SIP Online permite:
+
 - Gestionar los profesores de postgrado de un departamento (listar, ver detalles, agregar, modificar, eliminar)
 - Gestionar las asignaturas de postgrado de un departamento (listar, ver detalles, agregar, modificar, eliminar)
 - Realizar, como Jefe de Departamento, la asignacion profesoral de la oferta.
 - Seleccionar, como Profesor, las preferencias sobre las asignaturas a ser ofertadas.
+- Declarar las ofertas como preliminares o finales
+- Editar asignaciones de profesores y agregarlas o quitarlas de una oferta
+- Enviar a las Coordinaciones la oferta que requieran según las asignaturas que necesiten para sus carreras
 
 ### Desarrollo
 
 El SIP Online se encuentra en desarrollo actualmente. El desarrollo se hace utilizando *Python 3.6.6* y *Django 1.11.15*. El resto de requerimientos se encuentran en el [archivo de requerimientos (requirements.txt)](requirements.txt).
 
-## Documentación 
+## Documentación
 
 La documentación del SIP Online se encuentra repartida en los siguientes lugares:
 
@@ -37,7 +43,9 @@ python manage.py test
 Las pruebas verifican integridad de modelos, métodos adicionales y algunos controladores con sus respuestas, para garantizar la calidad del código del producto.
 
 ## Autores
+
 Equipo de desarrollo de software **BIG Developers**.
+
 - Andrés Ignacio Torres (14-11082)
 - Javier Medina (12-10400)
 - Mariagabriela Jaimes (14-10526)

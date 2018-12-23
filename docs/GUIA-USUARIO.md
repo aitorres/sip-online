@@ -226,3 +226,28 @@ Al hacer clic al ícono de ver una oferta (*ojo*), se puede visualizar la inform
 ![Actualizar_preferencia](imagenes/actualizar_preferencia.png "Vista de Actualizar preferencias de una Oferta trimestral")
 
 Al hacer clic al ícono de actualizar preferencias (*engranaje*), se puede visualizar la ventana de Actualizar preferencias, aparecera una lista con las asignaturas posibles y un cuadrado que al hacer click se actualiza la preferencia, para confirmar se presiona el boton *Actualizar*, para cancelar se presiona el boton *cancelar* o se hace click fuera del recuadro
+
+
+## Buscar ofertas
+
+El apartado de Buscar ofertas, al que se puede acceder con la barra navegacional lateral, permita realizar búsquedas sobre las ofertas registradas, utilizando
+los filtros:
+
+- Período
+- Año
+- Solo ofertas de mi Dpto
+
+Al introducir los datos por los cuales se desea encontrar una oferta, se presiona el botón de Buscar y aparecerán los resultados que cumplen con las condiciones
+de búsqueda.
+### Gestión del coordinador.
+
+![Inicio_coordiancion](imagenes/Inicio_coordinacion.png "Pagina de inicio con un coordinador")
+
+El sistema permite ingresas con el rol de COORDINADOR. Este rol lo ejerce un profesor, que no puede ser jefe de departamento. Y se encarga de gestionar recibir la oferta del departamento y seleccionar las materias que necesite. Es importante resaltar, que al ser un profesor, tambien puede seleccionar sus preferencias sobre las materias que le sean asignadas por el departamento.
+
+### Ofertas Disponibles.
+
+![panel_coordinador](imagenes/panel_coordinador.png "Panel izquierdo del coordinador")
+
+El coordinador cuenta con la opcion de "Ofertas disponibles" y en esta puede gestionar, para su coordinacion, las ofertas hechas por el departamento. Tambien cuenta con el boton de "Gestionar prefrencias" ya que al ser un profesor, tiene permitida esta opcion. 
+

@@ -14,7 +14,7 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+CUR_DOMAIN = os.environ.get('CUR_DOMAIN', 'localhost')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
@@ -25,8 +25,12 @@ SECRET_KEY = '&6wk!_(nl%dl51p7pca&un=oqcp!)6^!t=%r!+326y24bszb^#'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '0.0.0.0', '127.0.0.1']
-
+ALLOWED_HOSTS = [
+    'localhost',
+    '0.0.0.0',
+    '127.0.0.1',
+    'sip-online.herokuapp.com'
+]
 
 # Application definition
 
@@ -84,17 +88,26 @@ WSGI_APPLICATION = 'sip.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-DATABASES = {
-    'default': {
+DATABASES_LIST = {
+    'localhost': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'siponline_db',
         'USER': 'siponline',
         'PASSWORD': 's1p0nl1ne!',
         'HOST': 'localhost',
         'PORT': '',
-    }
+    },
+    'heroku': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.environ.get('DB_NAME', ''),
+        'USER': os.environ.get('DB_USER', ''),
+        'PASSWORD': os.environ.get('DB_PASS', ''),
+        'HOST': os.environ.get('DB_HOST', ''),
+        'PORT': '5432',
+    },
 }
 
+DATABASES = {'default': DATABASES_LIST[CUR_DOMAIN]}
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -146,8 +159,9 @@ STATICFILES_DIRS = [
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 
-EMAIL_HOST = 'smtp.gmail.com'
+# Configuración de correo
+EMAIL_HOST = os.environ.get('EMAIL_HOST', '')
 EMAIL_PORT = 465
-EMAIL_HOST_USER = 'siponline.usb@gmail.com'
-EMAIL_HOST_PASSWORD = 's1ps1p123'
+EMAIL_HOST_USER = os.environ.get('EMAIL_USER', '')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD', '')
 EMAIL_USE_SSL = True
