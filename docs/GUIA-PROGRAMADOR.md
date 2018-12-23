@@ -38,6 +38,18 @@ python manage.py test
 
 La salida de las pruebas está mejorada por el paquete *Django-nose* y muestra una breve descripción de cada prueba, así como los errores posibles (que, a fecha de redacción de este documento, no hay) y otros datos de las pruebas.
 
+## Variables de entorno
+
+El sistema utiliza las siguientes variables de entorno para poder trabajar. Todas tienen un comportamiento por defecto, en caso de que no se configuren:
+
+- *CUR_DOMAIN*, el dominiio actual. Por defecto es *localhost*. Está enlazado a la base de datos que se utilice, y al manejador de correos usado.
+- *DB_NAME*, nombre de la base de datos en producción
+- *DB_USER*, usuario de la base de datos en producción
+- *DB_PASS*, contraseña del usuario de la base de datos en producción
+- *DB_HOST*, hostname de la base de datos en producción
+- *EMAIL_HOST*, hostname del servidor SMTP de correo electrónico
+- *EMAIL_HOST_USER*, usuario (correo) autorizado por el servidor de correos electrónicos
+
 ## Scripts de desarrollo
 
 A continuación se listarán algunos scripts de desarrollo para facilitar la ejecución de algunas tareas para el programador del SIP Online.
