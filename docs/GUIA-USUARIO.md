@@ -191,17 +191,20 @@ Al hacer clic al ícono de eliminar una oferta (*papelera*), se puede visualizar
 
 ## Buscar Ofertas
 
-![Buscar_oferta](imagenes/buscar_oferta.png "Seccion buscar oferta")
+![Buscar_oferta](imagenes/buscar_ofertas.png "Seccion buscar oferta")
 
-El apartado de Buscar ofertas, al que se puede acceder con la barra de navegación lateral, permite realizar busquedas sobre ofertas hechas en trimestres previos. 
+El apartado de Buscar ofertas, al que se puede acceder con la barra navegacional lateral, permita realizar búsquedas sobre las ofertas registradas
+
+- Período
+- Año
+- Solo ofertas de mi Dpto 
 
 ![Buscar_oferta_cuadro](imagenes/buscar_oferta_cuadro.png "Cuadro buscar oferta")
 
-Permite realizar la busqueda por periodo, año y filtrar solo ofertas del departamento al cual pertenece el jefe de departamento.
+El sistema arroja el resultado de la busqueda y permite consultar o usar de modelo dicha oferta para crear una nueva.
 
 ![Buscar_oferta_especifica](imagenes/busqueda_en.png "Resultado de la busqueda")
 
-El sistema arroja el resultado de la busqueda y permite consultar, o usar de modelo dicha oferta para crear una nueva.
 
 
 ## Gestión Preferencias
@@ -244,17 +247,6 @@ Al hacer clic al ícono de ver una oferta (*ojo*), se puede visualizar la inform
 Al hacer clic al ícono de actualizar preferencias (*engranaje*), se puede visualizar la ventana de Actualizar preferencias, aparecera una lista con las asignaturas posibles y un cuadrado que al hacer click se actualiza la preferencia, para confirmar se presiona el boton *Actualizar*, para cancelar se presiona el boton *cancelar* o se hace click fuera del recuadro
 
 
-## Buscar ofertas
-
-El apartado de Buscar ofertas, al que se puede acceder con la barra navegacional lateral, permita realizar búsquedas sobre las ofertas registradas, utilizando
-los filtros:
-
-- Período
-- Año
-- Solo ofertas de mi Dpto
-
-Al introducir los datos por los cuales se desea encontrar una oferta, se presiona el botón de Buscar y aparecerán los resultados que cumplen con las condiciones
-de búsqueda.
 ### Gestión del coordinador.
 
 ![Inicio_coordiancion](imagenes/Inicio_coordinacion.png "Pagina de inicio con un coordinador")
