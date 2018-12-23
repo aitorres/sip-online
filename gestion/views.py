@@ -26,6 +26,19 @@ from gestion.models import (
     Coordinacion
 )
 
+def _puede_ver_chat(oferta, profesor):
+    """
+    Función privada para determinar si un determinado profesor
+    puede acceder al chat de una oferta trimestral, sea porque es el
+    jefe de departamento o un coordinador interesado.
+    """
+
+    es_jefe = profesor == oferta.departamento.jefe
+    es_coordinador = profesor.coordinacion() is not None
+    es_coordinador = es_coordinador and oferta in profesor.coordinacion().ofertas_disponibles()
+
+    return es_jefe or es_coordinador
+
 def _enviar_correo(para, asunto, plantilla_mensaje, contexto):
     """
     Función privada para enviar un correo electrónico a los profesores
@@ -454,8 +467,6 @@ class ListarOfertasCoordinacion(generic.ListView):
 
         # Agregamos la coordinacion al contexto
         context['coordinacion'] = self.request.user.profesor.coordinacion()
-        # TODO: corregir oferta coordinación
-        print(self.request.user.profesor.coordinacion())
 
         return context
 
@@ -482,6 +493,12 @@ class VerOfertaCoordinacion(LoginRequiredMixin, generic.DetailView):
         oferta = context['object']
         asignaciones = AsignacionProfesoral.objects.filter(
             oferta_trimestral=oferta
+        )
+
+        # Obtiene los permisos del chat
+        context['puede_ver_chat'] = _puede_ver_chat(
+            oferta,
+            self.request.user.profesor
         )
 
         context['asignaciones'] = asignaciones
@@ -782,6 +799,12 @@ class VerOferta(LoginRequiredMixin, generic.DetailView):
 
         context['asignaciones'] = asignaciones
 
+        # Obtiene los permisos del chat
+        context['puede_ver_chat'] = _puede_ver_chat(
+            oferta,
+            self.request.user.profesor
+        )
+
         return context
 
 class ModificarOferta(LoginRequiredMixin, generic.DetailView):
@@ -990,6 +1013,12 @@ class VerOfertaIncluyente(LoginRequiredMixin, generic.DetailView):
         asignaciones = AsignacionProfesoral.objects.filter(
             oferta_trimestral=oferta,
             profesor=self.request.user.profesor
+        )
+
+        # Obtiene los permisos del chat
+        context['puede_ver_chat'] = _puede_ver_chat(
+            oferta,
+            self.request.user.profesor
         )
 
         context['asignaciones'] = asignaciones

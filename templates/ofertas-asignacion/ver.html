@@ -67,5 +67,8 @@
 
 </div>
 <div class="modal-footer">
+    {% if oferta.es_final and puede_ver_chat %}
+        <button type="button" class="btn btn-success" onclick="location.href = '{% url 'conversate:room' oferta.slug %}';">Negociar oferta (chat)</button>
+    {% endif %}
     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
 </div>
