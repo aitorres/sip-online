@@ -4,6 +4,11 @@
 {% block js %}
 {{ block.super }}
 <script src="{% static "conversate/js/room.js" %}"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#id_content").attr('placeholder', 'Mensaje');
+    });
+</script>
 {% endblock %}
 
 
@@ -20,5 +25,4 @@
         </footer>
     </section>
 </section>
-
 {% endblock %}

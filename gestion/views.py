@@ -1,3 +1,5 @@
+from conversate.models import Room, RoomUser
+
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
@@ -599,6 +601,11 @@ class AgregarOferta(SessionWizardView):
         return form
 
     def done(self, form_list, **kwargs):
+        """
+        Almacena la información pasada a través de los formularios
+        como nuevas ofertas trimestrales.
+        """
+
         forms = list(form_list)
         paso1 = forms[0]
         paso2 = forms[1]
@@ -719,10 +726,30 @@ class VerOferta(LoginRequiredMixin, generic.DetailView):
             oferta.es_final = True
             oferta.save()
 
+            # Creamos las salas de chat
+            chat = Room(
+                title=oferta.nombre_completo() + (" (%s)" % oferta.departamento.codigo),
+                slug=oferta.slug()
+            )
+            chat.save()
+
+            jefe = oferta.departamento.jefe
+            usuario_jefe = RoomUser(
+                room=chat,
+                user=jefe.usuario
+            )
+            usuario_jefe.save()
+
             # Enviamos correos a las Coordinaciones
             coordinaciones = Coordinacion.objects.all()
             for coordinacion in coordinaciones:
                 if oferta in coordinacion.ofertas_disponibles() and coordinacion.coordinador is not None:
+                    usuario_coordinador = RoomUser(
+                        room=chat,
+                        user=coordinacion.coordinador.usuario
+                    )
+                    usuario_coordinador.save()
+
                     _enviar_correo(
                         coordinacion.coordinador.email,
                         "[SIP] Oferta disponible para la Coordinación",
