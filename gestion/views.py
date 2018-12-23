@@ -169,6 +169,7 @@ class AgregarProfesor(LoginRequiredMixin, generic.CreateView):
         form.fields['departamento'].queryset = Departamento.objects.filter(
             id = self.request.user.profesor.departamento.id
         )
+        form.fields['departamento'].initial = self.request.user.profesor.departamento
         form.fields['asignaturas'].queryset = Asignatura.objects.filter(
             departamento = self.request.user.profesor.departamento
         )
@@ -211,7 +212,7 @@ class EditarProfesor(LoginRequiredMixin, generic.UpdateView):
 
         messages.warning(self.request, 'Ocurrió un error al editar el profesor.')
         return redirect(self.success_url)
-    
+
     def get_form(self):
         """
         Se modifica el método get_form para especificar restricciones en las opciones de algunos
@@ -222,6 +223,7 @@ class EditarProfesor(LoginRequiredMixin, generic.UpdateView):
         form.fields['departamento'].queryset = Departamento.objects.filter(
             id = self.request.user.profesor.departamento.id
         )
+        form.fields['departamento'].initial = self.request.user.profesor.departamento
         form.fields['asignaturas'].queryset = Asignatura.objects.filter(
             departamento = self.request.user.profesor.departamento
         )
@@ -312,6 +314,7 @@ class AgregarAsignatura(generic.CreateView):
         form.fields['departamento'].queryset = Departamento.objects.filter(
             id = self.request.user.profesor.departamento.id
         )
+        form.fields['departamento'].initial = self.request.user.profesor.departamento
         return form
 
 class EditarAsignatura(generic.UpdateView):
@@ -343,7 +346,7 @@ class EditarAsignatura(generic.UpdateView):
 
         messages.warning(self.request, 'Ocurrió un error al editar la asignatura.')
         return redirect(self.success_url)
-    
+
     def get_form(self):
         """
         Se modifica el método get_form para especificar restricciones en las opciones de algunos
@@ -354,6 +357,7 @@ class EditarAsignatura(generic.UpdateView):
         form.fields['departamento'].queryset = Departamento.objects.filter(
             id = self.request.user.profesor.departamento.id
         )
+        form.fields['departamento'].initial = self.request.user.profesor.departamento
         return form
 
 class EliminarAsignatura(generic.DeleteView):
@@ -574,6 +578,7 @@ class AgregarOferta(SessionWizardView):
             form.fields['departamento'].queryset = Departamento.objects.filter(
             id = self.request.user.profesor.departamento.id
             )
+            form.fields['departamento'].initial = self.request.user.profesor.departamento
 
             # Filtramos las asignaturas disponibles
             form.fields['asignaturas'].queryset = Asignatura.objects.filter(
