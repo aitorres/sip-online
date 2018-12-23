@@ -6,11 +6,7 @@ Para revisar una documentación más técnica, puedes revisar la [guía del prog
 
 ## Login
 
-Al entrar en el link se muestra el login de la aplicacion. Este cuenta con un campo para ingresar el correo electronico del usuario y un campo para su contraseña. Los datos de superusuario del sistema son:
-
-*correo electronico: admin@usb.ve*
-
-*contraseña: 1234abcd*
+Al entrar en el link se muestra el login de la aplicacion. Este cuenta con un campo para ingresar el correo electronico del usuario y un campo para su contraseña.
 
 ![Inicio_sesion](imagenes/inicio_sesion.png "Vista de inicio de sesion")
 
@@ -259,5 +255,11 @@ El sistema permite ingresas con el rol de COORDINADOR. Este rol lo ejerce un pro
 
 ![panel_coordinador](imagenes/panel_coordinador.png "Panel izquierdo del coordinador")
 
-El coordinador cuenta con la opcion de "Ofertas disponibles" y en esta puede gestionar, para su coordinacion, las ofertas hechas por el departamento. Tambien cuenta con el boton de "Gestionar prefrencias" ya que al ser un profesor, tiene permitida esta opcion. 
+El coordinador cuenta con la opcion de "Ofertas disponibles" y en esta puede consultar, para su coordinacion, las ofertas hechas por el departamento. Tambien cuenta con el boton de "Gestionar prefrencias" ya que al ser un profesor, tiene permitida esta opcion. 
 
+
+Al hacer click sobre "Ofertas disponible" se carga una tabla con las ofertas hechas por algun departamento con materias de esa coordinacion.
+
+![Ofertas_coordinacion](imagenes/ofertas_coord.png "Ofertas disponibles para la coordinacion")
+
+El coordinador puede consultar en detalle cada una de las ofertas listadas.
