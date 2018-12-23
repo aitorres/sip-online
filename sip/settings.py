@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'gestion',
-    'django_nose'
+    'django_nose',
+    'conversate'
 ]
 
 # Django-nose Measuring coverage
