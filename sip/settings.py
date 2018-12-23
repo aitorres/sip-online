@@ -171,5 +171,5 @@ else:
 EMAIL_HOST = os.environ.get('EMAIL_HOST', '')
 EMAIL_PORT = 465
 EMAIL_HOST_USER = os.environ.get('EMAIL_USER', '')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD', '')
+EMAIL_HOST_PASSWORD = 's1ps1p123?!'
 EMAIL_USE_SSL = True
