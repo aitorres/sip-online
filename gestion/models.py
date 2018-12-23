@@ -156,7 +156,7 @@ class Coordinacion(models.Model):
                     asignatura=asignatura
                 )
 
-                if asignatura in asignaturas_de_interes and len(asignaciones_finales) > 1:
+                if asignatura in asignaturas_de_interes and len(asignaciones_finales) > 0:
                     ofertas_disponibles.add(oferta)
                     break
 
