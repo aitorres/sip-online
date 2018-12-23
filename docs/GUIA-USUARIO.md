@@ -203,6 +203,8 @@ El apartado de Buscar ofertas, al que se puede acceder con la barra navegacional
 
 El sistema arroja el resultado de la busqueda y permite consultar o usar de modelo dicha oferta para crear una nueva.
 
+Al seleccionar "Usar de base" se abre el formulario de "Agregar oferta" dejando las materias de la oferta buscada preseleccionadas para esta nueva oferta.
+
 ![Buscar_oferta_especifica](imagenes/busqueda_en.png "Resultado de la busqueda")
 
 
