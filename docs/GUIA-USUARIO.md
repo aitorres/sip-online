@@ -188,6 +188,22 @@ Al hacer clic al ícono de ver una oferta (*ojo*), se puede visualizar la inform
 
 Al hacer clic al ícono de eliminar una oferta (*papelera*), se puede visualizar la ventana de confirmación de eliminación y hacer *confirmación* de la misma. Si se hace clic en el botón rojo, la oferta quedará eliminada del sistema. Si se hace clic en Cerrar o fuera de la ventana modal, se cerrará esta y no ocurrirá ningún cambio en la información.
 
+
+## Buscar Ofertas
+
+![Buscar_oferta](imagenes/buscar_oferta.png "Seccion buscar oferta")
+
+El apartado de Buscar ofertas, al que se puede acceder con la barra de navegación lateral, permite realizar busquedas sobre ofertas hechas en trimestres previos. 
+
+![Buscar_oferta_cuadro](imagenes/buscar_oferta_cuadro.png "Cuadro buscar oferta")
+
+Permite realizar la busqueda por periodo, año y filtrar solo ofertas del departamento al cual pertenece el jefe de departamento.
+
+![Buscar_oferta_especifica](imagenes/busqueda_en.png "Resultado de la busqueda")
+
+El sistema arroja el resultado de la busqueda y permite consultar, o usar de modelo dicha oferta para crear una nueva.
+
+
 ## Gestión Preferencias
 
 
