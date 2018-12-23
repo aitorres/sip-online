@@ -809,10 +809,10 @@ class ModificarOferta(LoginRequiredMixin, generic.DetailView):
                         oferta_trimestral=oferta,
                         profesor=profesor,
                         asignatura=asignatura,
+                        es_final = True
                     )
-                    asignacion.es_final = True
                     asignacion.save()
-                    print(asignacion)
+                    asignaciones_finales.add(asignacion)
                     c += 1
 
         # Arrojamos error si no se guardó ninguna asignación
