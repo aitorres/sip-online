@@ -11,6 +11,7 @@ Actualmente, el SIP Online permite:
 - Gestionar las asignaturas de postgrado de un departamento (listar, ver detalles, agregar, modificar, eliminar)
 - Realizar, como Jefe de Departamento, la asignacion profesoral de la oferta.
 - Seleccionar, como Profesor, las preferencias sobre las asignaturas a ser ofertadas.
+- Ver y discutir entre Jefe de Departamento y Coordinador las ofertas trimestrales Finales.
 
 ### Desarrollo
 
