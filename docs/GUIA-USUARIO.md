@@ -137,6 +137,7 @@ El apartado de Gestión de ofertas, al que se puede acceder con la barra de nave
 - Agregar una oferta trimestral nueva con sus datos respectivos (paso 1)
 - Agregar una oferta trimestral nueva con sus datos respectivos (paso 2)
 - Eliminar una oferta existente
+- Modificar una oferta final existente
 - Listar todas las ofertas cargadas en sistema
 - Realizar búsquedas por trimestrey nombre
 - Ver los detalles de asignaturas, profesores y preferencias de la oferta trimestral
