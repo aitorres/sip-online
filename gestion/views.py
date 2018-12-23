@@ -896,7 +896,7 @@ class ModificarOferta(LoginRequiredMixin, generic.DetailView):
         # Cargamos las nuevas asignaciones posibles
         asignaturas_ofertadas = oferta.asignaturas_ofertadas()
         context['asignaciones_nuevas'] = {}
-
+        context['hay_asignaciones_nuevas'] = False
         for asignatura in asignaturas_ofertadas:
             context['asignaciones_nuevas'][asignatura] = set()
             profesores_disponibles = Profesor.objects.filter(
@@ -912,6 +912,7 @@ class ModificarOferta(LoginRequiredMixin, generic.DetailView):
 
                 if len(asignaciones_existentes) == 0:
                     context['asignaciones_nuevas'][asignatura].add(profesor)
+                    context['hay_asignaciones_nuevas'] = True
 
         # Cargamos asignaturas y profesores no ofertados
         asignaturas = Asignatura.objects.filter(
@@ -925,7 +926,7 @@ class ModificarOferta(LoginRequiredMixin, generic.DetailView):
                 asignaturas_no_ofertadas.add(asignatura)
 
         context['asignaturas_no_ofertadas'] = {}
-
+        context['hay_asignaturas_no_ofertadas'] = False
         for asignatura in asignaturas_no_ofertadas:
             context['asignaturas_no_ofertadas'][asignatura] = set()
             profesores_disponibles = Profesor.objects.filter(
@@ -934,6 +935,7 @@ class ModificarOferta(LoginRequiredMixin, generic.DetailView):
 
             for profesor in profesores_disponibles:
                 context['asignaturas_no_ofertadas'][asignatura].add(profesor)
+                context['hay_asignaturas_no_ofertadas'] = True
 
         return context
 
