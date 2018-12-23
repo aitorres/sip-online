@@ -16,12 +16,12 @@
         {% endif %}
 
 
-        <h3 class="menu-title">Ofertas</h3><!-- /.menu-title -->
         <li>
             {% if request.user.profesor.es_jefe %}
-                <a href="{% url 'gestion:listar-ofertas' %}"> <i class="menu-icon fa fa-bookmark"></i>Gestionar ofertas</a>
+                <h3 class="menu-title">Ofertas</h3><!-- /.menu-title -->
+                    <a href="{% url 'gestion:listar-ofertas' %}"> <i class="menu-icon fa fa-bookmark"></i>Gestionar ofertas</a>
+                    <a href="{% url 'gestion:buscar-ofertas' %}"> <i class="menu-icon fa fa-search"></i>Buscar ofertas</a>
             {% endif %}
-            <a href="{% url 'gestion:buscar-ofertas' %}"> <i class="menu-icon fa fa-search"></i>Buscar ofertas</a>
         </li>
 
         {% if request.user.profesor.es_coordinador %}
