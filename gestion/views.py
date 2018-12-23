@@ -1092,7 +1092,7 @@ def buscar_oferta(request, periodo=None, ano=None):
     if periodo != "-":
         # Si se escogió un periodo, se filtra este periodo
         context = dict()
-        ofertas = OfertaTrimestral.objects.all()
+        ofertas = OfertaTrimestral.objects.filter(es_final=True)
 
         ofertas_periodo = set()
         for oferta in ofertas:
@@ -1105,7 +1105,7 @@ def buscar_oferta(request, periodo=None, ano=None):
 
         # Si se escogió un año
         context = dict()
-        ofertas = OfertaTrimestral.objects.all()
+        ofertas = OfertaTrimestral.objects.filter(es_final=True)
 
         ofertas_ano = set()
         for oferta in ofertas:
@@ -1117,7 +1117,7 @@ def buscar_oferta(request, periodo=None, ano=None):
     elif periodo is not None and periodo != "-" and ano != None:
         # Si se escogen ambos filtros
         context = dict()
-        ofertas = OfertaTrimestral.objects.all()
+        ofertas = OfertaTrimestral.objects.filter(es_final=True)
 
         ofertas_periodo = set()
         for oferta in ofertas:
