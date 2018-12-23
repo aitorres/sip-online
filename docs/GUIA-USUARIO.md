@@ -6,11 +6,7 @@ Para revisar una documentación más técnica, puedes revisar la [guía del prog
 
 ## Login
 
-Al entrar en el link se muestra el login de la aplicacion. Este cuenta con un campo para ingresar el correo electronico del usuario y un campo para su contraseña. Los datos de superusuario del sistema son:
-
-*correo electronico: admin@usb.ve*
-
-*contraseña: 1234abcd*
+Al entrar en el link se muestra el login de la aplicacion. Este cuenta con un campo para ingresar el correo electronico del usuario y un campo para su contraseña.
 
 ![Inicio_sesion](imagenes/inicio_sesion.png "Vista de inicio de sesion")
 
@@ -141,6 +137,7 @@ El apartado de Gestión de ofertas, al que se puede acceder con la barra de nave
 - Agregar una oferta trimestral nueva con sus datos respectivos (paso 1)
 - Agregar una oferta trimestral nueva con sus datos respectivos (paso 2)
 - Eliminar una oferta existente
+- Modificar una oferta final existente
 - Listar todas las ofertas cargadas en sistema
 - Realizar búsquedas por trimestrey nombre
 - Ver los detalles de asignaturas, profesores y preferencias de la oferta trimestral
@@ -188,6 +185,54 @@ Al hacer clic al ícono de ver una oferta (*ojo*), se puede visualizar la inform
 
 Al hacer clic al ícono de eliminar una oferta (*papelera*), se puede visualizar la ventana de confirmación de eliminación y hacer *confirmación* de la misma. Si se hace clic en el botón rojo, la oferta quedará eliminada del sistema. Si se hace clic en Cerrar o fuera de la ventana modal, se cerrará esta y no ocurrirá ningún cambio en la información.
 
+### Modificar una oferta
+
+![Modificar_oferta](imagenes/modificar_oferta.png "Vista de Modificar Oferta trimestral")
+
+Al hacer click al icono de modificar oferta (*lapiz*), se abre un formulario que permite tanto agregar profesores a las materias que actualmente posee la oferta o agregar materias nuevas con sus respectivos profesores. Es importante resaltar que al agregar estos datos, se asume que la oferta es final. 
+
+Al hacer click en "Asignar nuevos profesores" se muestra la siguiente pantalla:
+
+
+![Asignar_Profesor](imagenes/asignar_profe.png "Vista asignar profesor")
+
+Al hacer click en "Asignar asignaturas" se muestra la siguiente pantalla:
+
+![Asignar_Asignatura](imagenes/asignar_asig.png "Vista asignar asignatura")
+
+
+## Buscar Ofertas
+
+![Buscar_oferta](imagenes/buscar_ofertas.png "Seccion buscar oferta")
+
+El apartado de Buscar ofertas, al que se puede acceder con la barra navegacional lateral, permita realizar búsquedas sobre las ofertas registradas
+
+- Período
+- Año
+- Solo ofertas de mi Dpto 
+
+![Buscar_oferta_cuadro](imagenes/buscar_oferta_cuadro.png "Cuadro buscar oferta")
+
+El sistema arroja el resultado de la busqueda y permite consultar o usar de modelo dicha oferta para crear una nueva.
+
+Al seleccionar "Usar de base" se abre el formulario de "Agregar oferta" dejando las materias de la oferta buscada preseleccionadas para esta nueva oferta.
+
+![Buscar_oferta_especifica](imagenes/busqueda_en.png "Resultado de la busqueda")
+
+
+## Negociar
+
+Luego de que la oferta final sea enviada a la coordinacion. Tanto el JEFE DE DEPARTAMENTO como el COORDINADOR pueden negociar sobre la oferta.
+Cuando se consulta la oferta, sale una opcion de "Negociar oferta (chat)".
+
+![Negociar](imagenes/negociar.png "Vista de negociacion")
+
+Al hacer click, se abre el chat. En esta vista ambos actores pueden comunicarse para llegar a un acuerdo sobre la oferta final. 
+Existe una sala de chat exlusiva por cada oferta existente.
+
+![ChatRoom](imagenes/chat.png "Vista del ChatRoom")
+
+
 ## Gestión Preferencias
 
 
@@ -228,17 +273,6 @@ Al hacer clic al ícono de ver una oferta (*ojo*), se puede visualizar la inform
 Al hacer clic al ícono de actualizar preferencias (*engranaje*), se puede visualizar la ventana de Actualizar preferencias, aparecera una lista con las asignaturas posibles y un cuadrado que al hacer click se actualiza la preferencia, para confirmar se presiona el boton *Actualizar*, para cancelar se presiona el boton *cancelar* o se hace click fuera del recuadro
 
 
-## Buscar ofertas
-
-El apartado de Buscar ofertas, al que se puede acceder con la barra navegacional lateral, permita realizar búsquedas sobre las ofertas registradas, utilizando
-los filtros:
-
-- Período
-- Año
-- Solo ofertas de mi Dpto
-
-Al introducir los datos por los cuales se desea encontrar una oferta, se presiona el botón de Buscar y aparecerán los resultados que cumplen con las condiciones
-de búsqueda.
 ### Gestión del coordinador.
 
 ![Inicio_coordiancion](imagenes/Inicio_coordinacion.png "Pagina de inicio con un coordinador")
@@ -249,5 +283,11 @@ El sistema permite ingresas con el rol de COORDINADOR. Este rol lo ejerce un pro
 
 ![panel_coordinador](imagenes/panel_coordinador.png "Panel izquierdo del coordinador")
 
-El coordinador cuenta con la opcion de "Ofertas disponibles" y en esta puede gestionar, para su coordinacion, las ofertas hechas por el departamento. Tambien cuenta con el boton de "Gestionar prefrencias" ya que al ser un profesor, tiene permitida esta opcion. 
+El coordinador cuenta con la opcion de "Ofertas disponibles" y en esta puede consultar, para su coordinacion, las ofertas hechas por el departamento. Tambien cuenta con el boton de "Gestionar prefrencias" ya que al ser un profesor, tiene permitida esta opcion. 
 
+
+Al hacer click sobre "Ofertas disponible" se carga una tabla con las ofertas hechas por algun departamento con materias de esa coordinacion.
+
+![Ofertas_coordinacion](imagenes/ofertas_coord.png "Ofertas disponibles para la coordinacion")
+
+El coordinador puede consultar en detalle cada una de las ofertas listadas.
