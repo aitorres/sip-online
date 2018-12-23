@@ -793,6 +793,27 @@ class ModificarOferta(LoginRequiredMixin, generic.DetailView):
                     asignacion.save()
                     asignaciones_finales.add(asignacion)
                     c += 1
+            elif k[0:11] == "botonNueva_":
+                # Parseamos los datos
+                id_asignatura = int(k[11:])
+                asignatura = Asignatura.objects.get(pk=id_asignatura)
+
+                clave_opciones = "opciones_%s" % id_asignatura
+                opciones = request.POST.getlist(clave_opciones)
+
+                for id_profesor in opciones:
+                    # Guardamos cada asignación nueva
+                    profesor = Profesor.objects.get(pk=int(id_profesor))
+
+                    asignacion = AsignacionProfesoral(
+                        oferta_trimestral=oferta,
+                        profesor=profesor,
+                        asignatura=asignatura,
+                        es_final = True
+                    )
+                    asignacion.save()
+                    asignaciones_finales.add(asignacion)
+                    c += 1
             elif k[0:13] == "botonAgregar_":
                 # Parseamos los datos
                 datos = k.split("_")
