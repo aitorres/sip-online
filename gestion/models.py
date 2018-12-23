@@ -523,6 +523,19 @@ class AsignacionProfesoral(models.Model):
         default=TEORIA
     )
 
+    def __str__(self):
+        periodo = str(self.oferta_trimestral)
+        asignatura = str(self.asignatura)
+        profesor = str(self.profesor)
+        estatus = "final" if self.es_final else "preliminar"
+
+        return "(%s) %s dictada por %s (%s)" % (
+            periodo,
+            asignatura,
+            profesor,
+            estatus
+        )
+
 @receiver(post_save, sender=Profesor)
 def trigger_actualizar_profesor(sender, instance, created, **kwargs):
     """

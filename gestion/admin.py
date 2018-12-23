@@ -6,10 +6,18 @@ sencillas de CRUD de manera fácil para el programador.
 
 from django.contrib import admin
 
-from gestion.models import Profesor, Asignatura, Departamento, Disponibilidad, Coordinacion
+from gestion.models import (
+    Profesor,
+    Asignatura,
+    Departamento,
+    Disponibilidad,
+    Coordinacion,
+    AsignacionProfesoral
+)
 
 admin.site.register(Profesor)
 admin.site.register(Asignatura)
 admin.site.register(Departamento)
 admin.site.register(Disponibilidad)
 admin.site.register(Coordinacion)
+admin.site.register(AsignacionProfesoral)
