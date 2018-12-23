@@ -159,6 +159,13 @@ STATICFILES_DIRS = [
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 
+# En Localhost, para pruebas, se utilizará el manejador de correos del terminal
+# pero en Heroku se utilizará el backend real
+if CUR_DOMAIN == 'localhost':
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
 # Configuración de correo
 EMAIL_HOST = os.environ.get('EMAIL_HOST', '')
 EMAIL_PORT = 465
