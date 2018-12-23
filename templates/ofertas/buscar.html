@@ -66,6 +66,9 @@
                             <div class="card-body">
                                 <h5 class="card-title">{{ oferta.nombre_completo }}</h5>
                                 <p class="card-text">{{ oferta.departamento }}</p>
+                                {% if oferta.departamento == request.user.profesor.departamento %}
+                                    <a href="#" class="card-link trigger" data-toggle="modal" data-target="#modalCRUD" data-url="{% url 'gestion:agregar-oferta' oferta.pk %}">Usar de base</a>
+                                {% endif %}
                                 <a href="#" class="card-link trigger" data-toggle="modal" data-target="#modalCRUD" data-url="{% url 'gestion:ver-oferta' oferta.pk %}">Ver más detalles</a>
                             </div>
                         </div>
