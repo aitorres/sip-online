@@ -426,6 +426,7 @@ class OfertaTrimestral(models.Model):
         Determina algunas opciones base para el modelo Oferta Trimestral.
         """
 
+        # Restricción de unicidad conjunta entre trimestre y departamento
         unique_together = ('trimestre', 'departamento',)
 
     def nombre_completo(self):
