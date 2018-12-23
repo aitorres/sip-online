@@ -448,6 +448,8 @@ class ListarOfertasCoordinacion(generic.ListView):
 
         # Agregamos la coordinacion al contexto
         context['coordinacion'] = self.request.user.profesor.coordinacion()
+        # TODO: corregir oferta coordinación
+        print(self.request.user.profesor.coordinacion())
 
         return context
 
