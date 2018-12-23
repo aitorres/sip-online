@@ -16,7 +16,9 @@ Actualmente, el SIP Online permite:
 - Seleccionar, como Profesor, las preferencias sobre las asignaturas a ser ofertadas.
 - Declarar las ofertas como preliminares o finales
 - Editar asignaciones de profesores y agregarlas o quitarlas de una oferta
+- Modificar las ofertas finales para incorporar nuevas asignaturas o nuevos profesores.
 - Enviar a las Coordinaciones la oferta que requieran según las asignaturas que necesiten para sus carreras
+- Ver y discutir entre Jefe de Departamento y Coordinador las ofertas trimestrales finales en Mesas de Negociación tipo chat.
 
 ### Desarrollo
 
