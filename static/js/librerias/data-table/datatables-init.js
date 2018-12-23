@@ -13,6 +13,13 @@
         language: {
             url: "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
           },
+	});
+
+	$('#bootstrap-data-table2').DataTable({
+        lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
+        language: {
+            url: "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+          },
     });
 
 
