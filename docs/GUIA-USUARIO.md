@@ -184,6 +184,21 @@ Al hacer clic al ícono de ver una oferta (*ojo*), se puede visualizar la inform
 
 Al hacer clic al ícono de eliminar una oferta (*papelera*), se puede visualizar la ventana de confirmación de eliminación y hacer *confirmación* de la misma. Si se hace clic en el botón rojo, la oferta quedará eliminada del sistema. Si se hace clic en Cerrar o fuera de la ventana modal, se cerrará esta y no ocurrirá ningún cambio en la información.
 
+### Modificar una oferta
+
+![Modificar_oferta](imagenes/modificar_oferta.png "Vista de Modificar Oferta trimestral")
+
+Al hacer click al icono de modificar oferta (*lapiz*), se abre un formulario que permite tanto agregar profesores a las materias que actualmente posee la oferta o agregar materias nuevas con sus respectivos profesores. Es importante resaltar que al agregar estos datos, se asume que la oferta es final. 
+
+Al hacer click en "Asignar nuevos profesores" se muestra la siguiente pantalla:
+
+
+![Asignar_Profesor](imagenes/asignar_profe.png "Vista asignar profesor")
+
+Al hacer click en "Asignar asignaturas" se muestra la siguiente pantalla:
+
+![Asignar_Asignatura](imagenes/asignar_asig.png "Vista asignar asignatura")
+
 
 ## Buscar Ofertas
 
@@ -203,6 +218,18 @@ Al seleccionar "Usar de base" se abre el formulario de "Agregar oferta" dejando 
 
 ![Buscar_oferta_especifica](imagenes/busqueda_en.png "Resultado de la busqueda")
 
+
+## Negociar
+
+Luego de que la oferta final sea enviada a la coordinacion. Tanto el JEFE DE DEPARTAMENTO como el COORDINADOR pueden negociar sobre la oferta.
+Cuando se consulta la oferta, sale una opcion de "Negociar oferta (chat)".
+
+![Negociar](imagenes/negociar.png "Vista de negociacion")
+
+Al hacer click, se abre el chat. En esta vista ambos actores pueden comunicarse para llegar a un acuerdo sobre la oferta final. 
+Existe una sala de chat exlusiva por cada oferta existente.
+
+![ChatRoom](imagenes/chat.png "Vista del ChatRoom")
 
 
 ## Gestión Preferencias
