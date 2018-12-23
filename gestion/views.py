@@ -1,3 +1,5 @@
+from conversate.models import Room, RoomUser
+
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
@@ -23,6 +25,19 @@ from gestion.models import (
     AsignacionProfesoral,
     Coordinacion
 )
+
+def _puede_ver_chat(oferta, profesor):
+    """
+    Función privada para determinar si un determinado profesor
+    puede acceder al chat de una oferta trimestral, sea porque es el
+    jefe de departamento o un coordinador interesado.
+    """
+
+    es_jefe = profesor == oferta.departamento.jefe
+    es_coordinador = profesor.coordinacion() is not None
+    es_coordinador = es_coordinador and oferta in profesor.coordinacion().ofertas_disponibles()
+
+    return es_jefe or es_coordinador
 
 def _enviar_correo(para, asunto, plantilla_mensaje, contexto):
     """
@@ -452,8 +467,6 @@ class ListarOfertasCoordinacion(generic.ListView):
 
         # Agregamos la coordinacion al contexto
         context['coordinacion'] = self.request.user.profesor.coordinacion()
-        # TODO: corregir oferta coordinación
-        print(self.request.user.profesor.coordinacion())
 
         return context
 
@@ -480,6 +493,12 @@ class VerOfertaCoordinacion(LoginRequiredMixin, generic.DetailView):
         oferta = context['object']
         asignaciones = AsignacionProfesoral.objects.filter(
             oferta_trimestral=oferta
+        )
+
+        # Obtiene los permisos del chat
+        context['puede_ver_chat'] = _puede_ver_chat(
+            oferta,
+            self.request.user.profesor
         )
 
         context['asignaciones'] = asignaciones
@@ -599,6 +618,11 @@ class AgregarOferta(SessionWizardView):
         return form
 
     def done(self, form_list, **kwargs):
+        """
+        Almacena la información pasada a través de los formularios
+        como nuevas ofertas trimestrales.
+        """
+
         forms = list(form_list)
         paso1 = forms[0]
         paso2 = forms[1]
@@ -719,10 +743,40 @@ class VerOferta(LoginRequiredMixin, generic.DetailView):
             oferta.es_final = True
             oferta.save()
 
+            # Creamos las salas de chat
+            query = Room.objects.filter(
+                title=oferta.nombre_completo() + (" (%s)" % oferta.departamento.codigo),
+                slug=oferta.slug()
+            )
+
+            if len(query) == 0:
+                chat = Room(
+                    title=oferta.nombre_completo() + (" (%s)" % oferta.departamento.codigo),
+                    slug=oferta.slug()
+                )
+                chat.save()
+            else:
+                chat = query.first()
+
+            jefe = oferta.departamento.jefe
+            if len(RoomUser.objects.filter(room=chat, user=jefe.usuario)) == 0:
+                usuario_jefe = RoomUser(
+                    room=chat,
+                    user=jefe.usuario
+                )
+                usuario_jefe.save()
+
             # Enviamos correos a las Coordinaciones
             coordinaciones = Coordinacion.objects.all()
             for coordinacion in coordinaciones:
                 if oferta in coordinacion.ofertas_disponibles() and coordinacion.coordinador is not None:
+                    if len(RoomUser.objects.filter(room=chat, user=coordinacion.coordinador.usuario)) == 0:
+                        usuario_coordinador = RoomUser(
+                            room=chat,
+                            user=coordinacion.coordinador.usuario
+                        )
+                        usuario_coordinador.save()
+
                     _enviar_correo(
                         coordinacion.coordinador.email,
                         "[SIP] Oferta disponible para la Coordinación",
@@ -754,6 +808,12 @@ class VerOferta(LoginRequiredMixin, generic.DetailView):
         )
 
         context['asignaciones'] = asignaciones
+
+        # Obtiene los permisos del chat
+        context['puede_ver_chat'] = _puede_ver_chat(
+            oferta,
+            self.request.user.profesor
+        )
 
         return context
 
@@ -793,6 +853,48 @@ class ModificarOferta(LoginRequiredMixin, generic.DetailView):
                     asignacion.save()
                     asignaciones_finales.add(asignacion)
                     c += 1
+            elif k[0:11] == "botonNueva_":
+                # Parseamos los datos
+                id_asignatura = int(k[11:])
+                asignatura = Asignatura.objects.get(pk=id_asignatura)
+
+                clave_opciones = "opciones_%s" % id_asignatura
+                opciones = request.POST.getlist(clave_opciones)
+
+                for id_profesor in opciones:
+                    # Guardamos cada asignación nueva
+                    profesor = Profesor.objects.get(pk=int(id_profesor))
+
+                    asignacion = AsignacionProfesoral(
+                        oferta_trimestral=oferta,
+                        profesor=profesor,
+                        asignatura=asignatura,
+                        es_final = True
+                    )
+                    asignacion.save()
+                    asignaciones_finales.add(asignacion)
+                    c += 1
+            elif k[0:13] == "botonAgregar_":
+                # Parseamos los datos
+                datos = k.split("_")
+                asignatura_id = int(datos[1])
+                profesor_id = int(datos[2])
+
+                # Filtramos los checkboxes marcados
+                if v == "on":
+                    profesor = Profesor.objects.get(pk=profesor_id)
+                    asignatura = Asignatura.objects.get(pk=asignatura_id)
+
+                    # Guardamos la información en la asignación nueva
+                    asignacion = AsignacionProfesoral(
+                        oferta_trimestral=oferta,
+                        profesor=profesor,
+                        asignatura=asignatura,
+                        es_final = True
+                    )
+                    asignacion.save()
+                    asignaciones_finales.add(asignacion)
+                    c += 1
 
         # Arrojamos error si no se guardó ninguna asignación
         if c < 1:
@@ -821,7 +923,7 @@ class ModificarOferta(LoginRequiredMixin, generic.DetailView):
                 if oferta in coordinacion.ofertas_disponibles() and coordinacion.coordinador is not None:
                     _enviar_correo(
                         coordinacion.coordinador.email,
-                        "[SIP] Oferta modificada para la Coordinación",
+                        "[SIP] Oferta modificada por el Departamento para la Coordinación",
                         'emails/oferta_modificada_coordinacion.html',
                         {'oferta': oferta}
                     )
@@ -851,6 +953,50 @@ class ModificarOferta(LoginRequiredMixin, generic.DetailView):
 
         context['asignaciones'] = asignaciones
 
+        # Cargamos las nuevas asignaciones posibles
+        asignaturas_ofertadas = oferta.asignaturas_ofertadas()
+        context['asignaciones_nuevas'] = {}
+        context['hay_asignaciones_nuevas'] = False
+        for asignatura in asignaturas_ofertadas:
+            context['asignaciones_nuevas'][asignatura] = set()
+            profesores_disponibles = Profesor.objects.filter(
+                asignaturas__id__contains=asignatura.id
+            ).distinct()
+
+            for profesor in profesores_disponibles:
+                asignaciones_existentes = AsignacionProfesoral.objects.filter(
+                    oferta_trimestral=oferta,
+                    asignatura=asignatura,
+                    profesor=profesor
+                )
+
+                if len(asignaciones_existentes) == 0:
+                    context['asignaciones_nuevas'][asignatura].add(profesor)
+                    context['hay_asignaciones_nuevas'] = True
+
+        # Cargamos asignaturas y profesores no ofertados
+        asignaturas = Asignatura.objects.filter(
+            departamento=self.request.user.profesor.departamento
+        )
+        asignaturas_no_ofertadas = set()
+
+        # Filtramos manualmente las asignaturas no ofertadas
+        for asignatura in asignaturas:
+            if asignatura not in asignaturas_ofertadas:
+                asignaturas_no_ofertadas.add(asignatura)
+
+        context['asignaturas_no_ofertadas'] = {}
+        context['hay_asignaturas_no_ofertadas'] = False
+        for asignatura in asignaturas_no_ofertadas:
+            context['asignaturas_no_ofertadas'][asignatura] = set()
+            profesores_disponibles = Profesor.objects.filter(
+                asignaturas__id__contains=asignatura.id
+            ).distinct()
+
+            for profesor in profesores_disponibles:
+                context['asignaturas_no_ofertadas'][asignatura].add(profesor)
+                context['hay_asignaturas_no_ofertadas'] = True
+
         return context
 
 class VerOfertaIncluyente(LoginRequiredMixin, generic.DetailView):
@@ -877,6 +1023,12 @@ class VerOfertaIncluyente(LoginRequiredMixin, generic.DetailView):
         asignaciones = AsignacionProfesoral.objects.filter(
             oferta_trimestral=oferta,
             profesor=self.request.user.profesor
+        )
+
+        # Obtiene los permisos del chat
+        context['puede_ver_chat'] = _puede_ver_chat(
+            oferta,
+            self.request.user.profesor
         )
 
         context['asignaciones'] = asignaciones
@@ -940,7 +1092,7 @@ def buscar_oferta(request, periodo=None, ano=None):
     if periodo != "-":
         # Si se escogió un periodo, se filtra este periodo
         context = dict()
-        ofertas = OfertaTrimestral.objects.all()
+        ofertas = OfertaTrimestral.objects.filter(es_final=True)
 
         ofertas_periodo = set()
         for oferta in ofertas:
@@ -953,7 +1105,7 @@ def buscar_oferta(request, periodo=None, ano=None):
 
         # Si se escogió un año
         context = dict()
-        ofertas = OfertaTrimestral.objects.all()
+        ofertas = OfertaTrimestral.objects.filter(es_final=True)
 
         ofertas_ano = set()
         for oferta in ofertas:
@@ -965,7 +1117,7 @@ def buscar_oferta(request, periodo=None, ano=None):
     elif periodo is not None and periodo != "-" and ano != None:
         # Si se escogen ambos filtros
         context = dict()
-        ofertas = OfertaTrimestral.objects.all()
+        ofertas = OfertaTrimestral.objects.filter(es_final=True)
 
         ofertas_periodo = set()
         for oferta in ofertas:

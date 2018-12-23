@@ -1,3 +1,5 @@
+from conversate.models import Room
+
 from django.db import models
 from django.core.mail import send_mail
 from django.core.validators import MaxValueValidator, MinValueValidator
@@ -426,6 +428,7 @@ class OfertaTrimestral(models.Model):
         Determina algunas opciones base para el modelo Oferta Trimestral.
         """
 
+        # Restricción de unicidad conjunta entre trimestre y departamento
         unique_together = ('trimestre', 'departamento',)
 
     def nombre_completo(self):
@@ -450,6 +453,26 @@ class OfertaTrimestral(models.Model):
 
         nombre_completo = "%s %s" % (nombre_trimestre, ano)
         return nombre_completo
+
+    def slug(self):
+        """
+        Retorna un nombre especial a modo de slug correspondiente al trimestre,
+        como código único.
+        """
+
+        nombre = self.nombre_completo() + " " + self.departamento.codigo
+        return nombre.lower().replace(" ", "_")
+
+    def chat(self):
+        """
+        Retorna el salón de chat asociado a la oferta trimestral.
+        """
+
+        chat = Room.objects.get(
+            slug=self.slug()
+        )
+
+        return chat
 
     def estado(self):
         """
@@ -521,6 +544,19 @@ class AsignacionProfesoral(models.Model):
         choices=TIPO_CHOICES,
         default=TEORIA
     )
+
+    def __str__(self):
+        periodo = str(self.oferta_trimestral)
+        asignatura = str(self.asignatura)
+        profesor = str(self.profesor)
+        estatus = "final" if self.es_final else "preliminar"
+
+        return "(%s) %s dictada por %s (%s)" % (
+            periodo,
+            asignatura,
+            profesor,
+            estatus
+        )
 
 @receiver(post_save, sender=Profesor)
 def trigger_actualizar_profesor(sender, instance, created, **kwargs):

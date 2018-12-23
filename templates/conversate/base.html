@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static "conversate/css/styles.css" %}" type="text/css" />
+{{ block.super }}
+{% endblock %}
+
+{% block js %}
+{{ block.super }}
+<script>CONVERSATE={{ conversate_settings.config|safe }};</script>
+{% endblock %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+    <div class="col-md-12" style="margin-bottom: 50px;">
+        <div class="card">
+            <div class="card-header">
+                <h4>{{ title }}</h4>
+            </div>
+            <div class="card-body">
+                <div class="cnv_con">
+                    {% block conversate_content %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

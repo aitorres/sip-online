@@ -1,8 +1,17 @@
+astroid==2.1.0
 coverage==4.5.1
 Django==1.11.15
+-e git+https://github.com/radiac/django-conversate.git@786c1220889f053a3b236fe34f634044b995690a#egg=django_conversate
 django-formtools==2.1
 django-nose==1.4.5
 gunicorn==19.9.0
+isort==4.3.4
+lazy-object-proxy==1.3.1
+mccabe==0.6.1
 nose==1.3.7
 psycopg2-binary==2.7.5
+pylint==2.2.2
 pytz==2018.7
+six==1.12.0
+typed-ast==1.1.1
+wrapt==1.10.11
