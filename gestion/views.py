@@ -744,28 +744,38 @@ class VerOferta(LoginRequiredMixin, generic.DetailView):
             oferta.save()
 
             # Creamos las salas de chat
-            chat = Room(
+            query = Room.objects.filter(
                 title=oferta.nombre_completo() + (" (%s)" % oferta.departamento.codigo),
                 slug=oferta.slug()
             )
-            chat.save()
+
+            if len(query) == 0:
+                chat = Room(
+                    title=oferta.nombre_completo() + (" (%s)" % oferta.departamento.codigo),
+                    slug=oferta.slug()
+                )
+                chat.save()
+            else:
+                chat = query.first()
 
             jefe = oferta.departamento.jefe
-            usuario_jefe = RoomUser(
-                room=chat,
-                user=jefe.usuario
-            )
-            usuario_jefe.save()
+            if len(RoomUser.objects.filter(room=chat, user=jefe.usuario)) == 0:
+                usuario_jefe = RoomUser(
+                    room=chat,
+                    user=jefe.usuario
+                )
+                usuario_jefe.save()
 
             # Enviamos correos a las Coordinaciones
             coordinaciones = Coordinacion.objects.all()
             for coordinacion in coordinaciones:
                 if oferta in coordinacion.ofertas_disponibles() and coordinacion.coordinador is not None:
-                    usuario_coordinador = RoomUser(
-                        room=chat,
-                        user=coordinacion.coordinador.usuario
-                    )
-                    usuario_coordinador.save()
+                    if len(RoomUser.objects.filter(room=chat, user=coordinacion.coordinador.usuario)) == 0:
+                        usuario_coordinador = RoomUser(
+                            room=chat,
+                            user=coordinacion.coordinador.usuario
+                        )
+                        usuario_coordinador.save()
 
                     _enviar_correo(
                         coordinacion.coordinador.email,
