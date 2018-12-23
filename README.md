@@ -4,6 +4,8 @@ Repositorio del Sistema de Inscripción de Postgrado Online, proyecto de desarro
 
 ## Sobre el SIP Online
 
+![](docs/imagenes/dashboard.png)
+
 El Sistema de Inscripción de Postgrado Online es un sistema de gestión de profesores, asignaturas y trámites de inscripción trimestral para los estudiantes de postgrado. Permite gestionar la información necesaria para realizar la planificación trimestral a nivel de Departamento, consignar las disponibilidades horarias de los profesores, y permitir a los estudiantes el acceso a los trámites de manera digital, fácil, rápida y eficiente.
 
 ### Funcionalidades
