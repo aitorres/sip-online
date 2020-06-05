@@ -3,7 +3,7 @@ certifi==2019.11.28
 chardet==3.0.4
 colorclass==2.2.0
 coverage==5.0.3
-Django==1.11.28
+Django==1.11.29
 -e git+https://github.com/radiac/django-conversate.git@786c1220889f053a3b236fe34f634044b995690a#egg=django_conversate
 django-formtools==2.2
 django-nose==1.4.6
